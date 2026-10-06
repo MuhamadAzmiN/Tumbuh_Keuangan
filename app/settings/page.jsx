@@ -32,13 +32,17 @@ import {
   ChevronDown,
   ChevronUp,
   FileText,
+  Wallet,
+  PiggyBank,
+  ShoppingBag,
+  Percent,
 } from 'lucide-react';
 import { TumbuhLogo } from '@/components/ui/Logo';
 
 const FAQ_ITEMS = [
   {
-    q: 'Bagaimana cara mensinkronkan gaji Rp 3 juta dengan alokasi nabung & kebutuhan?',
-    a: 'Saat gajian masuk (contoh: tanggal 1), langsung catatkan sebagai Transaksi Pemasukan (Gaji Rp 2.000.000 + Sampingan Rp 1.300.000). Sistem secara otomatis akan mengalokasikan Rp 2.000.000 ke tabungan utama 50 juta dan Rp 1.000.000 untuk batas anggaran kebutuhan harian di menu Anggaran.',
+    q: 'Bagaimana cara mengatur persentase gaji (Nabung vs Kebutuhan)?',
+    a: 'Buka menu "Profil & Pengaturan Financial" di halaman ini. Kamu bisa memasukkan nominal gaji bulanan dan mengatur persentase alokasi untuk Nabung (misal: 50%) dan Kebutuhan (misal: 50%). Sistem akan otomatis menghitung nominal target nabung & batas anggaran kebutuhan per bulan.',
   },
   {
     q: 'Bagaimana jika pengeluaran harian melebihi anggaran bulanan?',
@@ -68,20 +72,40 @@ export default function SettingsPage() {
   const [activeFaqIdx, setActiveFaqIdx] = useState(null);
 
   // Form state for profile modal
-  const [nameInput, setNameInput] = useState(profile?.name || 'Azmi');
-  const [initialBalanceInput, setInitialBalanceInput] = useState(settings?.initial_balance || APP_CONFIG.initialBalance);
+  const defaultUserName = profile?.name || user?.user_metadata?.name || user?.email?.split('@')[0] || 'Pengguna';
+  const [nameInput, setNameInput] = useState(defaultUserName);
+  const [initialBalanceInput, setInitialBalanceInput] = useState(settings?.initial_balance ?? 0);
   const [targetAmountInput, setTargetAmountInput] = useState(settings?.target_amount || APP_CONFIG.targetAmount);
+  const [monthlySalaryInput, setMonthlySalaryInput] = useState(settings?.monthly_salary_target || APP_CONFIG.monthlySalaryTarget);
+  const [savingsPctInput, setSavingsPctInput] = useState(settings?.savings_percentage ?? 50);
+  const [needsPctInput, setNeedsPctInput] = useState(settings?.needs_percentage ?? 50);
   const [isSaving, setIsSaving] = useState(false);
 
-  const userName = profile?.name || 'Azmi';
+  const userName = profile?.name || user?.user_metadata?.name || user?.email?.split('@')[0] || 'Pengguna';
   const userInitials = userName.slice(0, 2).toUpperCase();
 
   // Open Edit Profile Modal
   const handleOpenProfileModal = () => {
-    setNameInput(profile?.name || 'Azmi');
-    setInitialBalanceInput(settings?.initial_balance || APP_CONFIG.initialBalance);
+    setNameInput(userName);
+    setInitialBalanceInput(settings?.initial_balance ?? 0);
     setTargetAmountInput(settings?.target_amount || APP_CONFIG.targetAmount);
+    setMonthlySalaryInput(settings?.monthly_salary_target || APP_CONFIG.monthlySalaryTarget);
+    const savPct = settings?.savings_percentage ?? 50;
+    setSavingsPctInput(savPct);
+    setNeedsPctInput(settings?.needs_percentage ?? (100 - savPct));
     setProfileModalOpen(true);
+  };
+
+  const handleSavingsPctChange = (val) => {
+    const num = Math.min(100, Math.max(0, Number(val) || 0));
+    setSavingsPctInput(num);
+    setNeedsPctInput(100 - num);
+  };
+
+  const handleNeedsPctChange = (val) => {
+    const num = Math.min(100, Math.max(0, Number(val) || 0));
+    setNeedsPctInput(num);
+    setSavingsPctInput(100 - num);
   };
 
   // Save Profile & Settings
@@ -94,12 +118,15 @@ export default function SettingsPage() {
       await updateUserProfile(nameInput.trim());
       await updateSettings({
         ...(settings || {}),
-        initial_balance: Number(initialBalanceInput) || APP_CONFIG.initialBalance,
+        initial_balance: Number(initialBalanceInput) || 0,
         target_amount: Number(targetAmountInput) || APP_CONFIG.targetAmount,
+        monthly_salary_target: Number(monthlySalaryInput) || APP_CONFIG.monthlySalaryTarget,
+        savings_percentage: Number(savingsPctInput) || 50,
+        needs_percentage: Number(needsPctInput) || 50,
       });
 
       setProfileModalOpen(false);
-      showToast('Profil & Pengaturan berhasil diperbarui! ✨', 'success');
+      showToast('Profil & Alokasi Gaji berhasil diperbarui! ✨', 'success');
     } catch (err) {
       alert(err.message || 'Gagal menyimpan pengaturan.');
     } finally {
@@ -151,11 +178,19 @@ export default function SettingsPage() {
     );
   }
 
+  const userSalary = Number(settings?.monthly_salary_target) || APP_CONFIG.monthlySalaryTarget;
+  const userFreelance = Number(settings?.monthly_freelance_target) || APP_CONFIG.monthlyFreelanceTarget;
+  const userTotalIncome = userSalary + userFreelance;
+  const savingsPct = settings?.savings_percentage ?? 50;
+  const needsPct = settings?.needs_percentage ?? (100 - savingsPct);
+  const savingsAmount = Math.round((userSalary * savingsPct) / 100);
+  const needsAmount = Math.round((userSalary * needsPct) / 100);
+
   const MENU_ITEMS = [
     {
       id: 'profile',
       label: 'Profil & Pengaturan Financial',
-      sublabel: 'Ubah nama, saldo awal & target 50JT',
+      sublabel: `Gaji: ${formatCurrency(userSalary)} • Alokasi ${savingsPct}% Nabung / ${needsPct}% Kebutuhan`,
       icon: User,
       action: handleOpenProfileModal,
       badge: null,
@@ -247,7 +282,7 @@ export default function SettingsPage() {
               <div className="flex items-center gap-2 mt-1.5">
                 <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100">
                   <ShieldCheck className="h-3 w-3 text-blue-600" />
-                  <span>Saldo Awal: {formatCurrency(settings?.initial_balance || APP_CONFIG.initialBalance)}</span>
+                  <span>Saldo Awal: {formatCurrency(settings?.initial_balance ?? 0)}</span>
                 </span>
               </div>
             </div>
@@ -269,11 +304,16 @@ export default function SettingsPage() {
             <TumbuhLogo className="h-5 w-5" />
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-bold text-slate-900">
-              Target Kontrak 12 Bulan (Okt 2026 – Sep 2027)
-            </p>
-            <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-              Alokasi bulanan: Gaji Rp 2.000.000 + Freelance Rp 1.300.000 (Total Rp 3.300.000/bln)
+            <div className="flex items-center justify-between">
+              <p className="text-xs font-bold text-slate-900">
+                Konfigurasi Gaji & Alokasi Bulanan
+              </p>
+              <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100">
+                {formatCurrency(userSalary)}/bln
+              </span>
+            </div>
+            <p className="text-[11px] text-slate-500 font-medium mt-1">
+              Nabung ({savingsPct}%): <strong className="text-emerald-600">{formatCurrency(savingsAmount)}</strong> • Kebutuhan ({needsPct}%): <strong className="text-blue-600">{formatCurrency(needsAmount)}</strong>
             </p>
           </div>
         </div>
@@ -363,7 +403,7 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <div className="flex items-center gap-2">
                   <User className="h-4 w-4 text-blue-600" />
-                  <h3 className="text-sm font-bold text-slate-900">Edit Profil & Financial</h3>
+                  <h3 className="text-sm font-bold text-slate-900">Edit Profil & Config Gaji</h3>
                 </div>
                 <button
                   type="button"
@@ -374,7 +414,7 @@ export default function SettingsPage() {
                 </button>
               </div>
 
-              <form onSubmit={handleSaveProfile} className="space-y-3.5">
+              <form onSubmit={handleSaveProfile} className="space-y-4">
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
                     Nama Pengguna / Pemilik
@@ -389,6 +429,121 @@ export default function SettingsPage() {
                   />
                 </div>
 
+                {/* Card Section: Config Gaji & Persentase Alokasi */}
+                <div className="rounded-2xl border border-blue-100 bg-blue-50/40 p-4 space-y-3.5">
+                  <div className="flex items-center gap-2">
+                    <div className="p-1.5 rounded-lg bg-blue-600 text-white">
+                      <Wallet className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold text-slate-900">Config Gaji & Persentase Alokasi</h4>
+                      <p className="text-[10px] text-slate-500 font-medium">Atur nominal gaji & % alokasi (Nabung vs Kebutuhan)</p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                      Gaji / Pendapatan Bulanan Utama (Rp)
+                    </label>
+                    <CurrencyInput
+                      value={monthlySalaryInput}
+                      onChange={(val) => setMonthlySalaryInput(val)}
+                      placeholder="2.000.000"
+                    />
+                  </div>
+
+                  {/* Preset Alokasi Buttons */}
+                  <div>
+                    <label className="block text-[11px] font-semibold text-slate-600 mb-1.5">
+                      Pilihan Alokasi Cepat (% Nabung / % Kebutuhan):
+                    </label>
+                    <div className="grid grid-cols-4 gap-1.5">
+                      {[
+                        { sav: 50, need: 50, label: '50 / 50' },
+                        { sav: 60, need: 40, label: '60 / 40' },
+                        { sav: 70, need: 30, label: '70 / 30' },
+                        { sav: 80, need: 20, label: '80 / 20' },
+                      ].map((preset) => {
+                        const isActive = savingsPctInput === preset.sav && needsPctInput === preset.need;
+                        return (
+                          <button
+                            key={preset.label}
+                            type="button"
+                            onClick={() => {
+                              setSavingsPctInput(preset.sav);
+                              setNeedsPctInput(preset.need);
+                            }}
+                            className={`py-1.5 px-2 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
+                              isActive
+                                ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                                : 'bg-white text-slate-700 border-slate-200 hover:border-blue-300'
+                            }`}
+                          >
+                            {preset.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Interactive Sliders */}
+                  <div className="space-y-3 pt-1">
+                    <div>
+                      <div className="flex items-center justify-between text-xs font-bold mb-1">
+                        <span className="text-emerald-700 flex items-center gap-1">
+                          <PiggyBank className="h-3.5 w-3.5" /> Nabung ({savingsPctInput}%)
+                        </span>
+                        <span className="text-emerald-800 font-extrabold">
+                          {formatCurrency(Math.round(((Number(monthlySalaryInput) || 0) * savingsPctInput) / 100))}
+                        </span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={savingsPctInput}
+                        onChange={(e) => handleSavingsPctChange(e.target.value)}
+                        className="w-full h-2 bg-emerald-100 rounded-lg appearance-none cursor-pointer accent-emerald-600"
+                      />
+                    </div>
+
+                    <div>
+                      <div className="flex items-center justify-between text-xs font-bold mb-1">
+                        <span className="text-blue-700 flex items-center gap-1">
+                          <ShoppingBag className="h-3.5 w-3.5" /> Kebutuhan ({needsPctInput}%)
+                        </span>
+                        <span className="text-blue-800 font-extrabold">
+                          {formatCurrency(Math.round(((Number(monthlySalaryInput) || 0) * needsPctInput) / 100))}
+                        </span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={needsPctInput}
+                        onChange={(e) => handleNeedsPctChange(e.target.value)}
+                        className="w-full h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Dynamic Summary Breakdown */}
+                  <div className="rounded-xl bg-white border border-slate-200/80 p-3 text-[11px] space-y-1 font-medium text-slate-600 shadow-2xs">
+                    <div className="flex justify-between items-center text-slate-800 font-bold">
+                      <span>Rincian Gaji Bulanan:</span>
+                      <span className="text-blue-600 font-extrabold">{formatCurrency(Number(monthlySalaryInput) || 0)}</span>
+                    </div>
+                    <div className="flex justify-between items-center text-emerald-700">
+                      <span>• Target Nabung ({savingsPctInput}%):</span>
+                      <span className="font-bold">{formatCurrency(Math.round(((Number(monthlySalaryInput) || 0) * savingsPctInput) / 100))}/bln</span>
+                    </div>
+                    <div className="flex justify-between items-center text-blue-700">
+                      <span>• Limit Kebutuhan ({needsPctInput}%):</span>
+                      <span className="font-bold">{formatCurrency(Math.round(((Number(monthlySalaryInput) || 0) * needsPctInput) / 100))}/bln</span>
+                    </div>
+                  </div>
+                </div>
+
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
                     Saldo Awal Tabungan (Rp)
@@ -396,10 +551,10 @@ export default function SettingsPage() {
                   <CurrencyInput
                     value={initialBalanceInput}
                     onChange={(val) => setInitialBalanceInput(val)}
-                    placeholder="10.950.000"
+                    placeholder="0"
                   />
                   <p className="text-[10px] text-slate-400 mt-1">
-                    Saldo awal yang kamu miliki saat memulai target ini.
+                    Saldo awal yang kamu miliki saat pertama kali memulai.
                   </p>
                 </div>
 
@@ -427,7 +582,7 @@ export default function SettingsPage() {
                     disabled={isSaving}
                     className="flex-1 rounded-xl bg-blue-600 py-3 text-xs font-bold text-white hover:bg-blue-700 transition-colors cursor-pointer disabled:opacity-50"
                   >
-                    {isSaving ? 'Memproses...' : 'Simpan Profil'}
+                    {isSaving ? 'Memproses...' : 'Simpan Profil & Config'}
                   </button>
                 </div>
               </form>

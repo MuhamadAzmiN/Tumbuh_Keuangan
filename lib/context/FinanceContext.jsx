@@ -190,9 +190,15 @@ export function FinanceProvider({ children }) {
   }, [settings, transactions]);
 
   // Derived expense & cash flow metrics for active month
+  const defaultNeedsBudget = useMemo(() => {
+    const salary = Number(settings?.monthly_salary_target) || 2000000;
+    const needsPct = Number(settings?.needs_percentage ?? 50);
+    return Math.round((salary * needsPct) / 100);
+  }, [settings?.monthly_salary_target, settings?.needs_percentage]);
+
   const currentMonthBudget = useMemo(() => {
-    return monthlyBudgets[activeMonthKey] ?? 2000000;
-  }, [monthlyBudgets, activeMonthKey]);
+    return monthlyBudgets[activeMonthKey] ?? defaultNeedsBudget;
+  }, [monthlyBudgets, activeMonthKey, defaultNeedsBudget]);
 
   const currentMonthExpenseStats = useMemo(() => {
     return calculateMonthlyExpenseStats(activeMonthKey, expenses, currentMonthBudget);
