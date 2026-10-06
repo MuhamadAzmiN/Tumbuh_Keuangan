@@ -117,7 +117,7 @@ export default function LoginPage() {
         </div>
 
         {/* Main Card */}
-        <div className="bg-white/90 backdrop-blur-xl rounded-[24px] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-6 space-y-5">
+        <div className="bg-white/90 dark:bg-[#0F172A]/90 backdrop-blur-xl rounded-[24px] border border-white dark:border-slate-800/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none p-6 space-y-5">
           {/* Tab Selector */}
           <div className="flex rounded-2xl bg-[#F1F5F9] dark:bg-slate-800/50 p-1.5">
             <button
@@ -177,7 +177,7 @@ export default function LoginPage() {
                     placeholder="Contoh: Agus Setiawan"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full rounded-2xl border border-[#E2E8F0] dark:border-slate-800/60 bg-[#F8FAFC] dark:bg-[#020617] pl-11 pr-4 py-3.5 text-[13px] font-medium text-[#0F172A] dark:text-slate-100 placeholder:text-[#94A3B8] dark:text-slate-400 focus:border-[#2563EB] dark:border-slate-800/60 focus:bg-white dark:bg-[#0F172A] focus:outline-none transition-all"
+                    className="w-full rounded-2xl border border-[#E2E8F0] dark:border-slate-800/60 bg-[#F8FAFC] dark:bg-[#020617] pl-11 pr-4 py-3.5 text-[13px] font-medium text-[#0F172A] dark:text-slate-100 placeholder:text-[#94A3B8] dark:placeholder:text-slate-500 focus:border-[#2563EB] dark:focus:border-blue-500 focus:bg-white dark:focus:bg-[#0F172A] focus:outline-none transition-all"
                   />
                 </div>
               </div>
@@ -195,7 +195,7 @@ export default function LoginPage() {
                   placeholder="agus.setiawan@company.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-2xl border border-[#E2E8F0] dark:border-slate-800/60 bg-[#F8FAFC] dark:bg-[#020617] pl-11 pr-4 py-3.5 text-[13px] font-medium text-[#0F172A] dark:text-slate-100 placeholder:text-[#94A3B8] dark:text-slate-400 focus:border-[#2563EB] dark:border-slate-800/60 focus:bg-white dark:bg-[#0F172A] focus:outline-none transition-all"
+                  className="w-full rounded-2xl border border-[#E2E8F0] dark:border-slate-800/60 bg-[#F8FAFC] dark:bg-[#020617] pl-11 pr-4 py-3.5 text-[13px] font-medium text-[#0F172A] dark:text-slate-100 placeholder:text-[#94A3B8] dark:placeholder:text-slate-500 focus:border-[#2563EB] dark:focus:border-blue-500 focus:bg-white dark:focus:bg-[#0F172A] focus:outline-none transition-all"
                 />
               </div>
             </div>
@@ -212,7 +212,7 @@ export default function LoginPage() {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full rounded-2xl border border-[#E2E8F0] dark:border-slate-800/60 bg-[#F8FAFC] dark:bg-[#020617] pl-11 pr-11 py-3.5 text-[13px] font-medium text-[#0F172A] dark:text-slate-100 placeholder:text-[#94A3B8] dark:text-slate-400 tracking-widest focus:border-[#2563EB] dark:border-slate-800/60 focus:bg-white dark:bg-[#0F172A] focus:outline-none transition-all"
+                  className="w-full rounded-2xl border border-[#E2E8F0] dark:border-slate-800/60 bg-[#F8FAFC] dark:bg-[#020617] pl-11 pr-11 py-3.5 text-[13px] font-medium text-[#0F172A] dark:text-slate-100 placeholder:text-[#94A3B8] dark:placeholder:text-slate-500 tracking-widest focus:border-[#2563EB] dark:focus:border-blue-500 focus:bg-white dark:focus:bg-[#0F172A] focus:outline-none transition-all"
                 />
                 <button
                   type="button"

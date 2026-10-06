@@ -165,10 +165,10 @@ export function AppLayout({ children }) {
       {/* ═══════════════════════════════════════ */}
       <nav
         aria-label="Mobile Navigation"
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-[#0F172A] border-t border-slate-200 dark:border-slate-800/60 shadow-md max-w-md mx-auto"
-        style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-[99] bg-white dark:bg-[#0F172A] border-t border-slate-200 dark:border-slate-800/60 shadow-md max-w-md mx-auto"
+        style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 12px)' }}
       >
-        <div className="h-[58px] flex items-center justify-around px-1">
+        <div className="h-[64px] flex items-center justify-around px-1">
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href));
@@ -176,12 +176,12 @@ export function AppLayout({ children }) {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex flex-col items-center justify-center py-1 px-1 min-w-0 flex-1 transition-colors ${
+                className={`flex flex-col items-center justify-center py-2 px-1 min-w-0 flex-1 transition-colors ${
                   isActive ? 'text-[#2563EB]' : 'text-[#94A3B8] dark:text-slate-400 hover:text-slate-600 dark:text-slate-300'
                 }`}
               >
-                <Icon className={`h-[19px] w-[19px] mb-0.5 ${isActive ? 'text-[#2563EB] stroke-[2.2]' : 'stroke-[1.8]'}`} />
-                <span className={`text-[9px] leading-none truncate ${isActive ? 'font-bold text-[#2563EB]' : 'font-medium text-[#94A3B8] dark:text-slate-400'}`}>
+                <Icon className={`h-[22px] w-[22px] mb-1 ${isActive ? 'text-[#2563EB] stroke-[2.2]' : 'stroke-[1.8]'}`} />
+                <span className={`text-[10px] leading-none truncate ${isActive ? 'font-bold text-[#2563EB]' : 'font-medium text-[#94A3B8] dark:text-slate-400'}`}>
                   {item.label}
                 </span>
               </Link>
