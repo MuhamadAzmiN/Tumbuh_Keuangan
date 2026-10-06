@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { motion } from 'framer-motion';
 import {
   Home,
   FileText,
@@ -149,7 +150,14 @@ export function AppLayout({ children }) {
       {/*  MAIN CONTENT                           */}
       {/* ═══════════════════════════════════════ */}
       <main className="flex-1 pb-20 lg:pb-10 w-full max-w-md lg:max-w-4xl mx-auto px-4 pt-3 lg:pt-6">
-        {children}
+        <motion.div
+          key={pathname}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ ease: 'circOut', duration: 0.35 }}
+        >
+          {children}
+        </motion.div>
       </main>
 
       {/* ═══════════════════════════════════════ */}

@@ -38,6 +38,7 @@ export default function DashboardPage() {
 
   const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
   const [isAddTxOpen, setIsAddTxOpen] = useState(false);
+  const [showBalance, setShowBalance] = useState(true);
 
   const userName = profile?.name || 'Muhammad Azmi Naziyulloh';
   const targetAmount = settings?.target_amount || APP_CONFIG.targetAmount;
@@ -117,6 +118,8 @@ export default function DashboardPage() {
           targetAmount={targetAmount}
           progressInfo={progressInfo}
           financialStatus={financialStatus}
+          showBalance={showBalance}
+          onToggleBalance={() => setShowBalance(!showBalance)}
         />
 
         {/* ── 3. QUICK ACTIONS CARD CONTAINER ───────── */}
@@ -205,7 +208,7 @@ export default function DashboardPage() {
                 <div>
                   <h4 className="text-[11px] font-semibold text-[#172033] dark:text-slate-100">Gaji</h4>
                   <p className="text-[11px] font-bold text-[#172033] dark:text-slate-100 tabular-nums">
-                    {formatCurrency(monthStats.salaryTarget || 2000000)}
+                    {showBalance ? formatCurrency(monthStats.salaryTarget || 2000000) : '••••••••'}
                   </p>
                 </div>
               </div>
@@ -220,7 +223,7 @@ export default function DashboardPage() {
                 <div>
                   <h4 className="text-[11px] font-semibold text-[#172033] dark:text-slate-100">Freelance</h4>
                   <p className="text-[11px] font-bold text-[#172033] dark:text-slate-100 tabular-nums">
-                    {formatCurrency(monthStats.freelanceTarget || 1300000)}
+                    {showBalance ? formatCurrency(monthStats.freelanceTarget || 1300000) : '••••••••'}
                   </p>
                 </div>
               </div>
@@ -236,7 +239,7 @@ export default function DashboardPage() {
               <span className="text-[11px] font-bold text-[#172033] dark:text-slate-100">Total</span>
             </div>
             <span className="text-[11px] sm:text-xs font-bold text-[#2563EB] tabular-nums">
-              {formatCurrency(monthStats.totalTarget || 3300000)}
+              {showBalance ? formatCurrency(monthStats.totalTarget || 3300000) : '••••••••'}
             </span>
           </div>
         </div>
@@ -277,7 +280,7 @@ export default function DashboardPage() {
                     </div>
                   </div>
                   <div className={`text-[12px] font-bold tabular-nums ${tx.type === 'income' ? 'text-[#00A86B]' : 'text-[#172033] dark:text-slate-100'}`}>
-                    {tx.type === 'income' ? '+' : '-'}{formatCurrency(tx.amount)}
+                    {tx.type === 'income' ? '+' : '-'}{showBalance ? formatCurrency(tx.amount) : '••••••••'}
                   </div>
                 </div>
               ))}

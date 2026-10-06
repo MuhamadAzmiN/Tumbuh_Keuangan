@@ -7,6 +7,7 @@ import { isSupabaseConfigured } from '@/lib/supabase/client';
 import { useFinance } from '@/lib/context/FinanceContext';
 import { Lock, Mail, User, ArrowRight, Shield, Eye, EyeOff } from 'lucide-react';
 import { TumbuhLogo } from '@/components/ui/Logo';
+import { motion } from 'framer-motion';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -92,7 +93,12 @@ export default function LoginPage() {
         <svg className="absolute bottom-[5%] right-[10%] w-10 h-10 text-emerald-300 opacity-80 -rotate-12" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5,22c-1.3,0-2.8-0.3-4.4-0.9C7.8,19,4,13.7,4,7.8C4,5,5.1,2.8,7.3,1.3c1.6-1.1,3.4-1.2,5-0.1 c1.9,1.3,3.7,3.5,5.3,6.5C20.6,13.5,21.5,17.7,17.5,22z"/></svg>
       </div>
 
-      <div className="w-full max-w-[390px] space-y-6 relative z-10">
+      <motion.div 
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ ease: 'circOut', duration: 0.4 }}
+        className="w-full max-w-[390px] space-y-6 relative z-10"
+      >
         
         {/* Header Section */}
         <div className="flex flex-col items-center text-center space-y-3">
@@ -250,7 +256,7 @@ export default function LoginPage() {
           <Shield className="h-3.5 w-3.5" />
           <span>Keamanan Data Terjamin dengan Supabase Auth</span>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

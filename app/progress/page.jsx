@@ -267,7 +267,7 @@ export default function ProgressPage() {
             </div>
 
             <div className="relative">
-              <div className="absolute left-[16px] top-4 bottom-4 w-[2px] bg-slate-200" aria-hidden="true" />
+              <div className="absolute left-[16px] top-4 bottom-4 w-[2px] bg-slate-200 dark:bg-slate-700" aria-hidden="true" />
               <div className="space-y-2">
                 {milestones.map((ms, idx) => {
                   const done = currentBalance >= ms.amount;
@@ -280,30 +280,30 @@ export default function ProgressPage() {
                   return (
                     <div
                       key={ms.amount}
-                      className="relative flex items-start gap-3 cursor-pointer group"
+                      className="relative flex items-center gap-3 cursor-pointer group"
                       onClick={() => setSelectedMilestone({ ...ms, isCompleted: done, isNext: next, progressVal: pct, idx })}
                     >
-                      <div className={`relative z-10 h-[34px] w-[34px] flex-shrink-0 rounded-full flex items-center justify-center border-2 transition-transform group-hover:scale-105 ${done ? 'bg-emerald-500 border-emerald-500 text-white' : next ? 'bg-[#2563EB] border-[#2563EB] dark:border-slate-800/60 text-white ring-4 ring-blue-100' : 'bg-white dark:bg-[#0F172A] border-slate-200 dark:border-slate-800/60 text-slate-400'}`}>
-                        {done ? <Check className="h-4 w-4 stroke-[2.5]" /> : next ? <Play className="h-3 w-3 fill-white translate-x-0.5" /> : <Lock className="h-3 w-3 stroke-[2]" />}
+                      <div className={`relative z-10 h-[34px] w-[34px] flex-shrink-0 rounded-full flex items-center justify-center border-2 transition-transform group-hover:scale-105 ${done ? 'bg-emerald-500 border-emerald-500 text-white' : next ? 'bg-[#2563EB] border-[#2563EB] text-white ring-4 ring-blue-100 dark:ring-blue-900/50' : 'bg-white dark:bg-[#0F172A] border-slate-200 dark:border-slate-800/60 text-slate-400'}`}>
+                        {done ? <Check className="h-4 w-4 stroke-[2.5]" /> : next ? <Play className="h-3 w-3 fill-white translate-x-[1px]" /> : <Lock className="h-3 w-3 stroke-[2]" />}
                       </div>
-                      <div className={`flex-1 rounded-[14px] border p-3 min-w-0 transition-all ${done ? 'border-emerald-200 bg-white dark:bg-[#0F172A]' : next ? 'border-blue-200 bg-blue-50/40' : 'border-slate-100 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-800/40 opacity-70'}`}>
+                      <div className={`flex-1 rounded-[14px] border p-3 min-w-0 transition-all ${done ? 'border-emerald-200 dark:border-emerald-800 bg-white dark:bg-[#0F172A]' : next ? 'border-blue-200 dark:border-blue-800/60 bg-blue-50/40 dark:bg-blue-900/20' : 'border-slate-100 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-800/40 opacity-70'}`}>
                         <div className="flex items-start justify-between gap-2">
                           <div className="min-w-0 flex-1">
                             <span className="text-[11.5px] font-semibold text-[#172033] dark:text-slate-100 block">{ms.title}</span>
                             <span className="text-[10px] text-slate-500 block mt-0.5">{ms.desc}</span>
                           </div>
                           <div className="text-right flex-shrink-0">
-                            <span className={`text-[11px] font-bold tabular-nums block ${done ? 'text-emerald-700' : next ? 'text-blue-700' : 'text-slate-500'}`}>
+                            <span className={`text-[11px] font-bold tabular-nums block ${done ? 'text-emerald-700 dark:text-emerald-400' : next ? 'text-blue-700 dark:text-blue-400' : 'text-slate-500 dark:text-slate-400'}`}>
                               {formatCurrency(ms.amount)}
                             </span>
-                            <span className={`text-[9.5px] font-semibold block mt-0.5 ${done ? 'text-emerald-600' : next ? 'text-blue-600' : 'text-slate-400'}`}>
+                            <span className={`text-[9.5px] font-semibold block mt-0.5 ${done ? 'text-emerald-600 dark:text-emerald-500' : next ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400'}`}>
                               {done ? '✓ Terpenuhi' : next ? `⚡ ${pct}%` : '🔒 Terkunci'}
                             </span>
                           </div>
                         </div>
                         {next && (
-                          <div className="mt-2 pt-2 border-t border-blue-100/80">
-                            <div className="h-[5px] w-full rounded-full bg-blue-100 overflow-hidden">
+                          <div className="mt-2 pt-2 border-t border-blue-100/80 dark:border-blue-800/50">
+                            <div className="h-[5px] w-full rounded-full bg-blue-100 dark:bg-blue-900/40 overflow-hidden">
                               <div className="h-full rounded-full bg-gradient-to-r from-blue-500 to-indigo-500" style={{ width: `${pct}%` }} />
                             </div>
                           </div>
@@ -339,13 +339,13 @@ export default function ProgressPage() {
                 const salRem    = Math.max(0, (m.monthStats?.salaryTarget    || 0) - (m.monthStats?.salaryActual    || 0));
                 const freRem    = Math.max(0, (m.monthStats?.freelanceTarget || 0) - (m.monthStats?.freelanceActual || 0));
                 return (
-                  <div key={m.key} className={`rounded-[14px] border p-3.5 space-y-2.5 ${isCurrent ? 'border-blue-300 bg-blue-50/30 ring-2 ring-blue-500/15' : 'border-[#E2E8F0] dark:border-slate-800/60 bg-white dark:bg-[#0F172A] shadow-[0_1px_3px_rgba(0,0,0,0.05)]'}`}>
+                  <div key={m.key} className={`rounded-[14px] border p-3.5 space-y-2.5 ${isCurrent ? 'border-blue-300 dark:border-blue-700 bg-blue-50/30 dark:bg-blue-900/20 ring-2 ring-blue-500/15 dark:ring-blue-500/30' : 'border-[#E2E8F0] dark:border-slate-800/60 bg-white dark:bg-[#0F172A] shadow-[0_1px_3px_rgba(0,0,0,0.05)]'}`}>
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
                         <span className="text-[12px] font-bold text-[#172033] dark:text-slate-100">{m.fullLabel}</span>
                         {isCurrent && <span className="px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-blue-600 text-white">Bulan Ini</span>}
                       </div>
-                      <span className={`px-2 py-0.5 rounded-full text-[9.5px] font-semibold border flex-shrink-0 ${isMet ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : isPast ? 'bg-rose-50 text-rose-700 border-rose-200' : isCurrent ? 'bg-amber-50 text-amber-700 border-amber-200' : 'bg-slate-50 dark:bg-slate-800/40 text-slate-500 border-slate-200 dark:border-slate-800/60'}`}>
+                      <span className={`px-2 py-0.5 rounded-full text-[9.5px] font-semibold border flex-shrink-0 ${isMet ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800' : isPast ? 'bg-rose-50 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800' : isCurrent ? 'bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800' : 'bg-slate-50 dark:bg-slate-800/40 text-slate-500 border-slate-200 dark:border-slate-800/60'}`}>
                         {isMet ? '🟢 Terpenuhi' : isFuture ? '⚪ Belum' : `🟡 Kurang ${formatCurrency(remM)}`}
                       </span>
                     </div>
@@ -362,19 +362,19 @@ export default function ProgressPage() {
                       </div>
                     </div>
                     {!isFuture && !isMet && (
-                      <div className="rounded-xl bg-amber-50 border border-amber-100 px-3 py-2 text-[10px] space-y-1">
-                        <div className="flex justify-between font-bold text-amber-900">
+                      <div className="rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-800/50 px-3 py-2 text-[10px] space-y-1">
+                        <div className="flex justify-between font-bold text-amber-900 dark:text-amber-400">
                           <span>Sisa Kekurangan</span>
                           <span className="tabular-nums">{formatCurrency(remM)}</span>
                         </div>
-                        <div className="grid grid-cols-2 gap-2 pt-1 border-t border-amber-200/60 text-[9.5px]">
-                          <span className="text-slate-600 dark:text-slate-300">Gaji: <strong className={salRem > 0 ? 'text-amber-700' : 'text-emerald-700'}>{salRem > 0 ? `Kurang ${formatCurrency(salRem)}` : 'OK'}</strong></span>
-                          <span className="text-slate-600 dark:text-slate-300">Freelance: <strong className={freRem > 0 ? 'text-amber-700' : 'text-emerald-700'}>{freRem > 0 ? `Kurang ${formatCurrency(freRem)}` : 'OK'}</strong></span>
+                        <div className="grid grid-cols-2 gap-2 pt-1 border-t border-amber-200/60 dark:border-amber-800/60 text-[9.5px]">
+                          <span className="text-slate-600 dark:text-slate-300">Gaji: <strong className={salRem > 0 ? 'text-amber-700 dark:text-amber-400' : 'text-emerald-700 dark:text-emerald-400'}>{salRem > 0 ? `Kurang ${formatCurrency(salRem)}` : 'OK'}</strong></span>
+                          <span className="text-slate-600 dark:text-slate-300">Freelance: <strong className={freRem > 0 ? 'text-amber-700 dark:text-amber-400' : 'text-emerald-700 dark:text-emerald-400'}>{freRem > 0 ? `Kurang ${formatCurrency(freRem)}` : 'OK'}</strong></span>
                         </div>
                       </div>
                     )}
                     {!isFuture && isMet && (
-                      <div className="rounded-xl bg-emerald-50 border border-emerald-100 px-3 py-2 text-[10px] text-emerald-800 font-semibold">
+                      <div className="rounded-xl bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800/50 px-3 py-2 text-[10px] text-emerald-800 dark:text-emerald-400 font-semibold">
                         Target nabung bulan ini terpenuhi
                       </div>
                     )}

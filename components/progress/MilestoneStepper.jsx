@@ -106,7 +106,7 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
                     {isCompleted ? (
                       <Check className="h-4 w-4 stroke-[3]" />
                     ) : isNext ? (
-                      <Play className="h-3 w-3 fill-white translate-x-0.5" />
+                      <Play className="h-3 w-3 fill-white translate-x-[1px]" />
                     ) : (
                       <Lock className="h-3 w-3 text-slate-400 stroke-[2]" />
                     )}

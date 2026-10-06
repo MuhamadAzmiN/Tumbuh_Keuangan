@@ -451,18 +451,18 @@ export default function SettingsPage() {
         </div>
 
         {/* Reset App Data Danger Zone Button */}
-        <div className="rounded-2xl border border-rose-100 bg-rose-50/40 p-4 flex items-center justify-between">
+        <div className="rounded-2xl border border-rose-100 dark:border-rose-800/50 bg-rose-50/40 dark:bg-rose-900/10 p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Trash2 className="h-5 w-5 text-rose-500" />
+            <Trash2 className="h-5 w-5 text-rose-500 dark:text-rose-600" />
             <div>
-              <span className="text-xs font-bold text-rose-900 block">Reset Data Aplikasi</span>
-              <span className="text-[11px] text-rose-600 font-medium block">Bersihkan cache & simpanan lokal</span>
+              <span className="text-xs font-bold text-rose-900 dark:text-rose-400 block">Reset Data Aplikasi</span>
+              <span className="text-[11px] text-rose-600 dark:text-rose-500/80 font-medium block">Bersihkan cache & simpanan lokal</span>
             </div>
           </div>
           <button
             type="button"
             onClick={() => setResetModalOpen(true)}
-            className="px-3 py-1.5 rounded-xl border border-rose-200 bg-white dark:bg-[#0F172A] text-xs font-bold text-rose-600 hover:bg-rose-600 hover:text-white transition-colors shadow-2xs cursor-pointer"
+            className="px-3 py-1.5 rounded-xl border border-rose-200 dark:border-rose-800/60 bg-white dark:bg-[#0F172A] text-xs font-bold text-rose-600 dark:text-rose-500 hover:bg-rose-600 dark:hover:bg-rose-900/60 hover:text-white transition-colors shadow-2xs cursor-pointer"
           >
             Reset
           </button>
@@ -473,7 +473,7 @@ export default function SettingsPage() {
           <button
             type="button"
             onClick={logout}
-            className="w-full rounded-2xl border border-slate-200 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] py-3.5 px-4 text-xs font-bold text-rose-600 hover:bg-rose-50 hover:border-rose-200 transition-colors flex items-center justify-center gap-2 shadow-xs cursor-pointer"
+            className="w-full rounded-2xl border border-slate-200 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] py-3.5 px-4 text-xs font-bold text-rose-600 dark:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-900/20 hover:border-rose-200 dark:hover:border-rose-800/60 transition-colors flex items-center justify-center gap-2 shadow-xs cursor-pointer"
           >
             <LogOut className="h-4 w-4 text-rose-600" />
             <span>Keluar dari Aplikasi</span>

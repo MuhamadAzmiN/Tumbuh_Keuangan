@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import { formatCurrency, formatPercentage } from '@/lib/formatters';
 import { Eye, EyeOff, Target, ShieldCheck } from 'lucide-react';
 
-export function PrimaryBalanceSection({ totalBalance, targetAmount, progressInfo, financialStatus }) {
-  const [showBalance, setShowBalance] = useState(true);
+export function PrimaryBalanceSection({ totalBalance, targetAmount, progressInfo, financialStatus, showBalance = true, onToggleBalance }) {
+
 
   const rawPercentage = progressInfo?.rawPercentage || 22.2;
   const targetVal = Number(targetAmount) || 50000000;
@@ -41,7 +41,7 @@ export function PrimaryBalanceSection({ totalBalance, targetAmount, progressInfo
 
             <button
               type="button"
-              onClick={() => setShowBalance(!showBalance)}
+              onClick={onToggleBalance}
               className="p-1 rounded-lg bg-white/10 hover:bg-white/20 text-white/90 transition-colors cursor-pointer ml-0.5"
               title={showBalance ? 'Sembunyikan Saldo' : 'Tampilkan Saldo'}
             >
@@ -81,18 +81,18 @@ export function PrimaryBalanceSection({ totalBalance, targetAmount, progressInfo
 
         {/* Target Label under progress bar */}
         <div className="text-[10.5px] font-medium text-white/90 pt-0.5">
-          <span>Target Utama</span> <span className="font-bold text-white tabular-nums ml-1">{formatCurrency(targetVal)}</span>
+          <span>Target Utama</span> <span className="font-bold text-white tabular-nums ml-1">{showBalance ? formatCurrency(targetVal) : '••••••••'}</span>
         </div>
 
         {/* Sisa & Terkumpul */}
         <div className="flex items-center justify-between pt-1.5 border-t border-white/10 text-[10.5px]">
           <div>
             <span className="text-white/80 font-normal block">Terkumpul</span>
-            <strong className="text-white font-bold text-xs sm:text-[13px] tabular-nums block mt-0.5">{formatCurrency(currentVal)}</strong>
+            <strong className="text-white font-bold text-xs sm:text-[13px] tabular-nums block mt-0.5">{showBalance ? formatCurrency(currentVal) : '••••••••'}</strong>
           </div>
           <div className="text-right">
             <span className="text-white/80 font-normal block">Sisa</span>
-            <strong className="text-white font-bold text-xs sm:text-[13px] tabular-nums block mt-0.5">{formatCurrency(remaining)}</strong>
+            <strong className="text-white font-bold text-xs sm:text-[13px] tabular-nums block mt-0.5">{showBalance ? formatCurrency(remaining) : '••••••••'}</strong>
           </div>
         </div>
       </div>
