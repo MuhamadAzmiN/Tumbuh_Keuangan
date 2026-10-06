@@ -96,6 +96,7 @@ export default function PlanPage() {
     expenses,
     monthlyBudgets,
     categoryBudgets,
+    settings,
     updateBudget,
     updateCategoryBudgets,
     removeTransaction,
@@ -113,28 +114,14 @@ export default function PlanPage() {
   const selectedMonth = CONTRACT_MONTHS[selectedMonthIdx] || CONTRACT_MONTHS[0];
   const monthKey = selectedMonth.key;
 
-  // UI States for Modals and Detail Accordions
-  const [editingCategory, setEditingCategory] = useState(null); // Category item being edited
-  const [editingCategoryAmount, setEditingCategoryAmount] = useState(0);
-  const [editingTotalModal, setEditingTotalModal] = useState(false);
-  const [editingTotalAmount, setEditingTotalAmount] = useState(0);
-  const [expandedCategory, setExpandedCategory] = useState(null);
-  const [deletingRecordId, setDeletingRecordId] = useState(null);
-  const [isSaving, setIsSaving] = useState(false);
+  // Calculate default budget from user settings
+  const defaultNeedsBudget = useMemo(() => {
+    const salary = Number(settings?.monthly_salary_target) || 2000000;
+    const needsPct = Number(settings?.needs_percentage ?? 50);
+    return Math.round((salary * needsPct) / 100);
+  }, [settings?.monthly_salary_target, settings?.needs_percentage]);
 
-  const handleDeleteItem = async (item) => {
-    try {
-      if (item.type === 'transaction') {
-        await removeTransaction(item.rawId);
-      } else {
-        await removeExpense(item.rawId);
-      }
-      setDeletingRecordId(null);
-      showToast('Pengeluaran berhasil dihapus', 'delete');
-    } catch (err) {
-      alert(err.message || 'Gagal menghapus item.');
-    }
-  };
+  const totalBudget = monthlyBudgets[monthKey] ?? defaultNeedsBudget;
 
   // Filter transactions and expenses for selected month
   const monthExpenseRecords = useMemo(() => {
@@ -190,8 +177,21 @@ export default function PlanPage() {
   const categoriesData = useMemo(() => {
     const savedLimits = categoryBudgets[monthKey] || {};
 
+    const getDynamicCategoryDefaultLimit = (catId, totalBgt) => {
+      switch (catId) {
+        case 'food': return Math.round(totalBgt * 0.4);
+        case 'transport': return Math.round(totalBgt * 0.2);
+        case 'shopping': return Math.round(totalBgt * 0.2);
+        case 'entertainment': return Math.round(totalBgt * 0.1);
+        case 'bills': return Math.round(totalBgt * 0.1);
+        default: return 0;
+      }
+    };
+
     return CATEGORY_DEFINITIONS.map((def) => {
-      const limit = savedLimits[def.id] !== undefined ? savedLimits[def.id] : def.defaultLimit;
+      const limit = savedLimits[def.id] !== undefined
+        ? savedLimits[def.id]
+        : getDynamicCategoryDefaultLimit(def.id, totalBudget);
       const categoryRecords = monthExpenseRecords.filter((r) => r.catId === def.id);
       const spent = categoryRecords.reduce((acc, curr) => acc + curr.amount, 0);
       const percent = limit > 0 ? Math.round((spent / limit) * 100) : spent > 0 ? 100 : 0;
@@ -221,14 +221,13 @@ export default function PlanPage() {
         records: categoryRecords,
       };
     });
-  }, [categoryBudgets, monthKey, monthExpenseRecords]);
+  }, [categoryBudgets, monthKey, monthExpenseRecords, totalBudget]);
 
   // Total Calculations
   const calculatedTotalCategoryLimit = useMemo(() => {
     return categoriesData.reduce((acc, cat) => acc + cat.limit, 0);
   }, [categoriesData]);
 
-  const totalBudget = monthlyBudgets[monthKey] ?? calculatedTotalCategoryLimit;
   const totalSpent = useMemo(() => {
     return categoriesData.reduce((acc, cat) => acc + cat.spent, 0);
   }, [categoriesData]);

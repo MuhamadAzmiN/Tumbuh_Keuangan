@@ -18,6 +18,7 @@ export default function ExpensesPage() {
     expenses,
     monthlyBudgets,
     activeMonthKey,
+    settings,
     loading,
   } = useFinance();
 
@@ -46,8 +47,15 @@ export default function ExpensesPage() {
     setTimeout(() => setToastMessage(''), 4000);
   };
 
+  // Calculate default budget from settings (% Kebutuhan of Gaji)
+  const defaultNeedsBudget = useMemo(() => {
+    const salary = Number(settings?.monthly_salary_target) || 2000000;
+    const needsPct = Number(settings?.needs_percentage ?? 50);
+    return Math.round((salary * needsPct) / 100);
+  }, [settings?.monthly_salary_target, settings?.needs_percentage]);
+
   // Calculate expense statistics for currently selected month
-  const currentBudget = monthlyBudgets[selectedMonthKey] ?? 2000000;
+  const currentBudget = monthlyBudgets[selectedMonthKey] ?? defaultNeedsBudget;
   const expenseStats = useMemo(() => {
     return calculateMonthlyExpenseStats(selectedMonthKey, expenses, currentBudget);
   }, [selectedMonthKey, expenses, currentBudget]);
