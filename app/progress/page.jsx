@@ -36,14 +36,6 @@ import Link from 'next/link';
 
 const DEFAULT_WISHLISTS = [];
 
-const BADGES = [
-  { id: 'b-1', minAmount: 10950000, title: 'Langkah Pertama', desc: 'Saldo awal Rp 10.95 JT', icon: '🚀', color: 'border-blue-200 bg-blue-50 text-blue-700' },
-  { id: 'b-2', minAmount: 20000000, title: 'Quarter Master', desc: 'Tercapai Rp 20 JT', icon: '⚡', color: 'border-purple-200 bg-purple-50 text-purple-700' },
-  { id: 'b-3', minAmount: 30000000, title: 'Halfway Hero', desc: 'Tercapai Rp 30 JT', icon: '🔥', color: 'border-amber-200 bg-amber-50 text-amber-700' },
-  { id: 'b-4', minAmount: 40000000, title: 'Final Countdown', desc: 'Tercapai Rp 40 JT', icon: '🌟', color: 'border-indigo-200 bg-indigo-50 text-indigo-700' },
-  { id: 'b-5', minAmount: 50000000, title: 'Master Tabungan', desc: 'Target Rp 50 JT tercapai!', icon: '👑', color: 'border-emerald-200 bg-emerald-50 text-emerald-700' },
-];
-
 export default function ProgressPage() {
   const { totalBalance, settings, progressInfo, trajectory, updateSettings, monthlyTargets, loading } = useFinance();
   const { showToast } = useToast();
@@ -73,6 +65,21 @@ export default function ProgressPage() {
   const currentBalance = totalBalance || 10950000;
   const remaining = Math.max(0, targetAmount - currentBalance);
   const rawPercentage = progressInfo?.rawPercentage || (currentBalance / targetAmount) * 100;
+
+  // Dynamic achievement badges based on user settings
+  const badges = useMemo(() => {
+    const initial = Number(initialBalance) || 10950000;
+    const target = Number(targetAmount) || 50000000;
+    const range = Math.max(1, target - initial);
+
+    return [
+      { id: 'b-1', minAmount: initial, title: 'Langkah Pertama', desc: `Saldo awal ${formatCurrency(initial)}`, icon: '🚀', color: 'border-blue-200 bg-blue-50 text-blue-700' },
+      { id: 'b-2', minAmount: Math.round(initial + range * 0.25), title: 'Quarter Master', desc: `Tercapai ${formatCurrency(Math.round(initial + range * 0.25))}`, icon: '⚡', color: 'border-purple-200 bg-purple-50 text-purple-700' },
+      { id: 'b-3', minAmount: Math.round(initial + range * 0.50), title: 'Halfway Hero', desc: `Tercapai ${formatCurrency(Math.round(initial + range * 0.50))}`, icon: '🔥', color: 'border-amber-200 bg-amber-50 text-amber-700' },
+      { id: 'b-4', minAmount: Math.round(initial + range * 0.75), title: 'Final Countdown', desc: `Tercapai ${formatCurrency(Math.round(initial + range * 0.75))}`, icon: '🌟', color: 'border-indigo-200 bg-indigo-50 text-indigo-700' },
+      { id: 'b-5', minAmount: target, title: 'Master Tabungan', desc: `Target ${formatCurrency(target)} tercapai!`, icon: '👑', color: 'border-emerald-200 bg-emerald-50 text-emerald-700' },
+    ];
+  }, [initialBalance, targetAmount]);
 
   // Active contract month calculations
   const currentMonthKey = useMemo(() => getCurrentContractMonthKey(), []);
@@ -364,7 +371,11 @@ export default function ProgressPage() {
         {activeTab === 'target' && (
           <div className="space-y-4 animate-in fade-in duration-200">
             {/* Milestone Stepper */}
-            <MilestoneStepper currentBalance={currentBalance} />
+            <MilestoneStepper
+              currentBalance={currentBalance}
+              targetAmount={targetAmount}
+              initialBalance={initialBalance}
+            />
 
             {/* Achievement Badges Rack */}
             <div className="rounded-2xl border border-slate-100 bg-white p-4 shadow-xs space-y-3">
@@ -374,12 +385,12 @@ export default function ProgressPage() {
                   <span>Pencapaian & Lencana</span>
                 </h3>
                 <span className="text-xs text-slate-400 font-medium">
-                  {BADGES.filter((b) => currentBalance >= b.minAmount).length} / {BADGES.length} Terbuka
+                  {badges.filter((b) => currentBalance >= b.minAmount).length} / {badges.length} Terbuka
                 </span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {BADGES.map((badge) => {
+                {badges.map((badge) => {
                   const isUnlocked = currentBalance >= badge.minAmount;
 
                   return (

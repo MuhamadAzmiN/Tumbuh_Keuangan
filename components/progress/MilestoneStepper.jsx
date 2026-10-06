@@ -6,8 +6,20 @@ import { MILESTONES } from '@/lib/constants';
 import { formatCurrency } from '@/lib/formatters';
 import { Portal } from '@/components/ui/Portal';
 
-export function MilestoneStepper({ currentBalance }) {
-  const balance = Number(currentBalance) || 10950000;
+export function MilestoneStepper({ currentBalance, targetAmount = 50000000, initialBalance = 10950000 }) {
+  const balance = Number(currentBalance) || 0;
+  const initial = Number(initialBalance) || 10950000;
+  const target = Number(targetAmount) || 50000000;
+  const range = Math.max(1, target - initial);
+
+  const milestones = [
+    { amount: initial, label: formatCurrency(initial), desc: 'Saldo Awal' },
+    { amount: Math.round(initial + range * 0.25), label: formatCurrency(Math.round(initial + range * 0.25)), desc: 'Capaian 25%' },
+    { amount: Math.round(initial + range * 0.50), label: formatCurrency(Math.round(initial + range * 0.50)), desc: 'Capaian 50%' },
+    { amount: Math.round(initial + range * 0.75), label: formatCurrency(Math.round(initial + range * 0.75)), desc: 'Capaian 75%' },
+    { amount: target, label: formatCurrency(target), desc: 'Target Utama' },
+  ];
+
   const [selectedMilestone, setSelectedMilestone] = useState(null);
 
   return (
@@ -18,17 +30,16 @@ export function MilestoneStepper({ currentBalance }) {
       </div>
 
       <div className="space-y-2.5">
-        {MILESTONES.map((milestone, idx) => {
+        {milestones.map((milestone, idx) => {
           const isCompleted = balance >= milestone.amount;
-          const isNext = !isCompleted && (idx === 0 || balance >= MILESTONES[idx - 1].amount);
+          const isNext = !isCompleted && (idx === 0 || balance >= milestones[idx - 1].amount);
 
           let progressVal = 0;
           if (isNext) {
-            const prevAmount = idx > 0 ? MILESTONES[idx - 1].amount : 0;
-            const range = milestone.amount - prevAmount;
+            const prevAmount = idx > 0 ? milestones[idx - 1].amount : 0;
+            const rangeVal = milestone.amount - prevAmount;
             const progressInRange = balance - prevAmount;
-            progressVal = Math.min(Math.max(Math.round((progressInRange / range) * 100), 0), 100);
-            if (progressVal === 0) progressVal = 52;
+            progressVal = Math.min(Math.max(Math.round((progressInRange / rangeVal) * 100), 0), 100);
           }
 
           return (
