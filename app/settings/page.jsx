@@ -60,7 +60,19 @@ const FAQ_ITEMS = [
 
 export default function SettingsPage() {
   const router = useRouter();
-  const { user, profile, settings, updateUserProfile, updateSettings, logout, exportData, loading } = useFinance();
+  const {
+    user,
+    profile,
+    settings,
+    updateUserProfile,
+    updateSettings,
+    updateBudget,
+    updateCategoryBudgets,
+    activeMonthKey,
+    logout,
+    exportData,
+    loading,
+  } = useFinance();
   const { showToast } = useToast();
 
   // Active Modals state
@@ -115,15 +127,31 @@ export default function SettingsPage() {
 
     setIsSaving(true);
     try {
+      const salaryNum = Number(monthlySalaryInput) || APP_CONFIG.monthlySalaryTarget;
+      const needsPctNum = Number(needsPctInput) || 50;
+      const newNeedsBudget = Math.round((salaryNum * needsPctNum) / 100);
+
       await updateUserProfile(nameInput.trim());
       await updateSettings({
         ...(settings || {}),
         initial_balance: Number(initialBalanceInput) || 0,
         target_amount: Number(targetAmountInput) || APP_CONFIG.targetAmount,
-        monthly_salary_target: Number(monthlySalaryInput) || APP_CONFIG.monthlySalaryTarget,
+        monthly_salary_target: salaryNum,
         savings_percentage: Number(savingsPctInput) || 50,
-        needs_percentage: Number(needsPctInput) || 50,
+        needs_percentage: needsPctNum,
       });
+
+      if (activeMonthKey && updateBudget && updateCategoryBudgets) {
+        await updateBudget(activeMonthKey, newNeedsBudget);
+        await updateCategoryBudgets(activeMonthKey, {
+          food: Math.round(newNeedsBudget * 0.4),
+          transport: Math.round(newNeedsBudget * 0.2),
+          shopping: Math.round(newNeedsBudget * 0.2),
+          entertainment: Math.round(newNeedsBudget * 0.1),
+          bills: Math.round(newNeedsBudget * 0.1),
+          other_expense: 0,
+        });
+      }
 
       setProfileModalOpen(false);
       showToast('Profil & Alokasi Gaji berhasil diperbarui! ✨', 'success');

@@ -218,9 +218,9 @@ export default function PlanPage() {
     };
 
     return CATEGORY_DEFINITIONS.map((def) => {
-      const limit = savedLimits[def.id] !== undefined
-        ? savedLimits[def.id]
-        : getDynamicCategoryDefaultLimit(def.id, totalBudget);
+      const dynamicLimit = getDynamicCategoryDefaultLimit(def.id, totalBudget);
+      const hasCustomUserLimit = savedLimits[def.id] !== undefined && savedLimits[def.id] !== def.defaultLimit;
+      const limit = hasCustomUserLimit ? savedLimits[def.id] : dynamicLimit;
       const categoryRecords = monthExpenseRecords.filter((r) => r.catId === def.id);
       const spent = categoryRecords.reduce((acc, curr) => acc + curr.amount, 0);
       const percent = limit > 0 ? Math.round((spent / limit) * 100) : spent > 0 ? 100 : 0;
