@@ -280,70 +280,85 @@ export default function SettingsPage() {
   const savingsAmount = Math.round((userSalary * savingsPct) / 100);
   const needsAmount = Math.round((userSalary * needsPct) / 100);
 
-  const MENU_ITEMS = [
+  const MENU_GROUPS = [
     {
-      id: 'profile',
-      label: 'Profil & Pengaturan Financial',
-      sublabel: `Gaji: ${formatCurrency(userSalary)} • Alokasi ${savingsPct}% Nabung / ${needsPct}% Kebutuhan`,
-      icon: User,
-      action: handleOpenProfileModal,
-      badge: null,
+      title: 'Akun & Keuangan',
+      items: [
+        {
+          id: 'profile',
+          label: 'Profil & Pengaturan Financial',
+          sublabel: `Gaji: ${formatCurrency(userSalary)} • Alokasi ${savingsPct}% Nabung / ${needsPct}% Kebutuhan`,
+          icon: User,
+          action: handleOpenProfileModal,
+          badge: null,
+        },
+        {
+          id: 'goals',
+          label: 'Tujuan & Milestone Keuangan',
+          sublabel: 'Pantau progres tabungan 12 bulan',
+          icon: Target,
+          action: () => {
+            showToast('Buka menu Target & Impian 🎯', 'info');
+            router.push('/progress');
+          },
+          badge: null,
+        },
+        {
+          id: 'budget',
+          label: 'Pengaturan Anggaran Bulanan',
+          sublabel: 'Kelola limit pengeluaran kebutuhan',
+          icon: BarChart2,
+          action: () => {
+            showToast('Buka menu Anggaran Bulanan 📊', 'info');
+            router.push('/plan');
+          },
+          badge: null,
+        },
+      ],
     },
     {
-      id: 'goals',
-      label: 'Tujuan & Milestone Keuangan',
-      sublabel: 'Pantau progres tabungan 12 bulan',
-      icon: Target,
-      action: () => {
-        showToast('Buka menu Target & Impian 🎯', 'info');
-        router.push('/progress');
-      },
-      badge: null,
+      title: 'Data & Preferensi',
+      items: [
+        {
+          id: 'export',
+          label: 'Ekspor & Cadangan Data',
+          sublabel: 'Unduh file backup JSON transaksi kamu',
+          icon: Download,
+          action: handleExportData,
+          badge: 'Siap',
+          badgeBg: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+        },
+        {
+          id: 'notifications',
+          label: 'Notifikasi & Pengingat Gajian',
+          sublabel: 'Pengingat otomatis gajian & tagihan',
+          icon: Bell,
+          action: () => setMaintenanceModalOpen(true),
+          badge: 'Maintenance',
+          badgeBg: 'bg-amber-50 text-amber-700 border-amber-200',
+        },
+      ],
     },
     {
-      id: 'budget',
-      label: 'Pengaturan Anggaran Bulanan',
-      sublabel: 'Kelola limit pengeluaran kebutuhan',
-      icon: BarChart2,
-      action: () => {
-        showToast('Buka menu Anggaran Bulanan 📊', 'info');
-        router.push('/plan');
-      },
-      badge: null,
-    },
-    {
-      id: 'export',
-      label: 'Ekspor & Cadangan Data',
-      sublabel: 'Unduh file backup JSON transaksi kamu',
-      icon: Download,
-      action: handleExportData,
-      badge: 'Siap',
-      badgeBg: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-    },
-    {
-      id: 'notifications',
-      label: 'Notifikasi & Pengingat Gajian',
-      sublabel: 'Pengingat otomatis gajian & tagihan',
-      icon: Bell,
-      action: () => setMaintenanceModalOpen(true),
-      badge: 'Maintenance',
-      badgeBg: 'bg-amber-50 text-amber-700 border-amber-200',
-    },
-    {
-      id: 'help',
-      label: 'Bantuan & FAQ Keuangan',
-      sublabel: 'Panduan penggunaan & tips alokasi dana',
-      icon: HelpCircle,
-      action: () => setFaqModalOpen(true),
-      badge: null,
-    },
-    {
-      id: 'about',
-      label: 'Tentang Aplikasi',
-      sublabel: 'Versi v1.2.0 • Status Sistem Normal',
-      icon: Info,
-      action: () => setAboutModalOpen(true),
-      badge: null,
+      title: 'Bantuan & Lainnya',
+      items: [
+        {
+          id: 'help',
+          label: 'Bantuan & FAQ Keuangan',
+          sublabel: 'Panduan penggunaan & tips alokasi dana',
+          icon: HelpCircle,
+          action: () => setFaqModalOpen(true),
+          badge: null,
+        },
+        {
+          id: 'about',
+          label: 'Tentang Aplikasi',
+          sublabel: 'Versi v1.2.0 • Status Sistem Normal',
+          icon: Info,
+          action: () => setAboutModalOpen(true),
+          badge: null,
+        },
+      ],
     },
   ];
 
@@ -361,22 +376,22 @@ export default function SettingsPage() {
         </div>
 
         {/* User Profile Header Card */}
-        <div className="rounded-3xl border border-slate-100 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] p-5 shadow-xs flex items-center justify-between">
-          <div className="flex items-center gap-4">
+        <div className="rounded-3xl border border-slate-100 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] p-5 shadow-xs flex items-center justify-between gap-3">
+          <div className="flex items-center gap-4 min-w-0 flex-1">
             {/* Dark Blue Avatar Circle */}
             <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center font-extrabold text-lg shadow-md border border-white/20 flex-shrink-0">
               {userInitials}
             </div>
 
-            <div>
-              <h3 className="text-lg font-extrabold text-slate-900 dark:text-slate-100 tracking-tight leading-tight">
+            <div className="min-w-0 flex-1">
+              <h3 className="text-lg font-extrabold text-slate-900 dark:text-slate-100 tracking-tight leading-tight truncate">
                 {userName}
               </h3>
-              <p className="text-xs text-slate-400 font-medium mt-0.5">Pencatatan Azmi • Road to 50JT</p>
-              <div className="flex items-center gap-2 mt-1.5">
-                <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100">
-                  <ShieldCheck className="h-3 w-3 text-blue-600" />
-                  <span>Saldo Awal: {formatCurrency(settings?.initial_balance ?? 0)}</span>
+              <p className="text-xs text-slate-400 font-medium mt-0.5 truncate">Pencatatan Azmi • Road to 50JT</p>
+              <div className="flex items-center gap-2 mt-1.5 overflow-hidden">
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100 whitespace-nowrap">
+                  <ShieldCheck className="h-3 w-3 text-blue-600 flex-shrink-0" />
+                  <span className="truncate">Saldo Awal: {formatCurrency(settings?.initial_balance ?? 0)}</span>
                 </span>
               </div>
             </div>
@@ -385,7 +400,7 @@ export default function SettingsPage() {
           <button
             type="button"
             onClick={handleOpenProfileModal}
-            className="p-2.5 rounded-2xl text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors cursor-pointer border border-slate-100 dark:border-slate-800/60"
+            className="p-2.5 rounded-full text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors cursor-pointer border border-slate-100 dark:border-slate-800/60 flex-shrink-0"
             title="Edit Profil & Target"
           >
             <Edit2 className="h-4 w-4" />
@@ -412,42 +427,49 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        {/* Menu Items Card List */}
-        <div className="rounded-3xl border border-slate-100 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] divide-y divide-slate-100 dark:divide-slate-800/60 shadow-xs overflow-hidden">
-          {MENU_ITEMS.map((item) => {
-            const Icon = item.icon;
-            return (
-              <button
-                key={item.id}
-                type="button"
-                onClick={item.action}
-                className="w-full p-4 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors cursor-pointer group"
-              >
-                <div className="flex items-center gap-3.5 min-w-0 pr-2">
-                  <div className="p-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 group-hover:bg-blue-50 text-slate-600 dark:text-slate-300 group-hover:text-blue-600 transition-colors flex-shrink-0">
-                    <Icon className="h-4 w-4" />
-                  </div>
-                  <div className="min-w-0">
-                    <span className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-blue-600 transition-colors block truncate">
-                      {item.label}
-                    </span>
-                    <span className="text-[11px] text-slate-400 font-medium block truncate">
-                      {item.sublabel}
-                    </span>
-                  </div>
-                </div>
+        {/* Menu Items Groups */}
+        <div className="space-y-6">
+          {MENU_GROUPS.map((group) => (
+            <div key={group.title}>
+              <h3 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 ml-1">{group.title}</h3>
+              <div className="rounded-3xl border border-slate-100 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] divide-y divide-slate-100 dark:divide-slate-800/60 shadow-xs overflow-hidden">
+                {group.items.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={item.action}
+                      className="w-full p-4 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors cursor-pointer group"
+                    >
+                      <div className="flex items-center gap-3.5 min-w-0 pr-2">
+                        <div className="p-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 group-hover:bg-blue-50 text-slate-600 dark:text-slate-300 group-hover:text-blue-600 transition-colors flex-shrink-0">
+                          <Icon className="h-4 w-4" />
+                        </div>
+                        <div className="min-w-0">
+                          <span className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-blue-600 transition-colors block truncate">
+                            {item.label}
+                          </span>
+                          <span className="text-[11px] text-slate-400 font-medium block truncate">
+                            {item.sublabel}
+                          </span>
+                        </div>
+                      </div>
 
-                <div className="flex items-center gap-2 flex-shrink-0">
-                  {item.badge && (
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${item.badgeBg}`}>
-                      {item.badge}
-                    </span>
-                  )}
-                  <ChevronRight className="h-4 w-4 text-slate-300 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all" />
-                </div>
-              </button>
-            );
-          })}
+                      <div className="flex items-center gap-2 flex-shrink-0">
+                        {item.badge && (
+                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${item.badgeBg}`}>
+                            {item.badge}
+                          </span>
+                        )}
+                        <ChevronRight className="h-4 w-4 text-slate-300 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all" />
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* Reset App Data Danger Zone Button */}

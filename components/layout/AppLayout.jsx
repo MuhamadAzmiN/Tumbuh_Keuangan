@@ -187,7 +187,7 @@ export function AppLayout({ children }) {
                     <button
                       type="button"
                       onClick={() => setIsAddTxOpen(true)}
-                      className="h-[60px] w-[60px] rounded-full bg-[#2563EB] text-white flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.4)] border-[2px] border-white dark:border-[#0F172A] transform hover:scale-105 active:scale-95 transition-all z-50 cursor-pointer"
+                      className="h-[60px] w-[60px] rounded-full bg-[#2563EB] text-white flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.4)] transform hover:scale-105 active:scale-95 transition-all z-50 cursor-pointer"
                     >
                       <Plus className="h-7 w-7 stroke-[2]" />
                     </button>

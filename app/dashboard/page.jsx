@@ -312,7 +312,7 @@ export default function DashboardPage() {
         </div>
 
         {/* ── 6. KEBIASAAN MENABUNG BANNER ───────────── */}
-        <div className="w-full rounded-[16px] border border-emerald-100 bg-[#E6F4EA] dark:bg-emerald-950/30 p-3 flex items-center justify-between shadow-2xs h-[64px]">
+        <div className="w-full rounded-[16px] border border-emerald-100 dark:border-emerald-800/50 bg-[#E6F4EA] dark:bg-emerald-950/30 p-3 flex items-center justify-between shadow-2xs h-[64px]">
           <div className="flex items-center gap-2.5 min-w-0 flex-1">
             {/* Sprout Icon */}
             <div className="h-8 w-8 rounded-xl bg-white dark:bg-[#0F172A] p-1 flex items-center justify-center flex-shrink-0 shadow-2xs">
