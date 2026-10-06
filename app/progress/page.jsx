@@ -318,13 +318,13 @@ export default function ProgressPage() {
         )}
 
         {/* Navigation Tabs */}
-        <div className="flex rounded-2xl bg-slate-200/70 p-1 border border-slate-200 overflow-x-auto no-scrollbar">
+        <div className="grid grid-cols-4 gap-1 p-1 rounded-2xl bg-slate-200/70 border border-slate-200 text-center text-xs font-bold">
           <button
             type="button"
             onClick={() => setActiveTab('target')}
-            className={`flex-1 min-w-[75px] py-2 text-xs font-bold rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+            className={`py-2 px-1 rounded-xl transition-all cursor-pointer truncate ${
               activeTab === 'target'
-                ? 'bg-white text-blue-600 shadow-sm'
+                ? 'bg-white text-blue-600 shadow-xs font-extrabold'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
@@ -333,20 +333,20 @@ export default function ProgressPage() {
           <button
             type="button"
             onClick={() => setActiveTab('riwayat')}
-            className={`flex-1 min-w-[95px] py-2 text-xs font-bold rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+            className={`py-2 px-1 rounded-xl transition-all cursor-pointer truncate ${
               activeTab === 'riwayat'
-                ? 'bg-white text-blue-600 shadow-sm'
+                ? 'bg-white text-blue-600 shadow-xs font-extrabold'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            Riwayat Nabung
+            Riwayat
           </button>
           <button
             type="button"
             onClick={() => setActiveTab('wishlist')}
-            className={`flex-1 min-w-[85px] py-2 text-xs font-bold rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+            className={`py-2 px-1 rounded-xl transition-all cursor-pointer truncate ${
               activeTab === 'wishlist'
-                ? 'bg-white text-blue-600 shadow-sm'
+                ? 'bg-white text-blue-600 shadow-xs font-extrabold'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
@@ -355,9 +355,9 @@ export default function ProgressPage() {
           <button
             type="button"
             onClick={() => setActiveTab('proyeksi')}
-            className={`flex-1 min-w-[75px] py-2 text-xs font-bold rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+            className={`py-2 px-1 rounded-xl transition-all cursor-pointer truncate ${
               activeTab === 'proyeksi'
-                ? 'bg-white text-blue-600 shadow-sm'
+                ? 'bg-white text-blue-600 shadow-xs font-extrabold'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
