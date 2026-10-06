@@ -53,30 +53,36 @@ export function FinanceProvider({ children }) {
   const [monthlyBudgets, setMonthlyBudgets] = useState({});
   const [categoryBudgets, setCategoryBudgets] = useState({});
   const [loading, setLoading] = useState(true);
-  const [isDemoMode, setIsDemoMode] = useState(!isSupabaseConfigured);
 
   // Load all finance data
   const loadFinanceData = useCallback(async (currentUser) => {
-    const activeUser = currentUser || {
-      id: 'demo-user-id',
-      email: 'azmi@example.com',
-      user_metadata: { name: 'Azmi' },
-    };
+    if (!currentUser) {
+      setUser(null);
+      setProfile(null);
+      setSettings(null);
+      setTransactions([]);
+      setMonthlyTargets([]);
+      setExpenses([]);
+      setMonthlyBudgets({});
+      setCategoryBudgets({});
+      setLoading(false);
+      return;
+    }
 
     try {
       setLoading(true);
       const [profData, settsData, txData, targetsData, expData, budgetData, catBudgetData] = await Promise.all([
-        getProfile(activeUser.id).catch(() => null),
-        getFinancialSettings(activeUser.id).catch(() => null),
-        getTransactions(activeUser.id).catch(() => []),
-        getMonthlyTargets(activeUser.id).catch(() => []),
-        getExpenses(activeUser.id).catch(() => []),
-        getMonthlyBudgets(activeUser.id).catch(() => ({})),
-        getCategoryBudgets(activeUser.id).catch(() => ({})),
+        getProfile(currentUser.id).catch(() => null),
+        getFinancialSettings(currentUser.id).catch(() => null),
+        getTransactions(currentUser.id).catch(() => []),
+        getMonthlyTargets(currentUser.id).catch(() => []),
+        getExpenses(currentUser.id).catch(() => []),
+        getMonthlyBudgets(currentUser.id).catch(() => ({})),
+        getCategoryBudgets(currentUser.id).catch(() => ({})),
       ]);
 
-      setUser(activeUser);
-      setProfile(profData || { name: activeUser.user_metadata?.name || 'Azmi' });
+      setUser(currentUser);
+      setProfile(profData || { name: currentUser.user_metadata?.name || 'Azmi' });
       setSettings(
         settsData || {
           target_amount: APP_CONFIG.targetAmount,
@@ -146,7 +152,9 @@ export function FinanceProvider({ children }) {
     if (loading) return;
 
     const isAuthRoute = pathname === '/login';
-    if (user && isAuthRoute && user.id !== 'demo-user-id') {
+    if (!user && !isAuthRoute) {
+      router.push('/login');
+    } else if (user && isAuthRoute) {
       router.push('/dashboard');
     }
   }, [user, loading, pathname, router]);
@@ -364,7 +372,6 @@ export function FinanceProvider({ children }) {
     currentMonthIncome,
     currentMonthCashFlow,
     loading,
-    isDemoMode,
     isSupabaseConfigured,
     totalBalance,
     progressInfo,

@@ -28,7 +28,7 @@ const NAV_ITEMS = [
 
 export function AppLayout({ children }) {
   const pathname = usePathname();
-  const { user, profile, isDemoMode, logout } = useFinance();
+  const { user, profile, logout } = useFinance();
   const [isAddTxOpen, setIsAddTxOpen] = useState(false);
 
   const userName = profile?.name || user?.email?.split('@')[0] || 'Azmi';
@@ -87,18 +87,6 @@ export function AppLayout({ children }) {
             );
           })}
         </nav>
-
-        {isDemoMode && (
-          <div className="mx-4 mb-3 p-3 rounded-xl bg-blue-50/70 border border-blue-100 text-xs text-blue-800">
-            <div className="flex items-center gap-1.5 font-semibold mb-1">
-              <Info className="h-3.5 w-3.5 text-blue-600" />
-              <span>Penyimpanan Lokal</span>
-            </div>
-            <p className="text-[11px] leading-relaxed text-blue-700">
-              Data tersimpan aman di browser Anda.
-            </p>
-          </div>
-        )}
 
         <div className="p-4 border-t border-slate-100 flex items-center justify-between">
           <div className="flex items-center gap-2.5 min-w-0">
