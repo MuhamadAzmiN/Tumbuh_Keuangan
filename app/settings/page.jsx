@@ -96,28 +96,82 @@ export default function SettingsPage() {
   const userName = profile?.name || user?.user_metadata?.name || user?.email?.split('@')[0] || 'Pengguna';
   const userInitials = userName.slice(0, 2).toUpperCase();
 
+  const calcProjectedTarget = (initBal, salary, savPct) => {
+    const init = Number(initBal) || 0;
+    const sal = Number(salary) || 0;
+    const pct = Number(savPct) || 0;
+    const freelance = Number(settings?.monthly_freelance_target) || APP_CONFIG.monthlyFreelanceTarget;
+    const monthlySavings = Math.round((sal * pct) / 100);
+    return init + 12 * (monthlySavings + freelance);
+  };
+
+  const updateAllocationsFromTarget = (targetVal, initBal, salary) => {
+    const target = Number(targetVal) || 0;
+    const init = Number(initBal) || 0;
+    const sal = Number(salary) || 0;
+    const freelance = Number(settings?.monthly_freelance_target) || APP_CONFIG.monthlyFreelanceTarget;
+
+    if (sal <= 0) return;
+
+    const totalNeeded = target - init;
+    const monthlyTotalNeeded = totalNeeded / 12;
+    const salaryMonthlySavingsNeeded = monthlyTotalNeeded - freelance;
+
+    const rawPct = (salaryMonthlySavingsNeeded / sal) * 100;
+    const clampedSavingsPct = Math.min(100, Math.max(0, Math.round(rawPct)));
+    const clampedNeedsPct = 100 - clampedSavingsPct;
+
+    setSavingsPctInput(clampedSavingsPct);
+    setNeedsPctInput(clampedNeedsPct);
+  };
+
   // Open Edit Profile Modal
   const handleOpenProfileModal = () => {
     setNameInput(userName);
-    setInitialBalanceInput(settings?.initial_balance ?? 0);
-    setTargetAmountInput(settings?.target_amount || APP_CONFIG.targetAmount);
-    setMonthlySalaryInput(settings?.monthly_salary_target || APP_CONFIG.monthlySalaryTarget);
+    const initBal = settings?.initial_balance ?? 0;
+    const salary = settings?.monthly_salary_target || APP_CONFIG.monthlySalaryTarget;
     const savPct = settings?.savings_percentage ?? 50;
+
+    setInitialBalanceInput(initBal);
+    setMonthlySalaryInput(salary);
     setSavingsPctInput(savPct);
     setNeedsPctInput(settings?.needs_percentage ?? (100 - savPct));
+    setTargetAmountInput(settings?.target_amount || calcProjectedTarget(initBal, salary, savPct));
     setProfileModalOpen(true);
+  };
+
+  const handleMonthlySalaryChange = (val) => {
+    setMonthlySalaryInput(val);
+    const newTarget = calcProjectedTarget(initialBalanceInput, val, savingsPctInput);
+    setTargetAmountInput(newTarget);
   };
 
   const handleSavingsPctChange = (val) => {
     const num = Math.min(100, Math.max(0, Number(val) || 0));
     setSavingsPctInput(num);
     setNeedsPctInput(100 - num);
+    const newTarget = calcProjectedTarget(initialBalanceInput, monthlySalaryInput, num);
+    setTargetAmountInput(newTarget);
   };
 
   const handleNeedsPctChange = (val) => {
     const num = Math.min(100, Math.max(0, Number(val) || 0));
     setNeedsPctInput(num);
-    setSavingsPctInput(100 - num);
+    const newSavingsPct = 100 - num;
+    setSavingsPctInput(newSavingsPct);
+    const newTarget = calcProjectedTarget(initialBalanceInput, monthlySalaryInput, newSavingsPct);
+    setTargetAmountInput(newTarget);
+  };
+
+  const handleInitialBalanceChange = (val) => {
+    setInitialBalanceInput(val);
+    const newTarget = calcProjectedTarget(val, monthlySalaryInput, savingsPctInput);
+    setTargetAmountInput(newTarget);
+  };
+
+  const handleTargetAmountChange = (val) => {
+    setTargetAmountInput(val);
+    updateAllocationsFromTarget(val, initialBalanceInput, monthlySalaryInput);
   };
 
   // Save Profile & Settings
@@ -475,7 +529,7 @@ export default function SettingsPage() {
                     </label>
                     <CurrencyInput
                       value={monthlySalaryInput}
-                      onChange={(val) => setMonthlySalaryInput(val)}
+                      onChange={(val) => handleMonthlySalaryChange(val)}
                       placeholder="2.000.000"
                     />
                   </div>
@@ -578,7 +632,7 @@ export default function SettingsPage() {
                   </label>
                   <CurrencyInput
                     value={initialBalanceInput}
-                    onChange={(val) => setInitialBalanceInput(val)}
+                    onChange={(val) => handleInitialBalanceChange(val)}
                     placeholder="0"
                   />
                   <p className="text-[10px] text-slate-400 mt-1">
@@ -602,7 +656,7 @@ export default function SettingsPage() {
                         </span>
                         <button
                           type="button"
-                          onClick={() => setTargetAmountInput(projectedTotal12Months)}
+                          onClick={() => handleTargetAmountChange(projectedTotal12Months)}
                           className="text-[10px] font-extrabold px-2.5 py-1 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-2xs cursor-pointer flex-shrink-0"
                           title="Gunakan nominal proyeksi ini sebagai Target Utama Tabungan"
                         >
@@ -622,12 +676,12 @@ export default function SettingsPage() {
                       Target Utama Tabungan (Rp)
                     </label>
                     <span className="text-[10px] text-slate-400 font-medium">
-                      (Dapat disesuaikan)
+                      (Dua arah dengan % alokasi)
                     </span>
                   </div>
                   <CurrencyInput
                     value={targetAmountInput}
-                    onChange={(val) => setTargetAmountInput(val)}
+                    onChange={(val) => handleTargetAmountChange(val)}
                     placeholder="50.000.000"
                   />
                 </div>
