@@ -114,6 +114,29 @@ export default function PlanPage() {
   const selectedMonth = CONTRACT_MONTHS[selectedMonthIdx] || CONTRACT_MONTHS[0];
   const monthKey = selectedMonth.key;
 
+  // UI States for Modals and Detail Accordions
+  const [editingCategory, setEditingCategory] = useState(null); // Category item being edited
+  const [editingCategoryAmount, setEditingCategoryAmount] = useState(0);
+  const [editingTotalModal, setEditingTotalModal] = useState(false);
+  const [editingTotalAmount, setEditingTotalAmount] = useState(0);
+  const [expandedCategory, setExpandedCategory] = useState(null);
+  const [deletingRecordId, setDeletingRecordId] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleDeleteItem = async (item) => {
+    try {
+      if (item.type === 'transaction') {
+        await removeTransaction(item.rawId);
+      } else {
+        await removeExpense(item.rawId);
+      }
+      setDeletingRecordId(null);
+      showToast('Pengeluaran berhasil dihapus', 'delete');
+    } catch (err) {
+      alert(err.message || 'Gagal menghapus item.');
+    }
+  };
+
   // Calculate default budget from user settings
   const defaultNeedsBudget = useMemo(() => {
     const salary = Number(settings?.monthly_salary_target) || 2000000;
