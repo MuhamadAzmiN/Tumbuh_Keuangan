@@ -80,7 +80,7 @@ function CustomCategorySelect({ value, onChange, options }) {
 }
 
 export function TransactionModal({ isOpen, onClose, transactionToEdit = null }) {
-  const { addTransaction, editTransaction } = useFinance();
+  const { addTransaction, editTransaction, editExpense } = useFinance();
   const { showToast } = useToast();
 
   const [flowType, setFlowType] = useState('income'); // 'income' | 'expense'
@@ -93,7 +93,7 @@ export function TransactionModal({ isOpen, onClose, transactionToEdit = null }) 
 
   useEffect(() => {
     if (transactionToEdit) {
-      const isExpense = transactionToEdit.type?.includes('expense') || transactionToEdit.amount < 0;
+      const isExpense = transactionToEdit.type?.includes('expense') || transactionToEdit.amount < 0 || transactionToEdit.sourceType === 'expense';
       setFlowType(isExpense ? 'expense' : 'income');
       setCategory(transactionToEdit.type || 'salary');
       setAmount(Math.abs(Number(transactionToEdit.amount)) || 0);
@@ -103,7 +103,7 @@ export function TransactionModal({ isOpen, onClose, transactionToEdit = null }) 
       setFlowType('income');
       setCategory('salary');
       setAmount(2000000);
-      setDate('2026-10-10');
+      setDate(toISODate(new Date()));
       setDescription('Gaji bulanan');
     }
     setError('');
@@ -122,13 +122,23 @@ export function TransactionModal({ isOpen, onClose, transactionToEdit = null }) 
     setSubmitting(true);
     try {
       const finalAmount = flowType === 'expense' ? -Math.abs(numericAmount) : Math.abs(numericAmount);
+      
       if (transactionToEdit) {
-        await editTransaction(transactionToEdit.id, {
-          transaction_date: date,
-          type: category,
-          amount: finalAmount,
-          description: description.trim(),
-        });
+        if (transactionToEdit.sourceType === 'expense') {
+          await editExpense(transactionToEdit.rawId, {
+            expense_date: date,
+            category: category,
+            amount: Math.abs(finalAmount),
+            description: description.trim(),
+          });
+        } else {
+          await editTransaction(transactionToEdit.rawId || transactionToEdit.id, {
+            transaction_date: date,
+            type: category,
+            amount: finalAmount,
+            description: description.trim(),
+          });
+        }
         showToast('Transaksi berhasil diperbarui! ✨', 'success');
       } else {
         await addTransaction({

@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { PrimaryBalanceSection } from '@/components/dashboard/PrimaryBalanceSection';
+import { WeeklyChart } from '@/components/dashboard/WeeklyChart';
 import { OnboardingModal } from '@/components/dashboard/OnboardingModal';
 import { CardSkeleton, Skeleton } from '@/components/ui/Skeleton';
 import { useFinance } from '@/lib/context/FinanceContext';
@@ -34,6 +35,7 @@ export default function DashboardPage() {
     progressInfo,
     trajectory,
     transactions,
+    expenses,
   } = useFinance();
 
   const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
@@ -64,9 +66,23 @@ export default function DashboardPage() {
   }, [currentBalance, targetAmount, transactions, settings]);
 
   const recentTransactions = useMemo(() => {
-    if (!transactions) return [];
-    return [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
-  }, [transactions]);
+    const list = [];
+    (transactions || []).forEach(tx => list.push({
+      ...tx,
+      normalizedDate: tx.transaction_date,
+      normalizedCategory: tx.type || tx.category,
+      normalizedDesc: tx.notes || tx.description || tx.category || tx.type,
+      normalizedAmount: Number(tx.amount)
+    }));
+    (expenses || []).forEach(exp => list.push({
+      ...exp,
+      normalizedDate: exp.expense_date,
+      normalizedCategory: exp.category,
+      normalizedDesc: exp.description || exp.category,
+      normalizedAmount: -Math.abs(Number(exp.amount))
+    }));
+    return list.sort((a, b) => new Date(b.normalizedDate) - new Date(a.normalizedDate)).slice(0, 3);
+  }, [transactions, expenses]);
 
   useEffect(() => {
     if (!loading && user && !settings) {
@@ -244,7 +260,10 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* ── 5. TRANSAKSI TERAKHIR ──────────────────── */}
+        {/* ── 5. GRAFIK PENGELUARAN ──────────────────── */}
+        <WeeklyChart transactions={transactions || []} expenses={expenses || []} showBalance={showBalance} />
+
+        {/* ── 6. TRANSAKSI TERAKHIR ──────────────────── */}
         <div className="w-full rounded-[16px] border border-[#E2E8F0] dark:border-slate-800/60 bg-white dark:bg-[#0F172A] p-3.5 shadow-2xs space-y-3">
           <div className="flex items-center justify-between">
             <h3 className="text-[13px] sm:text-sm font-bold text-[#172033] dark:text-slate-100 flex items-center gap-1.5">
@@ -266,24 +285,28 @@ export default function DashboardPage() {
             </div>
           ) : (
             <div className="space-y-2.5">
-              {recentTransactions.map((tx) => (
-                <div key={tx.id} className="flex items-center justify-between py-1.5 border-b border-[#F1F5F9] dark:border-slate-800/60 last:border-0 last:pb-0">
-                  <div className="flex items-center gap-3">
-                    <CategoryIcon category={tx.category} />
-                    <div>
-                      <h4 className="text-[11.5px] font-bold text-[#172033] dark:text-slate-100 leading-tight">
-                        {tx.notes || tx.category}
-                      </h4>
-                      <p className="text-[9.5px] text-[#64748B] dark:text-slate-400 mt-0.5">
-                        {formatDate(tx.date)}
-                      </p>
+              {recentTransactions.map((tx, idx) => {
+                const isPositive = tx.normalizedAmount >= 0;
+                
+                return (
+                  <div key={`${tx.id}-${idx}`} className="flex items-center justify-between py-1.5 border-b border-[#F1F5F9] dark:border-slate-800/60 last:border-0 last:pb-0">
+                    <div className="flex items-center gap-3">
+                      <CategoryIcon category={tx.normalizedCategory} />
+                      <div>
+                        <h4 className="text-[11.5px] font-bold text-[#172033] dark:text-slate-100 leading-tight">
+                          {tx.normalizedDesc}
+                        </h4>
+                        <p className="text-[9.5px] text-[#64748B] dark:text-slate-400 mt-0.5">
+                          {formatDate(tx.normalizedDate)}
+                        </p>
+                      </div>
+                    </div>
+                    <div className={`text-[12px] font-bold tabular-nums ${isPositive ? 'text-[#00A86B]' : 'text-[#172033] dark:text-slate-100'}`}>
+                      {isPositive ? '+' : ''}{showBalance ? formatCurrency(Math.abs(tx.normalizedAmount)) : '••••••••'}
                     </div>
                   </div>
-                  <div className={`text-[12px] font-bold tabular-nums ${tx.type === 'income' ? 'text-[#00A86B]' : 'text-[#172033] dark:text-slate-100'}`}>
-                    {tx.type === 'income' ? '+' : '-'}{showBalance ? formatCurrency(tx.amount) : '••••••••'}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
