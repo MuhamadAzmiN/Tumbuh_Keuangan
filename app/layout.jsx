@@ -14,7 +14,12 @@ export const metadata = {
   description: 'Aplikasi pencatatan tabungan pribadi. Bangun kebiasaan menabung, tumbuhkan tabunganmu, capai tujuanmu.',
   manifest: '/manifest.json',
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      { url: '/logo.png', type: 'image/png' },
+      { url: '/favicon.ico', type: 'image/png' },
+    ],
+    shortcut: '/logo.png',
+    apple: '/logo.png',
   },
 };
 
