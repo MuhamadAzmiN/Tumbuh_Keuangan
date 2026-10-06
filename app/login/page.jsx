@@ -45,15 +45,15 @@ export default function LoginPage() {
     setSubmitting(true);
     try {
       if (isRegister) {
-        await signUpWithEmail(email, password, name || 'Azmi');
+        const loggedUser = await signUpWithEmail(email, password, name || email.split('@')[0]);
         if (isSupabaseConfigured) {
           setSuccessMsg('Pendaftaran berhasil! Kamu dapat langsung masuk.');
         }
-        await refreshData();
+        await refreshData(loggedUser);
         router.push('/dashboard');
       } else {
-        await loginWithEmail(email, password);
-        await refreshData();
+        const loggedUser = await loginWithEmail(email, password);
+        await refreshData(loggedUser);
         router.push('/dashboard');
       }
     } catch (err) {

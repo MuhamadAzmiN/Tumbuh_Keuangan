@@ -31,7 +31,7 @@ export function AppLayout({ children }) {
   const { user, profile, logout } = useFinance();
   const [isAddTxOpen, setIsAddTxOpen] = useState(false);
 
-  const userName = profile?.name || user?.email?.split('@')[0] || 'Azmi';
+  const userName = profile?.name || user?.email?.split('@')[0] || 'Pengguna';
   const userInitials = userName.slice(0, 2).toUpperCase();
 
   return (

@@ -82,7 +82,8 @@ export function FinanceProvider({ children }) {
       ]);
 
       setUser(currentUser);
-      setProfile(profData || { name: currentUser.user_metadata?.name || 'Azmi' });
+      const defaultName = currentUser.user_metadata?.name || currentUser.email?.split('@')[0] || 'Pengguna';
+      setProfile(profData?.name ? profData : { id: currentUser.id, name: defaultName });
       setSettings(
         settsData || {
           target_amount: APP_CONFIG.targetAmount,
@@ -393,7 +394,7 @@ export function FinanceProvider({ children }) {
     logout,
     exportData,
     importData,
-    refreshData: () => loadFinanceData(user),
+    refreshData: (overrideUser) => loadFinanceData(overrideUser || user),
   };
 
   return <FinanceContext.Provider value={value}>{children}</FinanceContext.Provider>;
