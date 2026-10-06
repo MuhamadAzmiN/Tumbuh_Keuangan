@@ -28,6 +28,13 @@ const NAV_ITEMS = [
   { href: '/settings', label: 'Profil', icon: User },
 ];
 
+const MOBILE_NAV_ITEMS = [
+  { href: '/dashboard', label: 'Beranda', icon: Home },
+  { href: '/transactions', label: 'Transaksi', icon: FileText },
+  { href: '/plan', label: 'Anggaran', icon: LayoutGrid },
+  { href: '/settings', label: 'Profil', icon: User },
+];
+
 export function AppLayout({ children }) {
   const pathname = usePathname();
   const { user, profile, logout } = useFinance();
@@ -165,26 +172,39 @@ export function AppLayout({ children }) {
       {/* ═══════════════════════════════════════ */}
       <nav
         aria-label="Mobile Navigation"
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-[99] bg-white dark:bg-[#0F172A] border-t border-slate-200 dark:border-slate-800/60 shadow-md max-w-md mx-auto"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-[99] bg-white dark:bg-[#0F172A] shadow-[0_-4px_20px_rgba(0,0,0,0.05)] dark:shadow-[0_-4px_20px_rgba(0,0,0,0.2)] max-w-md mx-auto rounded-t-[32px]"
         style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 12px)' }}
       >
-        <div className="h-[64px] flex items-center justify-around px-1">
-          {NAV_ITEMS.map((item) => {
+        <div className="h-[64px] flex items-center justify-between px-2 relative">
+          {MOBILE_NAV_ITEMS.map((item, index) => {
             const Icon = item.icon;
             const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href));
+
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`flex flex-col items-center justify-center py-2 px-1 min-w-0 flex-1 transition-colors ${
-                  isActive ? 'text-[#2563EB]' : 'text-[#94A3B8] dark:text-slate-400 hover:text-slate-600 dark:text-slate-300'
-                }`}
-              >
-                <Icon className={`h-[22px] w-[22px] mb-1 ${isActive ? 'text-[#2563EB] stroke-[2.2]' : 'stroke-[1.8]'}`} />
-                <span className={`text-[10px] leading-none truncate ${isActive ? 'font-bold text-[#2563EB]' : 'font-medium text-[#94A3B8] dark:text-slate-400'}`}>
-                  {item.label}
-                </span>
-              </Link>
+              <React.Fragment key={item.href}>
+                {index === 2 && (
+                  <div className="flex flex-col items-center justify-start min-w-[72px] relative -top-6">
+                    <button
+                      type="button"
+                      onClick={() => setIsAddTxOpen(true)}
+                      className="h-14 w-14 rounded-full bg-[#2563EB] text-white flex items-center justify-center shadow-[0_8px_16px_rgba(37,99,235,0.25)] border-[4px] border-white dark:border-[#0F172A] transform hover:scale-105 active:scale-95 transition-all z-50 cursor-pointer"
+                    >
+                      <Plus className="h-7 w-7 stroke-[2.5]" />
+                    </button>
+                    <span className="text-[10px] font-bold text-[#2563EB] mt-1">Tambah</span>
+                  </div>
+                )}
+                <Link
+                  href={item.href}
+                  className={`flex flex-col items-center justify-center py-2 px-1 min-w-0 flex-1 transition-colors ${isActive ? 'text-[#2563EB]' : 'text-[#94A3B8] dark:text-slate-400 hover:text-slate-600 dark:text-slate-300'
+                    }`}
+                >
+                  <Icon className={`h-[22px] w-[22px] mb-1 ${isActive ? 'text-[#2563EB] stroke-[2.2]' : 'stroke-[1.8]'}`} />
+                  <span className={`text-[10px] leading-none truncate ${isActive ? 'font-bold text-[#2563EB]' : 'font-medium text-[#94A3B8] dark:text-slate-400'}`}>
+                    {item.label}
+                  </span>
+                </Link>
+              </React.Fragment>
             );
           })}
         </div>

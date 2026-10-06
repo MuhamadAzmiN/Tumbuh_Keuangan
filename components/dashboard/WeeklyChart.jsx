@@ -14,7 +14,10 @@ export function WeeklyChart({ transactions = [], expenses = [], showBalance = tr
     for (let i = 6; i >= 0; i--) {
       const d = new Date();
       d.setDate(d.getDate() - i);
-      const dateStr = d.toISOString().split('T')[0];
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      const dateStr = `${y}-${m}-${day}`;
       
       const txExpense = transactions
         .filter(t => (t.amount < 0 || t.type === 'expense' || ['food', 'transport', 'shopping', 'entertainment', 'bills', 'other_expense'].includes(t.type)) && t.transaction_date && t.transaction_date.startsWith(dateStr))
@@ -35,7 +38,7 @@ export function WeeklyChart({ transactions = [], expenses = [], showBalance = tr
     }
     
     return { data, total };
-  }, [transactions]);
+  }, [transactions, expenses]);
 
   const hasData = chartData.total > 0;
   
