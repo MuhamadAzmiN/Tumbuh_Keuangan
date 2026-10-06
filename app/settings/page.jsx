@@ -352,7 +352,7 @@ export default function SettingsPage() {
       <div className="space-y-4 animate-in pb-8">
         {/* Top Header */}
         <div>
-          <h2 className="text-xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
             Pengaturan & Profil
           </h2>
           <p className="text-xs text-slate-500 font-medium">
@@ -361,7 +361,7 @@ export default function SettingsPage() {
         </div>
 
         {/* User Profile Header Card */}
-        <div className="rounded-3xl border border-slate-100 bg-white p-5 shadow-xs flex items-center justify-between">
+        <div className="rounded-3xl border border-slate-100 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] p-5 shadow-xs flex items-center justify-between">
           <div className="flex items-center gap-4">
             {/* Dark Blue Avatar Circle */}
             <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center font-extrabold text-lg shadow-md border border-white/20 flex-shrink-0">
@@ -369,7 +369,7 @@ export default function SettingsPage() {
             </div>
 
             <div>
-              <h3 className="text-lg font-extrabold text-slate-900 tracking-tight leading-tight">
+              <h3 className="text-lg font-extrabold text-slate-900 dark:text-slate-100 tracking-tight leading-tight">
                 {userName}
               </h3>
               <p className="text-xs text-slate-400 font-medium mt-0.5">Pencatatan Azmi • Road to 50JT</p>
@@ -385,7 +385,7 @@ export default function SettingsPage() {
           <button
             type="button"
             onClick={handleOpenProfileModal}
-            className="p-2.5 rounded-2xl text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors cursor-pointer border border-slate-100"
+            className="p-2.5 rounded-2xl text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors cursor-pointer border border-slate-100 dark:border-slate-800/60"
             title="Edit Profil & Target"
           >
             <Edit2 className="h-4 w-4" />
@@ -393,13 +393,13 @@ export default function SettingsPage() {
         </div>
 
         {/* Financial Summary Info Card */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-4 flex items-center gap-3.5 shadow-2xs">
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] p-4 flex items-center gap-3.5 shadow-2xs">
           <div className="h-10 w-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0">
             <TumbuhLogo className="h-5 w-5" />
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex items-center justify-between">
-              <p className="text-xs font-bold text-slate-900">
+              <p className="text-xs font-bold text-slate-900 dark:text-slate-100">
                 Konfigurasi Gaji & Alokasi Bulanan
               </p>
               <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100">
@@ -413,7 +413,7 @@ export default function SettingsPage() {
         </div>
 
         {/* Menu Items Card List */}
-        <div className="rounded-3xl border border-slate-100 bg-white divide-y divide-slate-100 shadow-xs overflow-hidden">
+        <div className="rounded-3xl border border-slate-100 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] divide-y divide-slate-100 dark:divide-slate-800/60 shadow-xs overflow-hidden">
           {MENU_ITEMS.map((item) => {
             const Icon = item.icon;
             return (
@@ -421,14 +421,14 @@ export default function SettingsPage() {
                 key={item.id}
                 type="button"
                 onClick={item.action}
-                className="w-full p-4 flex items-center justify-between text-left hover:bg-slate-50/80 transition-colors cursor-pointer group"
+                className="w-full p-4 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors cursor-pointer group"
               >
                 <div className="flex items-center gap-3.5 min-w-0 pr-2">
-                  <div className="p-2.5 rounded-2xl bg-slate-100 group-hover:bg-blue-50 text-slate-600 group-hover:text-blue-600 transition-colors flex-shrink-0">
+                  <div className="p-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 group-hover:bg-blue-50 text-slate-600 dark:text-slate-300 group-hover:text-blue-600 transition-colors flex-shrink-0">
                     <Icon className="h-4 w-4" />
                   </div>
                   <div className="min-w-0">
-                    <span className="text-xs font-bold text-slate-900 group-hover:text-blue-600 transition-colors block truncate">
+                    <span className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-blue-600 transition-colors block truncate">
                       {item.label}
                     </span>
                     <span className="text-[11px] text-slate-400 font-medium block truncate">
@@ -462,7 +462,7 @@ export default function SettingsPage() {
           <button
             type="button"
             onClick={() => setResetModalOpen(true)}
-            className="px-3 py-1.5 rounded-xl border border-rose-200 bg-white text-xs font-bold text-rose-600 hover:bg-rose-600 hover:text-white transition-colors shadow-2xs cursor-pointer"
+            className="px-3 py-1.5 rounded-xl border border-rose-200 bg-white dark:bg-[#0F172A] text-xs font-bold text-rose-600 hover:bg-rose-600 hover:text-white transition-colors shadow-2xs cursor-pointer"
           >
             Reset
           </button>
@@ -473,7 +473,7 @@ export default function SettingsPage() {
           <button
             type="button"
             onClick={logout}
-            className="w-full rounded-2xl border border-slate-200 bg-white py-3.5 px-4 text-xs font-bold text-rose-600 hover:bg-rose-50 hover:border-rose-200 transition-colors flex items-center justify-center gap-2 shadow-xs cursor-pointer"
+            className="w-full rounded-2xl border border-slate-200 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] py-3.5 px-4 text-xs font-bold text-rose-600 hover:bg-rose-50 hover:border-rose-200 transition-colors flex items-center justify-center gap-2 shadow-xs cursor-pointer"
           >
             <LogOut className="h-4 w-4 text-rose-600" />
             <span>Keluar dari Aplikasi</span>
@@ -491,18 +491,18 @@ export default function SettingsPage() {
               className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
               onClick={() => setProfileModalOpen(false)}
             />
-            <div className="relative z-10 w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
+            <div className="relative z-10 w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white dark:bg-[#0F172A] p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
               <div className="w-12 h-1.5 rounded-full bg-slate-200 mx-auto -mt-1 mb-1 flex-shrink-0 sm:hidden" />
 
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-3">
                 <div className="flex items-center gap-2">
                   <User className="h-4 w-4 text-blue-600" />
-                  <h3 className="text-sm font-bold text-slate-900">Edit Profil & Config Gaji</h3>
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Edit Profil & Config Gaji</h3>
                 </div>
                 <button
                   type="button"
                   onClick={() => setProfileModalOpen(false)}
-                  className="p-1 text-slate-400 hover:text-slate-600 rounded-lg cursor-pointer"
+                  className="p-1 text-slate-400 hover:text-slate-600 dark:text-slate-300 rounded-lg cursor-pointer"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -510,7 +510,7 @@ export default function SettingsPage() {
 
               <form onSubmit={handleSaveProfile} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                     Nama Pengguna / Pemilik
                   </label>
                   <input
@@ -519,24 +519,24 @@ export default function SettingsPage() {
                     onChange={(e) => setNameInput(e.target.value)}
                     required
                     placeholder="Masukkan nama kamu..."
-                    className="w-full rounded-xl border border-slate-200 px-3.5 py-2.5 text-xs font-semibold text-slate-900 focus:border-blue-600 focus:outline-none"
+                    className="w-full rounded-xl border border-slate-200 dark:border-slate-800/60 px-3.5 py-2.5 text-xs font-semibold text-slate-900 dark:text-slate-100 focus:border-blue-600 focus:outline-none"
                   />
                 </div>
 
                 {/* Card Section: Config Gaji & Persentase Alokasi */}
-                <div className="rounded-2xl border border-blue-100 bg-blue-50/40 p-4 space-y-3.5">
+                <div className="rounded-2xl border border-blue-100 dark:border-blue-800/50 bg-blue-50/40 dark:bg-blue-900/10 p-4 space-y-3.5">
                   <div className="flex items-center gap-2">
                     <div className="p-1.5 rounded-lg bg-blue-600 text-white">
                       <Wallet className="h-4 w-4" />
                     </div>
                     <div>
-                      <h4 className="text-xs font-bold text-slate-900">Config Gaji & Persentase Alokasi</h4>
+                      <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">Config Gaji & Persentase Alokasi</h4>
                       <p className="text-[10px] text-slate-500 font-medium">Atur nominal gaji & % alokasi (Nabung vs Kebutuhan)</p>
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                       Gaji / Pendapatan Bulanan Utama (Rp)
                     </label>
                     <CurrencyInput
@@ -548,7 +548,7 @@ export default function SettingsPage() {
 
                   {/* Preset Alokasi Buttons */}
                   <div>
-                    <label className="block text-[11px] font-semibold text-slate-600 mb-1.5">
+                    <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-300 mb-1.5">
                       Pilihan Alokasi Cepat (% Nabung / % Kebutuhan):
                     </label>
                     <div className="grid grid-cols-4 gap-1.5">
@@ -570,7 +570,7 @@ export default function SettingsPage() {
                             className={`py-1.5 px-2 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
                               isActive
                                 ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
-                                : 'bg-white text-slate-700 border-slate-200 hover:border-blue-300'
+                                : 'bg-white dark:bg-[#0F172A] text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800/60 hover:border-blue-300'
                             }`}
                           >
                             {preset.label}
@@ -584,10 +584,10 @@ export default function SettingsPage() {
                   <div className="space-y-3 pt-1">
                     <div>
                       <div className="flex items-center justify-between text-xs font-bold mb-1">
-                        <span className="text-emerald-700 flex items-center gap-1">
+                        <span className="text-emerald-700 dark:text-emerald-400 flex items-center gap-1">
                           <PiggyBank className="h-3.5 w-3.5" /> Nabung ({savingsPctInput}%)
                         </span>
-                        <span className="text-emerald-800 font-extrabold">
+                        <span className="text-emerald-800 dark:text-emerald-300 font-extrabold">
                           {formatCurrency(Math.round(((Number(monthlySalaryInput) || 0) * savingsPctInput) / 100))}
                         </span>
                       </div>
@@ -597,16 +597,16 @@ export default function SettingsPage() {
                         max="100"
                         value={savingsPctInput}
                         onChange={(e) => handleSavingsPctChange(e.target.value)}
-                        className="w-full h-2 bg-emerald-100 rounded-lg appearance-none cursor-pointer accent-emerald-600"
+                        className="w-full h-2 bg-emerald-100 dark:bg-emerald-900/40 rounded-lg appearance-none cursor-pointer accent-emerald-600 dark:accent-emerald-500"
                       />
                     </div>
 
                     <div>
                       <div className="flex items-center justify-between text-xs font-bold mb-1">
-                        <span className="text-blue-700 flex items-center gap-1">
+                        <span className="text-blue-700 dark:text-blue-400 flex items-center gap-1">
                           <ShoppingBag className="h-3.5 w-3.5" /> Kebutuhan ({needsPctInput}%)
                         </span>
-                        <span className="text-blue-800 font-extrabold">
+                        <span className="text-blue-800 dark:text-blue-300 font-extrabold">
                           {formatCurrency(Math.round(((Number(monthlySalaryInput) || 0) * needsPctInput) / 100))}
                         </span>
                       </div>
@@ -616,22 +616,22 @@ export default function SettingsPage() {
                         max="100"
                         value={needsPctInput}
                         onChange={(e) => handleNeedsPctChange(e.target.value)}
-                        className="w-full h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                        className="w-full h-2 bg-blue-100 dark:bg-blue-900/40 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500"
                       />
                     </div>
                   </div>
 
                   {/* Dynamic Summary Breakdown */}
-                  <div className="rounded-xl bg-white border border-slate-200/80 p-3 text-[11px] space-y-1 font-medium text-slate-600 shadow-2xs">
-                    <div className="flex justify-between items-center text-slate-800 font-bold">
+                  <div className="rounded-xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800/60 p-3 text-[11px] space-y-1 font-medium text-slate-600 dark:text-slate-300 shadow-2xs">
+                    <div className="flex justify-between items-center text-slate-800 dark:text-slate-200 font-bold">
                       <span>Rincian Gaji Bulanan:</span>
-                      <span className="text-blue-600 font-extrabold">{formatCurrency(Number(monthlySalaryInput) || 0)}</span>
+                      <span className="text-blue-600 dark:text-blue-400 font-extrabold">{formatCurrency(Number(monthlySalaryInput) || 0)}</span>
                     </div>
-                    <div className="flex justify-between items-center text-emerald-700">
+                    <div className="flex justify-between items-center text-emerald-700 dark:text-emerald-400">
                       <span>• Target Nabung ({savingsPctInput}%):</span>
                       <span className="font-bold">{formatCurrency(Math.round(((Number(monthlySalaryInput) || 0) * savingsPctInput) / 100))}/bln</span>
                     </div>
-                    <div className="flex justify-between items-center text-blue-700">
+                    <div className="flex justify-between items-center text-blue-700 dark:text-blue-400">
                       <span>• Limit Kebutuhan ({needsPctInput}%):</span>
                       <span className="font-bold">{formatCurrency(Math.round(((Number(monthlySalaryInput) || 0) * needsPctInput) / 100))}/bln</span>
                     </div>
@@ -639,7 +639,7 @@ export default function SettingsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                     Saldo Awal Tabungan (Rp)
                   </label>
                   <CurrencyInput
@@ -660,10 +660,10 @@ export default function SettingsPage() {
                   const projectedTotal12Months = currentInitialBal + (12 * (currentMonthlySavings + userFreelanceTarget));
 
                   return (
-                    <div className="rounded-2xl border border-emerald-100 bg-emerald-50/50 p-3.5 space-y-2">
+                    <div className="rounded-2xl border border-emerald-100 dark:border-emerald-800/50 bg-emerald-50/50 dark:bg-emerald-900/10 p-3.5 space-y-2">
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-xs font-bold text-emerald-900 flex items-center gap-1.5">
-                          <Sparkles className="h-4 w-4 text-emerald-600" />
+                        <span className="text-xs font-bold text-emerald-900 dark:text-emerald-400 flex items-center gap-1.5">
+                          <Sparkles className="h-4 w-4 text-emerald-600 dark:text-emerald-500" />
                           Proyeksi 12 Bulan (s/d Sep 2027)
                         </span>
                         <button
@@ -675,8 +675,8 @@ export default function SettingsPage() {
                           Terapkan {formatCurrency(projectedTotal12Months)}
                         </button>
                       </div>
-                      <p className="text-[11px] text-emerald-800 font-medium leading-relaxed">
-                        Hasil kalkulasi 12 bulan (Saldo Awal {formatCurrency(currentInitialBal)} + 12× Nabung {formatCurrency(currentMonthlySavings)} + 12× Freelance {formatCurrency(userFreelanceTarget)}) = <strong className="font-extrabold text-emerald-950">{formatCurrency(projectedTotal12Months)}</strong>
+                      <p className="text-[11px] text-emerald-800 dark:text-emerald-300 font-medium leading-relaxed">
+                        Hasil kalkulasi 12 bulan (Saldo Awal {formatCurrency(currentInitialBal)} + 12× Nabung {formatCurrency(currentMonthlySavings)} + 12× Freelance {formatCurrency(userFreelanceTarget)}) = <strong className="font-extrabold text-emerald-950 dark:text-emerald-100">{formatCurrency(projectedTotal12Months)}</strong>
                       </p>
                     </div>
                   );
@@ -684,7 +684,7 @@ export default function SettingsPage() {
 
                 <div>
                   <div className="flex items-center justify-between mb-1">
-                    <label className="block text-xs font-semibold text-slate-700">
+                    <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
                       Target Utama Tabungan (Rp)
                     </label>
                     <span className="text-[10px] text-slate-400 font-medium">
@@ -698,11 +698,11 @@ export default function SettingsPage() {
                   />
                 </div>
 
-                <div className="flex items-center gap-2 pt-2 border-t border-slate-100 pb-2 sm:pb-0">
+                <div className="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-slate-800/60 pb-2 sm:pb-0">
                   <button
                     type="button"
                     onClick={() => setProfileModalOpen(false)}
-                    className="flex-1 rounded-xl border border-slate-200 py-3 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors cursor-pointer"
+                    className="flex-1 rounded-xl border border-slate-200 dark:border-slate-800/60 py-3 text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors cursor-pointer"
                   >
                     Batal
                   </button>
@@ -730,7 +730,7 @@ export default function SettingsPage() {
               className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
               onClick={() => setMaintenanceModalOpen(false)}
             />
-            <div className="relative z-10 w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 text-center">
+            <div className="relative z-10 w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white dark:bg-[#0F172A] p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 text-center">
               <div className="w-12 h-1.5 rounded-full bg-slate-200 mx-auto -mt-1 mb-1 flex-shrink-0 sm:hidden" />
 
               <div className="h-14 w-14 rounded-2xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center mx-auto shadow-xs">
@@ -741,7 +741,7 @@ export default function SettingsPage() {
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-bold mb-1.5">
                   🛠️ Sedang Dalam Pemeliharaan (Maintenance)
                 </span>
-                <h3 className="text-base font-extrabold text-slate-900">
+                <h3 className="text-base font-extrabold text-slate-900 dark:text-slate-100">
                   Fitur Notifikasi & Pengingat
                 </h3>
                 <p className="text-xs text-slate-500 font-medium leading-relaxed mt-1.5">
@@ -749,8 +749,8 @@ export default function SettingsPage() {
                 </p>
               </div>
 
-              <div className="rounded-2xl bg-slate-50 border border-slate-100 p-3.5 text-xs text-slate-600 text-left space-y-1">
-                <div className="font-bold text-slate-800 flex items-center gap-1.5">
+              <div className="rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800/60 p-3.5 text-xs text-slate-600 dark:text-slate-300 text-left space-y-1">
+                <div className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
                   <Sparkles className="h-4 w-4 text-amber-500" />
                   <span>Yang Sedang Disiapkan:</span>
                 </div>
@@ -781,18 +781,18 @@ export default function SettingsPage() {
               className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
               onClick={() => setFaqModalOpen(false)}
             />
-            <div className="relative z-10 w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
+            <div className="relative z-10 w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white dark:bg-[#0F172A] p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
               <div className="w-12 h-1.5 rounded-full bg-slate-200 mx-auto -mt-1 mb-1 flex-shrink-0 sm:hidden" />
 
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-3">
                 <div className="flex items-center gap-2">
                   <HelpCircle className="h-4 w-4 text-blue-600" />
-                  <h3 className="text-sm font-bold text-slate-900">Bantuan & FAQ Keuangan</h3>
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Bantuan & FAQ Keuangan</h3>
                 </div>
                 <button
                   type="button"
                   onClick={() => setFaqModalOpen(false)}
-                  className="p-1 text-slate-400 hover:text-slate-600 rounded-lg cursor-pointer"
+                  className="p-1 text-slate-400 hover:text-slate-600 dark:text-slate-300 rounded-lg cursor-pointer"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -804,12 +804,12 @@ export default function SettingsPage() {
                   return (
                     <div
                       key={idx}
-                      className="rounded-2xl border border-slate-100 bg-slate-50/50 p-3.5 space-y-2 transition-all"
+                      className="rounded-2xl border border-slate-100 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-800/40 p-3.5 space-y-2 transition-all"
                     >
                       <button
                         type="button"
                         onClick={() => setActiveFaqIdx(isOpen ? null : idx)}
-                        className="w-full flex items-center justify-between text-left font-bold text-xs text-slate-900 cursor-pointer"
+                        className="w-full flex items-center justify-between text-left font-bold text-xs text-slate-900 dark:text-slate-100 cursor-pointer"
                       >
                         <span className="pr-2">{item.q}</span>
                         {isOpen ? (
@@ -820,7 +820,7 @@ export default function SettingsPage() {
                       </button>
 
                       {isOpen && (
-                        <p className="text-[11px] text-slate-600 leading-relaxed pt-1 border-t border-slate-200/60 animate-in fade-in duration-150">
+                        <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed pt-1 border-t border-slate-200 dark:border-slate-800/60 animate-in fade-in duration-150">
                           {item.a}
                         </p>
                       )}
@@ -853,7 +853,7 @@ export default function SettingsPage() {
               className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
               onClick={() => setAboutModalOpen(false)}
             />
-            <div className="relative z-10 w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 text-center">
+            <div className="relative z-10 w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white dark:bg-[#0F172A] p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 text-center">
               <div className="w-12 h-1.5 rounded-full bg-slate-200 mx-auto -mt-1 mb-1 flex-shrink-0 sm:hidden" />
 
               <div className="h-14 w-14 rounded-2xl bg-blue-600 text-white flex items-center justify-center mx-auto shadow-md">
@@ -861,17 +861,17 @@ export default function SettingsPage() {
               </div>
 
               <div>
-                <h3 className="text-base font-extrabold text-slate-900">Pencatatan Keuangan Azmi</h3>
+                <h3 className="text-base font-extrabold text-slate-900 dark:text-slate-100">Pencatatan Keuangan Azmi</h3>
                 <p className="text-xs text-blue-600 font-bold mt-0.5">Road to 50JT • Versi 1.2.0 (Stable)</p>
                 <p className="text-xs text-slate-500 font-medium leading-relaxed mt-2">
                   Aplikasi manajer keuangan pribadi yang dirancang khusus untuk memantau progres tabungan kontrak 12 bulan menuju target Rp 50.000.000.
                 </p>
               </div>
 
-              <div className="rounded-2xl bg-slate-50 border border-slate-100 p-3.5 text-xs text-slate-600 text-left space-y-1.5">
+              <div className="rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800/60 p-3.5 text-xs text-slate-600 dark:text-slate-300 text-left space-y-1.5">
                 <div className="flex items-center justify-between">
                   <span className="text-slate-400">Penyimpanan:</span>
-                  <span className="font-bold text-slate-800">LocalStorage & Supabase</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-200">LocalStorage & Supabase</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-slate-400">Status Sistem:</span>
@@ -903,7 +903,7 @@ export default function SettingsPage() {
               className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
               onClick={() => setResetModalOpen(false)}
             />
-            <div className="relative z-10 w-full sm:max-w-sm rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 text-center">
+            <div className="relative z-10 w-full sm:max-w-sm rounded-t-[32px] sm:rounded-3xl bg-white dark:bg-[#0F172A] p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 text-center">
               <div className="w-12 h-1.5 rounded-full bg-slate-200 mx-auto -mt-1 mb-1 flex-shrink-0 sm:hidden" />
 
               <div className="h-12 w-12 rounded-2xl bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center mx-auto">
@@ -911,7 +911,7 @@ export default function SettingsPage() {
               </div>
 
               <div>
-                <h3 className="text-sm font-extrabold text-slate-900">Konfirmasi Reset Data</h3>
+                <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-100">Konfirmasi Reset Data</h3>
                 <p className="text-xs text-slate-500 font-medium leading-relaxed mt-1">
                   Apakah kamu yakin ingin membersihkan seluruh data lokal? Tindakan ini akan menghapus semua riwayat transaksi yang tersimpan di browser.
                 </p>
@@ -921,7 +921,7 @@ export default function SettingsPage() {
                 <button
                   type="button"
                   onClick={() => setResetModalOpen(false)}
-                  className="flex-1 rounded-xl border border-slate-200 py-3 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors cursor-pointer"
+                  className="flex-1 rounded-xl border border-slate-200 dark:border-slate-800/60 py-3 text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors cursor-pointer"
                 >
                   Batal
                 </button>

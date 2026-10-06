@@ -132,7 +132,7 @@ export default function TransactionsPage() {
       <div className="space-y-4 animate-in pb-4">
         {/* Header */}
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
             Transaksi
           </h2>
           <button
@@ -156,7 +156,7 @@ export default function TransactionsPage() {
             placeholder="Cari transaksi..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-2xl border border-slate-200 bg-white pl-10 pr-4 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none shadow-xs"
+            className="w-full rounded-2xl border border-slate-200 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] pl-10 pr-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none shadow-xs"
           />
         </div>
 
@@ -168,7 +168,7 @@ export default function TransactionsPage() {
             className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
               filterType === 'all'
                 ? 'bg-blue-600 text-white shadow-xs'
-                : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+                : 'bg-white dark:bg-[#0F172A] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800/60 hover:bg-slate-50 dark:hover:bg-slate-800/40'
             }`}
           >
             Semua
@@ -179,7 +179,7 @@ export default function TransactionsPage() {
             className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
               filterType === 'income'
                 ? 'bg-blue-600 text-white shadow-xs'
-                : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+                : 'bg-white dark:bg-[#0F172A] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800/60 hover:bg-slate-50 dark:hover:bg-slate-800/40'
             }`}
           >
             Pemasukan
@@ -190,7 +190,7 @@ export default function TransactionsPage() {
             className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
               filterType === 'expense'
                 ? 'bg-blue-600 text-white shadow-xs'
-                : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+                : 'bg-white dark:bg-[#0F172A] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800/60 hover:bg-slate-50 dark:hover:bg-slate-800/40'
             }`}
           >
             Pengeluaran
@@ -202,7 +202,7 @@ export default function TransactionsPage() {
           <h3 className="text-xs font-bold text-slate-500 mb-2">Oktober 2026</h3>
 
           {/* List of items */}
-          <div className="rounded-2xl border border-slate-100 bg-white divide-y divide-slate-100 shadow-xs overflow-hidden">
+          <div className="rounded-2xl border border-slate-100 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] divide-y divide-slate-100 dark:divide-slate-800/60 shadow-xs overflow-hidden">
             {displayList.length === 0 ? (
               <div className="p-8 text-center text-xs text-slate-400 font-medium">
                 Tidak ada transaksi ditemukan
@@ -216,12 +216,12 @@ export default function TransactionsPage() {
                 return (
                   <div
                     key={tx.id}
-                    className="p-3.5 flex items-center justify-between gap-3 hover:bg-slate-50/80 transition-colors"
+                    className="p-3.5 flex items-center justify-between gap-3 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
                   >
                     <div className="flex items-center gap-3 min-w-0">
                       <CategoryIcon category={tx.type || tx.description} size="md" />
                       <div className="min-w-0">
-                        <p className="text-xs font-bold text-slate-900 truncate">
+                        <p className="text-xs font-bold text-slate-900 dark:text-slate-100 truncate">
                           {tx.description || 'Transaksi'}
                         </p>
                         <p className="text-[11px] text-slate-400 font-medium">
@@ -236,12 +236,12 @@ export default function TransactionsPage() {
                       </span>
 
                       {/* Action buttons: Edit & Delete */}
-                      <div className="flex items-center gap-1 pl-1 border-l border-slate-100">
+                      <div className="flex items-center gap-1 pl-1 border-l border-slate-100 dark:border-slate-800/60">
                         <button
                           type="button"
                           onClick={() => handleOpenEdit(tx)}
                           title="Ubah Transaksi"
-                          className="p-1 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-slate-100 transition-colors cursor-pointer"
+                          className="p-1 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                         >
                           <Edit2 className="h-3.5 w-3.5" />
                         </button>
@@ -269,7 +269,7 @@ export default function TransactionsPage() {
                             type="button"
                             onClick={() => setDeleteConfirmId(tx.id)}
                             title="Hapus Transaksi"
-                            className="p-1 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-slate-100 transition-colors cursor-pointer"
+                            className="p-1 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                           >
                             <Trash2 className="h-3.5 w-3.5" />
                           </button>

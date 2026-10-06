@@ -65,12 +65,12 @@ export function ExpenseList({
   };
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white overflow-hidden shadow-sm space-y-0">
+    <div className="rounded-xl border border-slate-200 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] overflow-hidden shadow-sm space-y-0">
       {/* Header & Filter Controls */}
-      <div className="p-4 sm:p-5 border-b border-slate-100 space-y-3">
+      <div className="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800/60 space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
-            <h3 className="text-base font-bold text-slate-900">
+            <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
               Daftar Pengeluaran
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
@@ -98,7 +98,7 @@ export function ExpenseList({
               placeholder="Cari pengeluaran..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 bg-slate-50/50 pl-8 pr-3 py-1.5 text-xs text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:bg-white focus:outline-none"
+              className="w-full rounded-lg border border-slate-200 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-800/40 pl-8 pr-3 py-1.5 text-xs text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:border-blue-600 focus:bg-white dark:bg-[#0F172A] focus:outline-none"
             />
           </div>
 
@@ -107,7 +107,7 @@ export function ExpenseList({
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 bg-slate-50/50 px-3 py-1.5 text-xs text-slate-900 focus:border-blue-600 focus:bg-white focus:outline-none"
+              className="w-full rounded-lg border border-slate-200 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-800/40 px-3 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:border-blue-600 focus:bg-white dark:bg-[#0F172A] focus:outline-none"
             >
               <option value="all">Semua Kategori</option>
               {EXPENSE_CATEGORIES.map((c) => (
@@ -123,7 +123,7 @@ export function ExpenseList({
             <select
               value={selectedPaymentMethod}
               onChange={(e) => setSelectedPaymentMethod(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 bg-slate-50/50 px-3 py-1.5 text-xs text-slate-900 focus:border-blue-600 focus:bg-white focus:outline-none"
+              className="w-full rounded-lg border border-slate-200 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-800/40 px-3 py-1.5 text-xs text-slate-900 dark:text-slate-100 focus:border-blue-600 focus:bg-white dark:bg-[#0F172A] focus:outline-none"
             >
               <option value="all">Semua Metode Pembayaran</option>
               {PAYMENT_METHODS.map((m) => (
@@ -156,7 +156,7 @@ export function ExpenseList({
       {/* List items or Empty state */}
       {filteredList.length === 0 ? (
         <div className="py-12 px-4 text-center">
-          <p className="text-sm font-semibold text-slate-800">
+          <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">
             Belum ada pengeluaran bulan ini.
           </p>
           <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
@@ -174,23 +174,23 @@ export function ExpenseList({
           </button>
         </div>
       ) : (
-        <div className="divide-y divide-slate-100">
+        <div className="divide-y divide-slate-100 dark:divide-slate-800/60">
           {filteredList.map((item) => (
             <div
               key={item.id}
-              className="p-4 sm:p-5 flex items-center justify-between gap-3 hover:bg-slate-50/70 transition-colors"
+              className="p-4 sm:p-5 flex items-center justify-between gap-3 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
             >
               <div className="flex items-start gap-3 min-w-0">
-                <span className="p-2 rounded-lg bg-slate-100 text-slate-700 flex-shrink-0 mt-0.5">
+                <span className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex-shrink-0 mt-0.5">
                   <CategoryIcon category={item.category} className="h-4 w-4" />
                 </span>
 
                 <div className="min-w-0 space-y-0.5">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-xs sm:text-sm font-bold text-slate-900 truncate">
+                    <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 truncate">
                       {item.category}
                     </span>
-                    <span className="inline-flex items-center rounded px-1.5 py-0.5 text-[10px] font-medium bg-slate-100 text-slate-600 border border-slate-200">
+                    <span className="inline-flex items-center rounded px-1.5 py-0.5 text-[10px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800/60">
                       {item.payment_method || 'Cash'}
                     </span>
                     <span className="text-xs text-slate-400">
@@ -199,7 +199,7 @@ export function ExpenseList({
                   </div>
 
                   {item.description && (
-                    <p className="text-xs text-slate-600 truncate max-w-xs sm:max-w-md">
+                    <p className="text-xs text-slate-600 dark:text-slate-300 truncate max-w-xs sm:max-w-md">
                       {item.description}
                     </p>
                   )}
@@ -218,7 +218,7 @@ export function ExpenseList({
                     onClick={() => setEditingExpense(item)}
                     title="Ubah Pengeluaran"
                     aria-label="Edit Pengeluaran"
-                    className="rounded-lg p-1.5 text-slate-400 hover:text-blue-600 hover:bg-slate-100 transition-colors cursor-pointer"
+                    className="rounded-lg p-1.5 text-slate-400 hover:text-blue-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                   >
                     <Edit2 className="h-3.5 w-3.5" />
                   </button>
@@ -247,7 +247,7 @@ export function ExpenseList({
                       onClick={() => setDeleteConfirmId(item.id)}
                       title="Hapus Pengeluaran"
                       aria-label="Hapus Pengeluaran"
-                      className="rounded-lg p-1.5 text-slate-400 hover:text-red-600 hover:bg-slate-100 transition-colors cursor-pointer"
+                      className="rounded-lg p-1.5 text-slate-400 hover:text-red-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
                     </button>

@@ -371,7 +371,7 @@ export default function PlanPage() {
         {/* Header Title */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-extrabold text-slate-900 tracking-tight">
+            <h2 className="text-xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
               Anggaran Bulanan
             </h2>
             <p className="text-xs text-slate-500 font-medium">
@@ -384,18 +384,18 @@ export default function PlanPage() {
         </div>
 
         {/* Month Navigation: < Oktober 2026 > */}
-        <div className="flex items-center justify-between rounded-2xl bg-white border border-slate-100 p-2 shadow-xs">
+        <div className="flex items-center justify-between rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-100 dark:border-slate-800/60 p-2 shadow-xs">
           <button
             type="button"
             onClick={handlePrevMonth}
             disabled={selectedMonthIdx === 0}
-            className="p-2 rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 disabled:opacity-30 disabled:hover:bg-transparent transition-colors cursor-pointer"
+            className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:text-slate-100 disabled:opacity-30 disabled:hover:bg-transparent transition-colors cursor-pointer"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
           <div className="text-center">
             <span className="text-xs text-slate-400 font-medium block">Periode Anggaran</span>
-            <span className="text-sm font-extrabold text-slate-900">
+            <span className="text-sm font-extrabold text-slate-900 dark:text-slate-100">
               {selectedMonth.label}
             </span>
           </div>
@@ -403,20 +403,20 @@ export default function PlanPage() {
             type="button"
             onClick={handleNextMonth}
             disabled={selectedMonthIdx === CONTRACT_MONTHS.length - 1}
-            className="p-2 rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 disabled:opacity-30 disabled:hover:bg-transparent transition-colors cursor-pointer"
+            className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:text-slate-100 disabled:opacity-30 disabled:hover:bg-transparent transition-colors cursor-pointer"
           >
             <ChevronRight className="h-5 w-5" />
           </button>
         </div>
 
         {/* Summary Card: Total Anggaran & Sisa */}
-        <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-xs space-y-4">
+        <div className="rounded-2xl border border-slate-100 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] p-5 shadow-xs space-y-4">
           <div className="flex items-start justify-between">
             <div>
               <span className="text-xs text-slate-500 font-medium block mb-1">
                 Total Batas Anggaran
               </span>
-              <h3 className="text-2xl font-extrabold text-slate-900 tabular-nums">
+              <h3 className="text-2xl font-extrabold text-slate-900 dark:text-slate-100 tabular-nums">
                 {formatCurrency(totalBudget)}
               </h3>
             </div>
@@ -424,7 +424,7 @@ export default function PlanPage() {
             <button
               type="button"
               onClick={handleOpenEditTotal}
-              className="p-2.5 rounded-xl text-slate-400 hover:text-blue-600 hover:bg-slate-50 transition-colors cursor-pointer border border-slate-100"
+              className="p-2.5 rounded-xl text-slate-400 hover:text-blue-600 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors cursor-pointer border border-slate-100 dark:border-slate-800/60"
               title="Ubah Total Anggaran"
             >
               <Edit2 className="h-4 w-4" />
@@ -432,10 +432,10 @@ export default function PlanPage() {
           </div>
 
           {/* Breakdown Grid: Terpakai vs Sisa */}
-          <div className="grid grid-cols-2 gap-3 pt-1 border-t border-slate-100">
+          <div className="grid grid-cols-2 gap-3 pt-1 border-t border-slate-100 dark:border-slate-800/60">
             <div>
               <span className="text-[11px] font-semibold text-slate-400 block">Total Pengeluaran</span>
-              <span className="text-sm font-bold text-slate-900 tabular-nums">
+              <span className="text-sm font-bold text-slate-900 dark:text-slate-100 tabular-nums">
                 {formatCurrency(totalSpent)}
               </span>
             </div>
@@ -454,9 +454,9 @@ export default function PlanPage() {
           <div className="space-y-1.5 pt-1">
             <div className="flex items-center justify-between text-xs">
               <span className="text-slate-500 font-medium">Penggunaan Anggaran</span>
-              <span className="font-bold text-slate-900 tabular-nums">{overallPercent}%</span>
+              <span className="font-bold text-slate-900 dark:text-slate-100 tabular-nums">{overallPercent}%</span>
             </div>
-            <div className="h-2.5 w-full rounded-full bg-slate-100 overflow-hidden">
+            <div className="h-2.5 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
               <div
                 className={`h-full rounded-full transition-all duration-300 ${totalSpent > totalBudget ? 'bg-rose-600' : 'bg-blue-600'
                   }`}
@@ -469,7 +469,7 @@ export default function PlanPage() {
         {/* Category Budget Breakdown List */}
         <div className="space-y-3">
           <div className="flex items-center justify-between px-1">
-            <h3 className="text-sm font-bold text-slate-900">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">
               Anggaran Per Kategori
             </h3>
             <span className="text-xs text-slate-400 font-medium">
@@ -477,14 +477,14 @@ export default function PlanPage() {
             </span>
           </div>
 
-          <div className="rounded-2xl border border-slate-100 bg-white p-4 shadow-xs space-y-4">
+          <div className="rounded-2xl border border-slate-100 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] p-4 shadow-xs space-y-4">
             {categoriesData.map((cat) => {
               const isExpanded = expandedCategory === cat.id;
 
               return (
                 <div
                   key={cat.id}
-                  className="rounded-xl border border-slate-100/80 bg-slate-50/40 p-3.5 space-y-2.5 transition-all hover:border-slate-200"
+                  className="rounded-xl border border-slate-100 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-800/40 p-3.5 space-y-2.5 transition-all hover:border-slate-200 dark:border-slate-800/60"
                 >
                   {/* Category Header Row */}
                   <div className="flex items-center justify-between gap-2">
@@ -495,7 +495,7 @@ export default function PlanPage() {
                     >
                       <CategoryIcon category={cat.icon || cat.name} size="sm" />
                       <div className="min-w-0">
-                        <span className="text-xs font-bold text-slate-900 truncate block">
+                        <span className="text-xs font-bold text-slate-900 dark:text-slate-100 truncate block">
                           {cat.name}
                         </span>
                         <span className="text-[10px] text-slate-400 font-medium block">
@@ -506,7 +506,7 @@ export default function PlanPage() {
 
                     <div className="flex items-center gap-2">
                       <div className="text-right">
-                        <div className="text-xs font-bold text-slate-900 tabular-nums">
+                        <div className="text-xs font-bold text-slate-900 dark:text-slate-100 tabular-nums">
                           {formatCurrency(cat.spent)}
                           <span className="text-[11px] font-normal text-slate-400"> / {formatCurrency(cat.limit)}</span>
                         </div>
@@ -521,7 +521,7 @@ export default function PlanPage() {
                       <button
                         type="button"
                         onClick={(e) => handleOpenEditCategory(cat, e)}
-                        className="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-slate-100 transition-colors cursor-pointer"
+                        className="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                         title="Ubah Limit Kategori"
                       >
                         <Edit2 className="h-3.5 w-3.5" />
@@ -531,7 +531,7 @@ export default function PlanPage() {
                       <button
                         type="button"
                         onClick={() => setExpandedCategory(isExpanded ? null : cat.id)}
-                        className="p-1 text-slate-400 hover:text-slate-700 cursor-pointer"
+                        className="p-1 text-slate-400 hover:text-slate-700 dark:text-slate-300 cursor-pointer"
                       >
                         {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                       </button>
@@ -548,14 +548,14 @@ export default function PlanPage() {
 
                   {/* Expandable Transaction Breakdown */}
                   {isExpanded && (
-                    <div className="pt-2 border-t border-slate-200/60 space-y-2 animate-in fade-in duration-150">
+                    <div className="pt-2 border-t border-slate-200 dark:border-slate-800/60 space-y-2 animate-in fade-in duration-150">
                       <div className="flex items-center justify-between text-[11px] font-bold text-slate-500 px-1">
                         <span>Rincian Pengeluaran</span>
                         <span>{cat.records.length} Item</span>
                       </div>
 
                       {cat.records.length === 0 ? (
-                        <p className="text-xs text-slate-400 italic py-2 text-center bg-white rounded-lg border border-dashed border-slate-200">
+                        <p className="text-xs text-slate-400 italic py-2 text-center bg-white dark:bg-[#0F172A] rounded-lg border border-dashed border-slate-200 dark:border-slate-800/60">
                           Belum ada pengeluaran dicatat di kategori ini bulan ini.
                         </p>
                       ) : (
@@ -563,10 +563,10 @@ export default function PlanPage() {
                           {cat.records.map((item) => (
                             <div
                               key={item.id}
-                              className="flex items-center justify-between p-2 rounded-lg bg-white border border-slate-100 text-xs"
+                              className="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-[#0F172A] border border-slate-100 dark:border-slate-800/60 text-xs"
                             >
                               <div className="min-w-0 pr-2">
-                                <span className="font-semibold text-slate-800 truncate block">
+                                <span className="font-semibold text-slate-800 dark:text-slate-200 truncate block">
                                   {item.description}
                                 </span>
                                 <span className="text-[10px] text-slate-400 block">
@@ -575,7 +575,7 @@ export default function PlanPage() {
                               </div>
 
                               <div className="flex items-center gap-2 flex-shrink-0">
-                                <span className="font-bold text-slate-900 tabular-nums">
+                                <span className="font-bold text-slate-900 dark:text-slate-100 tabular-nums">
                                   - {formatCurrency(item.amount)}
                                 </span>
 
@@ -601,7 +601,7 @@ export default function PlanPage() {
                                     type="button"
                                     onClick={() => setDeletingRecordId(item.id)}
                                     title="Hapus Item Ini"
-                                    className="p-1 rounded-md text-slate-400 hover:text-rose-600 hover:bg-slate-100 transition-colors cursor-pointer"
+                                    className="p-1 rounded-md text-slate-400 hover:text-rose-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                                   >
                                     <Trash2 className="h-3.5 w-3.5" />
                                   </button>
@@ -645,28 +645,28 @@ export default function PlanPage() {
               className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
               onClick={() => setEditingCategory(null)}
             />
-            <div className="relative z-10 w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
+            <div className="relative z-10 w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white dark:bg-[#0F172A] p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
               {/* Drag Handle Bar for mobile */}
               <div className="w-12 h-1.5 rounded-full bg-slate-200 mx-auto -mt-1 mb-1 flex-shrink-0 sm:hidden" />
 
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-3">
                 <div className="flex items-center gap-2.5">
                   <CategoryIcon category={editingCategory.icon || editingCategory.name} size="sm" />
-                  <h3 className="text-sm font-bold text-slate-900">
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">
                     Batas {editingCategory.name}
                   </h3>
                 </div>
                 <button
                   type="button"
                   onClick={() => setEditingCategory(null)}
-                  className="p-1 text-slate-400 hover:text-slate-600 rounded-lg cursor-pointer"
+                  className="p-1 text-slate-400 hover:text-slate-600 dark:text-slate-300 rounded-lg cursor-pointer"
                 >
                   <X className="h-4 w-4" />
                 </button>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
                   Batas Anggaran Kategori
                 </label>
                 <CurrencyInput
@@ -680,7 +680,7 @@ export default function PlanPage() {
                 <button
                   type="button"
                   onClick={() => setEditingCategory(null)}
-                  className="flex-1 rounded-xl border border-slate-200 py-3 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors cursor-pointer"
+                  className="flex-1 rounded-xl border border-slate-200 dark:border-slate-800/60 py-3 text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors cursor-pointer"
                 >
                   Batal
                 </button>
@@ -706,25 +706,25 @@ export default function PlanPage() {
               className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
               onClick={() => setEditingTotalModal(false)}
             />
-            <div className="relative z-10 w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
+            <div className="relative z-10 w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white dark:bg-[#0F172A] p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
               {/* Drag Handle Bar for mobile */}
               <div className="w-12 h-1.5 rounded-full bg-slate-200 mx-auto -mt-1 mb-1 flex-shrink-0 sm:hidden" />
 
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 className="text-sm font-bold text-slate-900">
+              <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-3">
+                <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">
                   Ubah Total Anggaran Bulan Ini
                 </h3>
                 <button
                   type="button"
                   onClick={() => setEditingTotalModal(false)}
-                  className="p-1 text-slate-400 hover:text-slate-600 rounded-lg cursor-pointer"
+                  className="p-1 text-slate-400 hover:text-slate-600 dark:text-slate-300 rounded-lg cursor-pointer"
                 >
                   <X className="h-4 w-4" />
                 </button>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
                   Nominal Total Anggaran
                 </label>
                 <CurrencyInput
@@ -741,7 +741,7 @@ export default function PlanPage() {
                 <button
                   type="button"
                   onClick={() => setEditingTotalModal(false)}
-                  className="flex-1 rounded-xl border border-slate-200 py-3 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors cursor-pointer"
+                  className="flex-1 rounded-xl border border-slate-200 dark:border-slate-800/60 py-3 text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors cursor-pointer"
                 >
                   Batal
                 </button>

@@ -38,20 +38,20 @@ export function Modal({ isOpen, onClose, title, children, maxWidth = 'sm:max-w-m
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-title"
-          className={`relative z-10 w-full ${maxWidth} rounded-t-[32px] sm:rounded-3xl border border-slate-200 bg-white p-5 sm:p-6 shadow-2xl transition-all max-h-[90vh] overflow-y-auto animate-in duration-200`}
+          className={`relative z-10 w-full ${maxWidth} rounded-t-[32px] sm:rounded-3xl border border-slate-200 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] p-5 sm:p-6 shadow-2xl transition-all max-h-[90vh] overflow-y-auto animate-in duration-200`}
         >
           {/* Drag Handle Bar for mobile */}
           <div className="w-12 h-1.5 rounded-full bg-slate-200 mx-auto -mt-1 mb-2 flex-shrink-0 sm:hidden" />
 
-          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-            <h2 id="modal-title" className="text-base font-bold text-slate-900">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800/60">
+            <h2 id="modal-title" className="text-base font-bold text-slate-900 dark:text-slate-100">
               {title}
             </h2>
             <button
               type="button"
               onClick={onClose}
               aria-label="Tutup modal"
-              className="rounded-lg p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+              className="rounded-lg p-1.5 text-slate-400 hover:text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
             >
               <X className="h-5 w-5" />
             </button>

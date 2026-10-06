@@ -10,7 +10,7 @@ import { TransactionModal } from '../transactions/TransactionModal';
 const TYPE_ICON_MAP = {
   salary: { bg: 'bg-blue-50', color: 'text-blue-600', icon: Wallet },
   freelance: { bg: 'bg-emerald-50', color: 'text-emerald-600', icon: Briefcase },
-  saving: { bg: 'bg-slate-100', color: 'text-slate-600', icon: Wallet },
+  saving: { bg: 'bg-slate-100 dark:bg-slate-800', color: 'text-slate-600 dark:text-slate-300', icon: Wallet },
   other: { bg: 'bg-amber-50', color: 'text-amber-600', icon: MoreHorizontal },
 };
 
@@ -26,14 +26,14 @@ export function RecentTransactionsCard({ transactions = [] }) {
   const getIconConfig = (type) => TYPE_ICON_MAP[type] || TYPE_ICON_MAP.other;
 
   return (
-    <div className="rounded-2xl border border-blue-100 bg-white shadow-sm overflow-hidden">
+    <div className="rounded-2xl border border-blue-100 bg-white dark:bg-[#0F172A] shadow-sm overflow-hidden">
       <div className="flex items-center justify-between px-5 pt-5 pb-3">
-        <h3 className="text-sm font-bold text-slate-900">Aktivitas terbaru</h3>
+        <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Aktivitas terbaru</h3>
         <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={() => setIsModalOpen(true)}
-            className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-colors"
+            className="inline-flex items-center gap-1 rounded-lg border border-slate-200 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-800/40 px-2.5 py-1 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
           >
             <Plus className="h-3 w-3" />
             <span>Tambah</span>
@@ -53,7 +53,7 @@ export function RecentTransactionsCard({ transactions = [] }) {
           <div className="h-12 w-12 rounded-full bg-blue-50 flex items-center justify-center mx-auto mb-3">
             <Wallet className="h-6 w-6 text-blue-400" />
           </div>
-          <p className="text-sm font-semibold text-slate-700">Belum ada transaksi</p>
+          <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">Belum ada transaksi</p>
           <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto">
             Tambahkan transaksi pertama untuk mulai mencatat perjalananmu menuju{' '}
             {formatCurrency(50000000)}.
@@ -75,7 +75,7 @@ export function RecentTransactionsCard({ transactions = [] }) {
             return (
               <div
                 key={tx.id}
-                className="flex items-center gap-3 px-5 py-3 hover:bg-slate-50/60 transition-colors"
+                className="flex items-center gap-3 px-5 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
               >
                 {/* Icon */}
                 <div className={`h-9 w-9 rounded-xl ${cfg.bg} flex items-center justify-center flex-shrink-0`}>
@@ -84,7 +84,7 @@ export function RecentTransactionsCard({ transactions = [] }) {
 
                 {/* Label & date */}
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-slate-900 truncate">
+                  <p className="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">
                     {getTypeLabel(tx.type)}
                   </p>
                   {tx.description && (

@@ -73,7 +73,7 @@ export default function LoginPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col justify-center items-center px-4 py-8 relative overflow-hidden">
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#020617] flex flex-col justify-center items-center px-4 py-8 relative overflow-hidden">
       {/* Background Decorative Elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
         {/* Top left shape */}
@@ -98,13 +98,13 @@ export default function LoginPage() {
         <div className="flex flex-col items-center text-center space-y-3">
           <TumbuhLogo className="h-20 w-20" />
           <div className="space-y-1.5">
-            <h1 className="text-[28px] font-extrabold text-[#1E293B] tracking-tight">
+            <h1 className="text-[28px] font-extrabold text-[#1E293B] dark:text-slate-100 tracking-tight">
               Tumbuh
             </h1>
-            <p className="text-[14px] text-[#64748B] font-semibold">
+            <p className="text-[14px] text-[#64748B] dark:text-slate-400 font-semibold">
               Catat. Kelola. Capai.
             </p>
-            <p className="text-[12.5px] text-[#94A3B8] max-w-[240px] mx-auto mt-2 leading-relaxed">
+            <p className="text-[12.5px] text-[#94A3B8] dark:text-slate-400 max-w-[240px] mx-auto mt-2 leading-relaxed">
               Mulai perjalanan finansialmu menuju masa depan yang lebih baik.
             </p>
           </div>
@@ -113,7 +113,7 @@ export default function LoginPage() {
         {/* Main Card */}
         <div className="bg-white/90 backdrop-blur-xl rounded-[24px] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-6 space-y-5">
           {/* Tab Selector */}
-          <div className="flex rounded-2xl bg-[#F1F5F9] p-1.5">
+          <div className="flex rounded-2xl bg-[#F1F5F9] dark:bg-slate-800/50 p-1.5">
             <button
               type="button"
               onClick={() => {
@@ -122,7 +122,7 @@ export default function LoginPage() {
                 setSuccessMsg('');
               }}
               className={`flex-1 flex items-center justify-center gap-2 rounded-xl py-2.5 text-[13px] font-bold transition-all cursor-pointer ${
-                !isRegister ? 'bg-white text-[#2563EB] shadow-sm' : 'text-[#64748B] hover:text-[#334155]'
+                !isRegister ? 'bg-white dark:bg-[#0F172A] text-[#2563EB] shadow-sm' : 'text-[#64748B] dark:text-slate-400 hover:text-[#334155]'
               }`}
             >
               <Mail className="h-4 w-4" />
@@ -136,7 +136,7 @@ export default function LoginPage() {
                 setSuccessMsg('');
               }}
               className={`flex-1 flex items-center justify-center gap-2 rounded-xl py-2.5 text-[13px] font-bold transition-all cursor-pointer ${
-                isRegister ? 'bg-white text-[#2563EB] shadow-sm' : 'text-[#64748B] hover:text-[#334155]'
+                isRegister ? 'bg-white dark:bg-[#0F172A] text-[#2563EB] shadow-sm' : 'text-[#64748B] dark:text-slate-400 hover:text-[#334155]'
               }`}
             >
               <User className="h-4 w-4" />
@@ -160,58 +160,58 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {isRegister && (
               <div className="space-y-1.5">
-                <label className="block text-[12px] font-bold text-[#1E293B]">
+                <label className="block text-[12px] font-bold text-[#1E293B] dark:text-slate-100">
                   Nama Lengkap
                 </label>
                 <div className="relative">
-                  <User className="absolute left-4 top-3.5 h-[18px] w-[18px] text-[#94A3B8]" />
+                  <User className="absolute left-4 top-3.5 h-[18px] w-[18px] text-[#94A3B8] dark:text-slate-400" />
                   <input
                     type="text"
                     required
                     placeholder="Contoh: Agus Setiawan"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] pl-11 pr-4 py-3.5 text-[13px] font-medium text-[#0F172A] placeholder:text-[#94A3B8] focus:border-[#2563EB] focus:bg-white focus:outline-none transition-all"
+                    className="w-full rounded-2xl border border-[#E2E8F0] dark:border-slate-800/60 bg-[#F8FAFC] dark:bg-[#020617] pl-11 pr-4 py-3.5 text-[13px] font-medium text-[#0F172A] dark:text-slate-100 placeholder:text-[#94A3B8] dark:text-slate-400 focus:border-[#2563EB] dark:border-slate-800/60 focus:bg-white dark:bg-[#0F172A] focus:outline-none transition-all"
                   />
                 </div>
               </div>
             )}
 
             <div className="space-y-1.5">
-              <label className="block text-[12px] font-bold text-[#1E293B]">
+              <label className="block text-[12px] font-bold text-[#1E293B] dark:text-slate-100">
                 Email
               </label>
               <div className="relative">
-                <Mail className="absolute left-4 top-3.5 h-[18px] w-[18px] text-[#94A3B8]" />
+                <Mail className="absolute left-4 top-3.5 h-[18px] w-[18px] text-[#94A3B8] dark:text-slate-400" />
                 <input
                   type="email"
                   required
                   placeholder="agus.setiawan@company.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] pl-11 pr-4 py-3.5 text-[13px] font-medium text-[#0F172A] placeholder:text-[#94A3B8] focus:border-[#2563EB] focus:bg-white focus:outline-none transition-all"
+                  className="w-full rounded-2xl border border-[#E2E8F0] dark:border-slate-800/60 bg-[#F8FAFC] dark:bg-[#020617] pl-11 pr-4 py-3.5 text-[13px] font-medium text-[#0F172A] dark:text-slate-100 placeholder:text-[#94A3B8] dark:text-slate-400 focus:border-[#2563EB] dark:border-slate-800/60 focus:bg-white dark:bg-[#0F172A] focus:outline-none transition-all"
                 />
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-[12px] font-bold text-[#1E293B]">
+              <label className="block text-[12px] font-bold text-[#1E293B] dark:text-slate-100">
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-4 top-3.5 h-[18px] w-[18px] text-[#94A3B8]" />
+                <Lock className="absolute left-4 top-3.5 h-[18px] w-[18px] text-[#94A3B8] dark:text-slate-400" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] pl-11 pr-11 py-3.5 text-[13px] font-medium text-[#0F172A] placeholder:text-[#94A3B8] tracking-widest focus:border-[#2563EB] focus:bg-white focus:outline-none transition-all"
+                  className="w-full rounded-2xl border border-[#E2E8F0] dark:border-slate-800/60 bg-[#F8FAFC] dark:bg-[#020617] pl-11 pr-11 py-3.5 text-[13px] font-medium text-[#0F172A] dark:text-slate-100 placeholder:text-[#94A3B8] dark:text-slate-400 tracking-widest focus:border-[#2563EB] dark:border-slate-800/60 focus:bg-white dark:bg-[#0F172A] focus:outline-none transition-all"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-3.5 text-[#94A3B8] hover:text-[#64748B] cursor-pointer transition-colors"
+                  className="absolute right-4 top-3.5 text-[#94A3B8] dark:text-slate-400 hover:text-[#64748B] dark:text-slate-400 cursor-pointer transition-colors"
                 >
                   {showPassword ? <EyeOff className="h-[18px] w-[18px]" /> : <Eye className="h-[18px] w-[18px]" />}
                 </button>
@@ -231,14 +231,14 @@ export default function LoginPage() {
           </form>
 
           <div className="relative flex items-center py-2">
-            <div className="flex-grow border-t border-[#E2E8F0]"></div>
-            <span className="flex-shrink-0 mx-4 text-[12px] font-medium text-[#94A3B8]">atau</span>
-            <div className="flex-grow border-t border-[#E2E8F0]"></div>
+            <div className="flex-grow border-t border-[#E2E8F0] dark:border-slate-800/60"></div>
+            <span className="flex-shrink-0 mx-4 text-[12px] font-medium text-[#94A3B8] dark:text-slate-400">atau</span>
+            <div className="flex-grow border-t border-[#E2E8F0] dark:border-slate-800/60"></div>
           </div>
 
           <button
             type="button"
-            className="w-full rounded-2xl border border-[#E2E8F0] bg-white py-3.5 text-[13.5px] font-bold text-[#475569] hover:bg-[#F8FAFC] transition-colors cursor-pointer flex items-center justify-center gap-2.5"
+            className="w-full rounded-2xl border border-[#E2E8F0] dark:border-slate-800/60 bg-white dark:bg-[#0F172A] py-3.5 text-[13.5px] font-bold text-[#475569] hover:bg-[#F8FAFC] dark:bg-[#020617] transition-colors cursor-pointer flex items-center justify-center gap-2.5"
           >
             <GoogleIcon />
             <span>{isRegister ? 'Daftar' : 'Masuk'} dengan Google</span>
@@ -246,7 +246,7 @@ export default function LoginPage() {
         </div>
 
         {/* Footer info */}
-        <div className="flex items-center justify-center gap-1.5 text-[11px] font-medium text-[#94A3B8] pt-2">
+        <div className="flex items-center justify-center gap-1.5 text-[11px] font-medium text-[#94A3B8] dark:text-slate-400 pt-2">
           <Shield className="h-3.5 w-3.5" />
           <span>Keamanan Data Terjamin dengan Supabase Auth</span>
         </div>

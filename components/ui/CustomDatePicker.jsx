@@ -72,7 +72,7 @@ export function CustomDatePicker({ value, onChange }) {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-2.5 flex items-center justify-between text-xs font-semibold text-slate-900 hover:bg-white hover:border-blue-500 transition-all cursor-pointer shadow-xs"
+        className="w-full rounded-2xl border border-slate-200 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-800/40 px-4 py-2.5 flex items-center justify-between text-xs font-semibold text-slate-900 dark:text-slate-100 hover:bg-white dark:hover:bg-[#0F172A] hover:border-blue-500 transition-all cursor-pointer shadow-xs"
       >
         <div className="flex items-center gap-2.5">
           <div className="h-7 w-7 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600">
@@ -89,23 +89,23 @@ export function CustomDatePicker({ value, onChange }) {
           {/* Backdrop overlay */}
           <div className="fixed inset-0 z-30" onClick={() => setIsOpen(false)} />
 
-          <div className="absolute left-0 right-0 top-full mt-2 z-40 bg-white border border-slate-200 rounded-3xl shadow-2xl p-4 space-y-3 animate-in fade-in zoom-in duration-150 min-w-[280px]">
+          <div className="absolute left-0 right-0 top-full mt-2 z-40 bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800/60 rounded-3xl shadow-2xl p-4 space-y-3 animate-in fade-in zoom-in duration-150 min-w-[280px]">
             {/* Header: < Month Year > */}
             <div className="flex items-center justify-between px-1">
               <button
                 type="button"
                 onClick={handlePrevMonth}
-                className="p-1 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors cursor-pointer"
+                className="p-1 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
               >
                 <ChevronLeft className="h-4 w-4" />
               </button>
-              <span className="text-xs font-bold text-slate-900">
+              <span className="text-xs font-bold text-slate-900 dark:text-slate-100">
                 {MONTH_NAMES[viewMonth]} {viewYear}
               </span>
               <button
                 type="button"
                 onClick={handleNextMonth}
-                className="p-1 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors cursor-pointer"
+                className="p-1 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
               >
                 <ChevronRight className="h-4 w-4" />
               </button>
@@ -143,7 +143,7 @@ export function CustomDatePicker({ value, onChange }) {
                     className={`h-8 w-8 rounded-full flex items-center justify-center text-xs font-semibold mx-auto transition-all cursor-pointer ${
                       isSelected
                         ? 'bg-blue-600 text-white font-bold shadow-xs scale-105'
-                        : 'text-slate-700 hover:bg-slate-100'
+                        : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
                     }`}
                   >
                     {day}
@@ -153,7 +153,7 @@ export function CustomDatePicker({ value, onChange }) {
             </div>
 
             {/* Footer Preset: Today */}
-            <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
+            <div className="pt-2 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between">
               <button
                 type="button"
                 onClick={handleSelectToday}
@@ -164,7 +164,7 @@ export function CustomDatePicker({ value, onChange }) {
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="text-[11px] font-semibold text-slate-500 hover:text-slate-800 cursor-pointer"
+                className="text-[11px] font-semibold text-slate-500 hover:text-slate-800 dark:text-slate-200 cursor-pointer"
               >
                 Tutup
               </button>

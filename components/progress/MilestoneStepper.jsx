@@ -47,10 +47,10 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
   const [selectedMilestone, setSelectedMilestone] = useState(null);
 
   return (
-    <div className="rounded-[16px] border border-slate-200/80 bg-white p-3.5 sm:p-4 shadow-2xs space-y-3">
-      <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+    <div className="rounded-[16px] border border-slate-200 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] p-3.5 sm:p-4 shadow-2xs space-y-3">
+      <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-2.5">
         <div>
-          <h3 className="text-[13px] sm:text-sm font-bold text-[#172033] tracking-tight flex items-center gap-1.5">
+          <h3 className="text-[13px] sm:text-sm font-bold text-[#172033] dark:text-slate-100 tracking-tight flex items-center gap-1.5">
             <Trophy className="h-4 w-4 text-amber-500" />
             <span>Milestone Target Tabungan</span>
           </h3>
@@ -85,10 +85,10 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
               onClick={() => setSelectedMilestone({ ...milestone, isCompleted, isNext, progressVal, idx })}
               className={`p-3 rounded-xl border transition-all cursor-pointer group active:scale-[0.99] ${
                 isCompleted
-                  ? 'border-emerald-200 bg-white hover:border-emerald-300 shadow-2xs'
+                  ? 'border-emerald-200 dark:border-emerald-800 bg-white dark:bg-[#0F172A] hover:border-emerald-300 dark:hover:border-emerald-700 shadow-2xs'
                   : isNext
-                  ? 'border-blue-300 bg-blue-50/30 ring-2 ring-blue-500/15 shadow-2xs'
-                  : 'border-slate-100 bg-slate-50/40 opacity-70 hover:border-slate-200'
+                  ? 'border-blue-300 dark:border-blue-700 bg-blue-50/30 dark:bg-blue-900/20 ring-2 ring-blue-500/15 dark:ring-blue-500/30 shadow-2xs'
+                  : 'border-slate-100 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-800/40 opacity-70 hover:border-slate-200 dark:hover:border-slate-800/80'
               }`}
             >
               <div className="flex items-center justify-between gap-2.5">
@@ -99,8 +99,8 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
                       isCompleted
                         ? 'bg-[#00A86B] text-white shadow-2xs'
                         : isNext
-                        ? 'bg-[#2563EB] text-white shadow-2xs ring-2 ring-blue-100'
-                        : 'bg-slate-200 text-slate-400'
+                        ? 'bg-[#2563EB] text-white shadow-2xs ring-2 ring-blue-100 dark:ring-blue-900'
+                        : 'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500'
                     }`}
                   >
                     {isCompleted ? (
@@ -115,7 +115,7 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
                   {/* Info */}
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-1.5">
-                      <span className="text-[11px] sm:text-xs font-semibold text-[#172033] leading-snug">
+                      <span className="text-[11px] sm:text-xs font-semibold text-[#172033] dark:text-slate-100 leading-snug">
                         {milestone.title}
                       </span>
                     </div>
@@ -130,10 +130,10 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
                   <span
                     className={`text-[11px] font-bold px-2 py-0.5 rounded-lg border inline-block tabular-nums ${
                       isCompleted
-                        ? 'bg-emerald-50 text-emerald-800 border-emerald-200/80 font-bold'
+                        ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-400 border-emerald-200/80 dark:border-emerald-800/60'
                         : isNext
-                        ? 'bg-blue-50 text-blue-800 border-blue-200 font-bold'
-                        : 'bg-slate-100 text-slate-500 border-slate-200 font-medium'
+                        ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 border-blue-200 dark:border-blue-800/60'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-500 border-slate-200 dark:border-slate-800/60'
                     }`}
                   >
                     {formatCurrency(milestone.amount)}
@@ -160,7 +160,7 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
               {/* Progress Bar for Active Step */}
               {isNext && (
                 <div className="mt-2.5 pt-2 border-t border-blue-100/80 space-y-1">
-                  <div className="flex items-center justify-between text-[11px] font-semibold text-slate-600">
+                  <div className="flex items-center justify-between text-[11px] font-semibold text-slate-600 dark:text-slate-300">
                     <span>Progres ke milestone ini</span>
                     <span className="text-blue-600 font-bold tabular-nums">{progressVal}%</span>
                   </div>
@@ -185,10 +185,10 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
               className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
               onClick={() => setSelectedMilestone(null)}
             />
-            <div className="relative z-10 w-full max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
+            <div className="relative z-10 w-full max-w-md rounded-t-[32px] sm:rounded-3xl bg-white dark:bg-[#0F172A] p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
               <div className="w-12 h-1.5 rounded-full bg-slate-200 mx-auto -mt-1 mb-1 flex-shrink-0 sm:hidden" />
 
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-3">
                 <div className="flex items-center gap-2.5">
                   <div
                     className={`p-2 rounded-xl text-white ${
@@ -198,7 +198,7 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
                     <Trophy className="h-4 w-4" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-slate-900">{selectedMilestone.title}</h4>
+                    <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100">{selectedMilestone.title}</h4>
                     <span className="text-xs text-slate-400 font-medium block">
                       Target: {formatCurrency(selectedMilestone.amount)}
                     </span>
@@ -208,23 +208,23 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
                 <button
                   type="button"
                   onClick={() => setSelectedMilestone(null)}
-                  className="p-1 text-slate-400 hover:text-slate-600 rounded-lg cursor-pointer"
+                  className="p-1 text-slate-400 hover:text-slate-600 dark:text-slate-300 rounded-lg cursor-pointer"
                 >
                   <X className="h-4 w-4" />
                 </button>
               </div>
 
               <div className="space-y-3">
-                <div className="rounded-2xl bg-slate-50 border border-slate-100 p-4 space-y-2 text-xs">
+                <div className="rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800/60 p-4 space-y-2 text-xs">
                   <div className="flex items-center justify-between">
                     <span className="text-slate-500 font-medium">Saldo Terkumpul Saat Ini:</span>
-                    <span className="font-bold text-slate-900 tabular-nums">{formatCurrency(balance)}</span>
+                    <span className="font-bold text-slate-900 dark:text-slate-100 tabular-nums">{formatCurrency(balance)}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-slate-500 font-medium">Target Milestone:</span>
-                    <span className="font-bold text-slate-900 tabular-nums">{formatCurrency(selectedMilestone.amount)}</span>
+                    <span className="font-bold text-slate-900 dark:text-slate-100 tabular-nums">{formatCurrency(selectedMilestone.amount)}</span>
                   </div>
-                  <div className="flex items-center justify-between pt-1 border-t border-slate-200/60">
+                  <div className="flex items-center justify-between pt-1 border-t border-slate-200 dark:border-slate-800/60">
                     <span className="text-slate-500 font-medium">Sisa Kekurangan:</span>
                     <span
                       className={`font-bold tabular-nums ${
@@ -249,7 +249,7 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
                     </span>
                   </div>
                 ) : (
-                  <div className="rounded-xl bg-slate-100 p-3 text-xs text-slate-600 font-medium">
+                  <div className="rounded-xl bg-slate-100 dark:bg-slate-800 p-3 text-xs text-slate-600 dark:text-slate-300 font-medium">
                     🔒 Capai milestone sebelumnya terlebih dahulu.
                   </div>
                 )}

@@ -19,10 +19,10 @@ export function CashFlowAndExpenseSection({
   const netCashFlow = monthIncome - totalExpense;
 
   return (
-    <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-5">
-      <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+    <section className="rounded-2xl border border-slate-200 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] p-6 shadow-sm space-y-5">
+      <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800/60">
         <div>
-          <h3 className="text-base font-bold text-slate-900">
+          <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
             Arus Kas & Pengeluaran ({activeMonthLabel})
           </h3>
           <p className="text-xs text-slate-500 mt-0.5">
@@ -42,33 +42,33 @@ export function CashFlowAndExpenseSection({
       {/* 3 Metrics: Pemasukan, Pengeluaran, Sisa Cash Flow */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {/* Pemasukan */}
-        <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-4">
+        <div className="rounded-xl border border-slate-100 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-800/40 p-4">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500">
               Pemasukan Bulan Ini
             </span>
             <ArrowUpRight className="h-4 w-4 text-emerald-600" />
           </div>
-          <p className="text-lg font-bold text-slate-900 mt-2 tabular-nums">
+          <p className="text-lg font-bold text-slate-900 dark:text-slate-100 mt-2 tabular-nums">
             {formatCurrency(monthIncome)}
           </p>
         </div>
 
         {/* Pengeluaran */}
-        <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-4">
+        <div className="rounded-xl border border-slate-100 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-800/40 p-4">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500">
               Pengeluaran Bulan Ini
             </span>
             <ArrowDownRight className="h-4 w-4 text-red-600" />
           </div>
-          <p className="text-lg font-bold text-slate-900 mt-2 tabular-nums">
+          <p className="text-lg font-bold text-slate-900 dark:text-slate-100 mt-2 tabular-nums">
             {formatCurrency(totalExpense)}
           </p>
         </div>
 
         {/* Sisa Cash Flow */}
-        <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-4">
+        <div className="rounded-xl border border-slate-100 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-800/40 p-4">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-500">
               Sisa Cash Flow
@@ -85,16 +85,16 @@ export function CashFlowAndExpenseSection({
       </div>
 
       {/* Insight Section */}
-      <div className="rounded-xl border border-slate-200/70 bg-slate-50/50 p-4 text-xs text-slate-700 space-y-1.5">
-        <div className="flex items-center gap-1.5 font-bold text-slate-800">
+      <div className="rounded-xl border border-slate-200 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-800/40 p-4 text-xs text-slate-700 dark:text-slate-300 space-y-1.5">
+        <div className="flex items-center gap-1.5 font-bold text-slate-800 dark:text-slate-200">
           <Lightbulb className="h-3.5 w-3.5 text-amber-500" />
           <span>Insight Keuangan Bulan Ini</span>
         </div>
 
-        <ul className="space-y-1 text-slate-600 pl-5 list-disc leading-relaxed">
+        <ul className="space-y-1 text-slate-600 dark:text-slate-300 pl-5 list-disc leading-relaxed">
           <li>
             Pengeluaran kamu bulan ini{' '}
-            <strong className="text-slate-900 tabular-nums">
+            <strong className="text-slate-900 dark:text-slate-100 tabular-nums">
               {formatCompactCurrency(totalExpense)}
             </strong>.
           </li>
@@ -102,7 +102,7 @@ export function CashFlowAndExpenseSection({
           {largestCategory && (
             <li>
               Kategori terbesar:{' '}
-              <strong className="text-slate-900">{largestCategory.category}</strong>{' '}
+              <strong className="text-slate-900 dark:text-slate-100">{largestCategory.category}</strong>{' '}
               ({formatCurrency(largestCategory.amount)}).
             </li>
           )}
@@ -110,7 +110,7 @@ export function CashFlowAndExpenseSection({
           {comparisonWithPrev && (
             <li>
               Pengeluaran kamu{' '}
-              <strong className="text-slate-900">
+              <strong className="text-slate-900 dark:text-slate-100">
                 {comparisonWithPrev.diffPercentage.toFixed(0)}%{' '}
                 {comparisonWithPrev.isLower
                   ? 'lebih rendah'

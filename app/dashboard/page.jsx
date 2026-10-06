@@ -95,18 +95,18 @@ export default function DashboardPage() {
         {/* ── 1. GREETING HEADER ──────────────────────── */}
         <div className="space-y-1 pt-0.5 w-full">
           {/* Pill Badge */}
-          <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FFF8E6] text-[#B7791F] border border-[#FEEBC8] text-[10px] font-medium shadow-2xs">
+          <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FFF8E6] text-[#B7791F] border border-[#FEEBC8] dark:border-slate-800/60 text-[10px] font-medium shadow-2xs">
             <Sun className="h-3 w-3 fill-[#F6AD55] text-[#D69E2E]" />
             <span>Selamat Pagi</span>
           </div>
 
           {/* Heading */}
-          <h2 className="text-[16px] sm:text-[17px] font-bold text-[#172033] tracking-tight flex items-center gap-1 mt-0.5">
+          <h2 className="text-[16px] sm:text-[17px] font-bold text-[#172033] dark:text-slate-100 tracking-tight flex items-center gap-1 mt-0.5">
             Halo, {userName} <span className="inline-block text-base">👋</span>
           </h2>
 
           {/* Subtitle */}
-          <p className="text-[10.5px] sm:text-[11px] text-[#64748B] font-normal leading-[16px] w-full">
+          <p className="text-[10.5px] sm:text-[11px] text-[#64748B] dark:text-slate-400 font-normal leading-[16px] w-full">
             Setiap langkah kecil membawa kamu lebih dekat ke tujuan besar.
           </p>
         </div>
@@ -120,7 +120,7 @@ export default function DashboardPage() {
         />
 
         {/* ── 3. QUICK ACTIONS CARD CONTAINER ───────── */}
-        <div className="w-full rounded-[16px] border border-[#E2E8F0] bg-white p-3 shadow-2xs">
+        <div className="w-full rounded-[16px] border border-[#E2E8F0] dark:border-slate-800/60 bg-white dark:bg-[#0F172A] p-3 shadow-2xs">
           <div className="grid grid-cols-4 gap-2">
             {/* + Tambah Transaksi */}
             <button
@@ -132,7 +132,7 @@ export default function DashboardPage() {
               <div className="h-10 w-10 rounded-2xl bg-[#2563EB] text-white flex items-center justify-center transition-transform group-hover:scale-105 shadow-2xs mb-1.5">
                 <Plus className="h-5 w-5 stroke-[2.5]" />
               </div>
-              <span className="text-[9.5px] font-semibold text-[#172033] text-center leading-tight">
+              <span className="text-[9.5px] font-semibold text-[#172033] dark:text-slate-100 text-center leading-tight">
                 Tambah<br />Transaksi
               </span>
             </button>
@@ -142,10 +142,10 @@ export default function DashboardPage() {
               href="/plan"
               className="flex flex-col items-center justify-center group cursor-pointer"
             >
-              <div className="h-10 w-10 rounded-2xl bg-[#E6F4EA] text-emerald-600 flex items-center justify-center transition-transform group-hover:scale-105 mb-1.5">
+              <div className="h-10 w-10 rounded-2xl bg-[#E6F4EA] dark:bg-emerald-950/30 text-emerald-600 flex items-center justify-center transition-transform group-hover:scale-105 mb-1.5">
                 <FileText className="h-4.5 w-4.5 stroke-[2]" />
               </div>
-              <span className="text-[9.5px] font-semibold text-[#172033] text-center leading-tight">
+              <span className="text-[9.5px] font-semibold text-[#172033] dark:text-slate-100 text-center leading-tight">
                 Atur<br />Anggaran
               </span>
             </Link>
@@ -155,10 +155,10 @@ export default function DashboardPage() {
               href="/progress"
               className="flex flex-col items-center justify-center group cursor-pointer"
             >
-              <div className="h-10 w-10 rounded-2xl bg-[#FEF3C7] text-amber-600 flex items-center justify-center transition-transform group-hover:scale-105 mb-1.5">
+              <div className="h-10 w-10 rounded-2xl bg-[#FEF3C7] dark:bg-amber-950/30 text-amber-600 flex items-center justify-center transition-transform group-hover:scale-105 mb-1.5">
                 <Target className="h-4.5 w-4.5 stroke-[2]" />
               </div>
-              <span className="text-[9.5px] font-semibold text-[#172033] text-center leading-tight">
+              <span className="text-[9.5px] font-semibold text-[#172033] dark:text-slate-100 text-center leading-tight">
                 Target<br />Tabungan
               </span>
             </Link>
@@ -168,10 +168,10 @@ export default function DashboardPage() {
               href="/progress"
               className="flex flex-col items-center justify-center group cursor-pointer"
             >
-              <div className="h-10 w-10 rounded-2xl bg-[#F3E8FF] text-purple-600 flex items-center justify-center transition-transform group-hover:scale-105 mb-1.5">
+              <div className="h-10 w-10 rounded-2xl bg-[#F3E8FF] dark:bg-purple-950/30 text-purple-600 flex items-center justify-center transition-transform group-hover:scale-105 mb-1.5">
                 <BarChart2 className="h-4.5 w-4.5 stroke-[2]" />
               </div>
-              <span className="text-[9.5px] font-semibold text-[#172033] text-center leading-tight">
+              <span className="text-[9.5px] font-semibold text-[#172033] dark:text-slate-100 text-center leading-tight">
                 Lihat<br />Progress
               </span>
             </Link>
@@ -179,10 +179,10 @@ export default function DashboardPage() {
         </div>
 
         {/* ── 4. TARGET BULAN INI CARD ───────────────── */}
-        <div className="w-full rounded-[16px] border border-[#E2E8F0] bg-white p-3.5 shadow-2xs space-y-3">
+        <div className="w-full rounded-[16px] border border-[#E2E8F0] dark:border-slate-800/60 bg-white dark:bg-[#0F172A] p-3.5 shadow-2xs space-y-3">
           {/* Section Header */}
           <div className="flex items-center justify-between">
-            <h3 className="text-[13px] sm:text-sm font-bold text-[#172033]">
+            <h3 className="text-[13px] sm:text-sm font-bold text-[#172033] dark:text-slate-100">
               Target Bulan Ini
             </h3>
             <Link
@@ -199,12 +199,12 @@ export default function DashboardPage() {
             {/* Gaji */}
             <div className="flex items-center justify-between h-9">
               <div className="flex items-center gap-2.5">
-                <div className="h-8 w-8 rounded-xl bg-[#E6F4EA] text-emerald-600 flex items-center justify-center flex-shrink-0">
+                <div className="h-8 w-8 rounded-xl bg-[#E6F4EA] dark:bg-emerald-950/30 text-emerald-600 flex items-center justify-center flex-shrink-0">
                   <FileText className="h-4 w-4 stroke-[2]" />
                 </div>
                 <div>
-                  <h4 className="text-[11px] font-semibold text-[#172033]">Gaji</h4>
-                  <p className="text-[11px] font-bold text-[#172033] tabular-nums">
+                  <h4 className="text-[11px] font-semibold text-[#172033] dark:text-slate-100">Gaji</h4>
+                  <p className="text-[11px] font-bold text-[#172033] dark:text-slate-100 tabular-nums">
                     {formatCurrency(monthStats.salaryTarget || 2000000)}
                   </p>
                 </div>
@@ -214,12 +214,12 @@ export default function DashboardPage() {
             {/* Freelance */}
             <div className="flex items-center justify-between h-9">
               <div className="flex items-center gap-2.5">
-                <div className="h-8 w-8 rounded-xl bg-[#EFF6FF] text-blue-600 flex items-center justify-center flex-shrink-0">
+                <div className="h-8 w-8 rounded-xl bg-[#EFF6FF] dark:bg-blue-950/30 text-blue-600 flex items-center justify-center flex-shrink-0">
                   <Briefcase className="h-4 w-4 stroke-[2]" />
                 </div>
                 <div>
-                  <h4 className="text-[11px] font-semibold text-[#172033]">Freelance</h4>
-                  <p className="text-[11px] font-bold text-[#172033] tabular-nums">
+                  <h4 className="text-[11px] font-semibold text-[#172033] dark:text-slate-100">Freelance</h4>
+                  <p className="text-[11px] font-bold text-[#172033] dark:text-slate-100 tabular-nums">
                     {formatCurrency(monthStats.freelanceTarget || 1300000)}
                   </p>
                 </div>
@@ -228,12 +228,12 @@ export default function DashboardPage() {
           </div>
 
           {/* Total Box */}
-          <div className="rounded-xl border border-blue-100/80 bg-[#EFF6FF] p-2.5 flex items-center justify-between">
+          <div className="rounded-xl border border-blue-100/80 bg-[#EFF6FF] dark:bg-blue-950/30 p-2.5 flex items-center justify-between">
             <div className="flex items-center gap-1.5">
               <div className="text-[#2563EB]">
                 <BarChart2 className="h-3.5 w-3.5 stroke-[2.5]" />
               </div>
-              <span className="text-[11px] font-bold text-[#172033]">Total</span>
+              <span className="text-[11px] font-bold text-[#172033] dark:text-slate-100">Total</span>
             </div>
             <span className="text-[11px] sm:text-xs font-bold text-[#2563EB] tabular-nums">
               {formatCurrency(monthStats.totalTarget || 3300000)}
@@ -242,9 +242,9 @@ export default function DashboardPage() {
         </div>
 
         {/* ── 5. TRANSAKSI TERAKHIR ──────────────────── */}
-        <div className="w-full rounded-[16px] border border-[#E2E8F0] bg-white p-3.5 shadow-2xs space-y-3">
+        <div className="w-full rounded-[16px] border border-[#E2E8F0] dark:border-slate-800/60 bg-white dark:bg-[#0F172A] p-3.5 shadow-2xs space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-[13px] sm:text-sm font-bold text-[#172033] flex items-center gap-1.5">
+            <h3 className="text-[13px] sm:text-sm font-bold text-[#172033] dark:text-slate-100 flex items-center gap-1.5">
               <History className="h-4 w-4 text-blue-600" />
               Transaksi Terakhir
             </h3>
@@ -259,24 +259,24 @@ export default function DashboardPage() {
 
           {recentTransactions.length === 0 ? (
             <div className="text-center py-4">
-              <p className="text-[11px] text-[#94A3B8]">Belum ada transaksi bulan ini.</p>
+              <p className="text-[11px] text-[#94A3B8] dark:text-slate-400">Belum ada transaksi bulan ini.</p>
             </div>
           ) : (
             <div className="space-y-2.5">
               {recentTransactions.map((tx) => (
-                <div key={tx.id} className="flex items-center justify-between py-1.5 border-b border-[#F1F5F9] last:border-0 last:pb-0">
+                <div key={tx.id} className="flex items-center justify-between py-1.5 border-b border-[#F1F5F9] dark:border-slate-800/60 last:border-0 last:pb-0">
                   <div className="flex items-center gap-3">
                     <CategoryIcon category={tx.category} />
                     <div>
-                      <h4 className="text-[11.5px] font-bold text-[#172033] leading-tight">
+                      <h4 className="text-[11.5px] font-bold text-[#172033] dark:text-slate-100 leading-tight">
                         {tx.notes || tx.category}
                       </h4>
-                      <p className="text-[9.5px] text-[#64748B] mt-0.5">
+                      <p className="text-[9.5px] text-[#64748B] dark:text-slate-400 mt-0.5">
                         {formatDate(tx.date)}
                       </p>
                     </div>
                   </div>
-                  <div className={`text-[12px] font-bold tabular-nums ${tx.type === 'income' ? 'text-[#00A86B]' : 'text-[#172033]'}`}>
+                  <div className={`text-[12px] font-bold tabular-nums ${tx.type === 'income' ? 'text-[#00A86B]' : 'text-[#172033] dark:text-slate-100'}`}>
                     {tx.type === 'income' ? '+' : '-'}{formatCurrency(tx.amount)}
                   </div>
                 </div>
@@ -286,10 +286,10 @@ export default function DashboardPage() {
         </div>
 
         {/* ── 6. KEBIASAAN MENABUNG BANNER ───────────── */}
-        <div className="w-full rounded-[16px] border border-emerald-100 bg-[#E6F4EA] p-3 flex items-center justify-between shadow-2xs h-[64px]">
+        <div className="w-full rounded-[16px] border border-emerald-100 bg-[#E6F4EA] dark:bg-emerald-950/30 p-3 flex items-center justify-between shadow-2xs h-[64px]">
           <div className="flex items-center gap-2.5 min-w-0 flex-1">
             {/* Sprout Icon */}
-            <div className="h-8 w-8 rounded-xl bg-white p-1 flex items-center justify-center flex-shrink-0 shadow-2xs">
+            <div className="h-8 w-8 rounded-xl bg-white dark:bg-[#0F172A] p-1 flex items-center justify-center flex-shrink-0 shadow-2xs">
               <img
                 src="/sprout-3d.png"
                 alt="Sprout"
@@ -297,10 +297,10 @@ export default function DashboardPage() {
               />
             </div>
             <div className="min-w-0 flex-1">
-              <h4 className="text-[11px] sm:text-xs font-bold text-[#172033]">
+              <h4 className="text-[11px] sm:text-xs font-bold text-[#172033] dark:text-slate-100">
                 Kebiasaan Menabung
               </h4>
-              <p className="text-[9.5px] sm:text-[10px] text-[#64748B] font-normal leading-tight mt-0.5 truncate">
+              <p className="text-[9.5px] sm:text-[10px] text-[#64748B] dark:text-slate-400 font-normal leading-tight mt-0.5 truncate">
                 Jangan lupa untuk konsisten menabung setiap bulan, ya!
               </p>
             </div>

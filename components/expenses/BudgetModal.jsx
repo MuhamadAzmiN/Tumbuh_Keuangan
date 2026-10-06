@@ -49,7 +49,7 @@ export function BudgetModal({ isOpen, onClose, monthKey, currentBudget = 2000000
         )}
 
         <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-1">
+          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
             Batas Maksimal Pengeluaran
           </label>
           <CurrencyInput
@@ -63,11 +63,11 @@ export function BudgetModal({ isOpen, onClose, monthKey, currentBudget = 2000000
           </p>
         </div>
 
-        <div className="pt-2 flex items-center justify-end gap-2 border-t border-slate-100">
+        <div className="pt-2 flex items-center justify-end gap-2 border-t border-slate-100 dark:border-slate-800/60">
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
+            className="rounded-lg border border-slate-200 dark:border-slate-800/60 px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
           >
             Batal
           </button>

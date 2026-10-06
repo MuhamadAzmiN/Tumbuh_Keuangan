@@ -72,7 +72,7 @@ export function CurrencyInput({
         placeholder={placeholder}
         value={displayValue}
         onChange={handleChange}
-        className={`w-full rounded-lg border border-slate-300 bg-white pl-10 pr-3 py-2 text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 tabular-nums ${className}`}
+        className={`w-full rounded-lg border border-slate-300 bg-white dark:bg-[#0F172A] pl-10 pr-3 py-2 text-sm font-semibold text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 tabular-nums ${className}`}
       />
     </div>
   );

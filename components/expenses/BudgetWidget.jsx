@@ -28,10 +28,10 @@ export function BudgetWidget({ expenseStats, monthKey, monthLabel }) {
   }
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm space-y-3">
-      <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+    <div className="rounded-xl border border-slate-200 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] p-5 shadow-sm space-y-3">
+      <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800/60">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-700">
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
             Batas Budget {monthLabel}
           </span>
           <span className={`inline-flex items-center rounded-md px-2 py-0.5 text-[11px] font-semibold border ${budgetBadgeColor}`}>
@@ -52,14 +52,14 @@ export function BudgetWidget({ expenseStats, monthKey, monthLabel }) {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
         <div>
           <span className="text-xs text-slate-500 block">Batas Budget</span>
-          <span className="text-base font-bold text-slate-900 tabular-nums">
+          <span className="text-base font-bold text-slate-900 dark:text-slate-100 tabular-nums">
             {formatCurrency(budget)}
           </span>
         </div>
 
         <div>
           <span className="text-xs text-slate-500 block">Terpakai</span>
-          <span className="text-base font-bold text-slate-900 tabular-nums">
+          <span className="text-base font-bold text-slate-900 dark:text-slate-100 tabular-nums">
             {formatCurrency(totalExpense)}
           </span>
         </div>
@@ -67,7 +67,7 @@ export function BudgetWidget({ expenseStats, monthKey, monthLabel }) {
         <div>
           <span className="text-xs text-slate-500 block">Sisa Budget</span>
           <span
-            className={`text-base font-bold tabular-nums ${budgetUsedPercentage > 100 ? 'text-red-600' : 'text-slate-900'
+            className={`text-base font-bold tabular-nums ${budgetUsedPercentage > 100 ? 'text-red-600' : 'text-slate-900 dark:text-slate-100'
               }`}
           >
             {budgetUsedPercentage > 100
@@ -79,7 +79,7 @@ export function BudgetWidget({ expenseStats, monthKey, monthLabel }) {
 
       {/* Progress Bar */}
       <div className="pt-1 space-y-1.5">
-        <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100 border border-slate-200/60">
+        <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-800/60">
           <div
             className={`h-full rounded-full transition-all duration-500 ${barColor}`}
             style={{ width: `${clampedProgress}%` }}

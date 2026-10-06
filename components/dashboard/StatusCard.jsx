@@ -8,7 +8,7 @@ export function StatusCard({ financialStatus }) {
   const { status, label, badgeColor, dotColor, message } = financialStatus;
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4 sm:p-5 shadow-sm flex items-center justify-between gap-4">
+    <div className="rounded-xl border border-slate-200 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] p-4 sm:p-5 shadow-sm flex items-center justify-between gap-4">
       <div className="flex items-center gap-3">
         <span
           className={`flex h-3 w-3 rounded-full ${dotColor} ring-4 ring-slate-100 flex-shrink-0`}
@@ -24,7 +24,7 @@ export function StatusCard({ financialStatus }) {
               {label}
             </span>
           </div>
-          <p className="text-sm font-medium text-slate-800 mt-0.5">
+          <p className="text-sm font-medium text-slate-800 dark:text-slate-200 mt-0.5">
             {message}
           </p>
         </div>

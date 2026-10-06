@@ -47,10 +47,10 @@ export function TrajectoryChart({ trajectory = [] }) {
   const yTicks = [0, 15000000, 30000000, 45000000, 50000000];
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-4">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-4 border-b border-slate-100">
+    <div className="rounded-2xl border border-slate-200 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] p-6 shadow-sm space-y-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-4 border-b border-slate-100 dark:border-slate-800/60">
         <div>
-          <h3 className="text-base font-bold text-slate-900">
+          <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
             Grafik Perkembangan Saldo
           </h3>
           <p className="text-xs text-slate-500 mt-0.5">
@@ -59,7 +59,7 @@ export function TrajectoryChart({ trajectory = [] }) {
         </div>
 
         {/* Legend */}
-        <div className="flex items-center gap-4 text-xs font-medium text-slate-600">
+        <div className="flex items-center gap-4 text-xs font-medium text-slate-600 dark:text-slate-300">
           <div className="flex items-center gap-1.5">
             <span className="h-2.5 w-2.5 rounded-full bg-blue-600" />
             <span>Saldo Aktual</span>
@@ -157,14 +157,14 @@ export function TrajectoryChart({ trajectory = [] }) {
 
         {/* Hover Tooltip display */}
         {hoveredPoint && (
-          <div className="mt-3 p-3 rounded-xl border border-slate-200 bg-slate-50/90 text-xs flex flex-wrap items-center justify-between gap-4">
-            <span className="font-bold text-slate-900">
+          <div className="mt-3 p-3 rounded-xl border border-slate-200 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-800/40 text-xs flex flex-wrap items-center justify-between gap-4">
+            <span className="font-bold text-slate-900 dark:text-slate-100">
               {hoveredPoint.label}
             </span>
-            <div className="flex items-center gap-4 text-slate-600">
+            <div className="flex items-center gap-4 text-slate-600 dark:text-slate-300">
               <span>
                 Target Ideal:{' '}
-                <strong className="text-slate-800 tabular-nums">
+                <strong className="text-slate-800 dark:text-slate-200 tabular-nums">
                   {formatCurrency(hoveredPoint.idealCumulative)}
                 </strong>
               </span>

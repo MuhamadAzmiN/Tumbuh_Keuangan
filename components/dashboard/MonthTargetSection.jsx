@@ -22,10 +22,10 @@ export function MonthTargetSection({ currentMonthStats, activeMonthKey }) {
   } = currentMonthStats || {};
 
   return (
-    <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+    <section className="rounded-2xl border border-slate-200 dark:border-slate-800/60 bg-white dark:bg-[#0F172A] p-6 shadow-sm">
+      <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800/60">
         <div>
-          <h3 className="text-base font-bold text-slate-900">
+          <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
             Bulan Ini ({currentMonthInfo.label})
           </h3>
           <p className="text-xs text-slate-500 mt-0.5">
@@ -34,7 +34,7 @@ export function MonthTargetSection({ currentMonthStats, activeMonthKey }) {
         </div>
         <div className="text-right">
           <span className="text-xs text-slate-500 block">Total Target</span>
-          <span className="text-base font-bold text-slate-900 tabular-nums">
+          <span className="text-base font-bold text-slate-900 dark:text-slate-100 tabular-nums">
             {formatCurrency(totalTarget)}
           </span>
         </div>
@@ -43,9 +43,9 @@ export function MonthTargetSection({ currentMonthStats, activeMonthKey }) {
       {/* Target & Actual Summary */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-5">
         {/* Gaji Box */}
-        <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-4">
+        <div className="rounded-xl border border-slate-200 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-800/40 p-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-700">
+            <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
               Nabung Gaji
             </span>
             <span className="text-xs font-medium text-slate-500 tabular-nums">
@@ -54,7 +54,7 @@ export function MonthTargetSection({ currentMonthStats, activeMonthKey }) {
           </div>
 
           <div className="mt-3 flex items-baseline justify-between">
-            <span className="text-xl font-bold text-slate-900 tabular-nums">
+            <span className="text-xl font-bold text-slate-900 dark:text-slate-100 tabular-nums">
               {formatCurrency(salaryActual)}
             </span>
             <span className="text-xs font-semibold text-blue-600 tabular-nums">
@@ -71,9 +71,9 @@ export function MonthTargetSection({ currentMonthStats, activeMonthKey }) {
         </div>
 
         {/* Freelance Box */}
-        <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-4">
+        <div className="rounded-xl border border-slate-200 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-800/40 p-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-700">
+            <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
               Freelance
             </span>
             <span className="text-xs font-medium text-slate-500 tabular-nums">
@@ -82,7 +82,7 @@ export function MonthTargetSection({ currentMonthStats, activeMonthKey }) {
           </div>
 
           <div className="mt-3 flex items-baseline justify-between">
-            <span className="text-xl font-bold text-slate-900 tabular-nums">
+            <span className="text-xl font-bold text-slate-900 dark:text-slate-100 tabular-nums">
               {formatCurrency(freelanceActual)}
             </span>
             <span className="text-xs font-semibold text-emerald-600 tabular-nums">
@@ -100,17 +100,17 @@ export function MonthTargetSection({ currentMonthStats, activeMonthKey }) {
       </div>
 
       {/* Monthly Total Progress Footer */}
-      <div className="mt-4 pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-600">
+      <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-600 dark:text-slate-300">
         <div>
           <span>Terkumpul bulan ini: </span>
-          <span className="font-bold text-slate-900 tabular-nums">
+          <span className="font-bold text-slate-900 dark:text-slate-100 tabular-nums">
             {formatCurrency(totalActual)}
           </span>
           <span className="text-slate-400"> / {formatCurrency(totalTarget)}</span>
         </div>
         <div className="font-medium">
           Sisa target bulan ini:{' '}
-          <span className="font-semibold text-slate-900 tabular-nums">
+          <span className="font-semibold text-slate-900 dark:text-slate-100 tabular-nums">
             {formatCurrency(Math.max(0, totalTarget - totalActual))}
           </span>
         </div>

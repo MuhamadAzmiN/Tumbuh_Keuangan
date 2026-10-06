@@ -29,18 +29,18 @@ export function MonthPlanCard({ month, transactions, settings, targetData }) {
 
   return (
     <div
-      className={`rounded-2xl border bg-white p-5 sm:p-6 transition-all shadow-sm ${isAllDone
+      className={`rounded-2xl border bg-white dark:bg-[#0F172A] p-5 sm:p-6 transition-all shadow-sm ${isAllDone
         ? 'border-emerald-200 bg-emerald-50/10'
-        : 'border-slate-200'
+        : 'border-slate-200 dark:border-slate-800/60'
         }`}
     >
       {/* Month Header */}
-      <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+      <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800/60">
         <div>
           <span className="text-xs font-semibold text-slate-400">
             Bulan {month.index} dari 12
           </span>
-          <h3 className="text-base font-bold text-slate-900 mt-0.5">
+          <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 mt-0.5">
             {month.label}
           </h3>
         </div>
@@ -54,7 +54,7 @@ export function MonthPlanCard({ month, transactions, settings, targetData }) {
           )}
           <div className="text-right">
             <span className="text-xs text-slate-400 block">Total Target</span>
-            <span className="text-sm font-bold text-slate-900 tabular-nums">
+            <span className="text-sm font-bold text-slate-900 dark:text-slate-100 tabular-nums">
               {formatCurrency(stats.totalTarget)}
             </span>
           </div>
@@ -64,10 +64,10 @@ export function MonthPlanCard({ month, transactions, settings, targetData }) {
       {/* Target Breakdown Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
         {/* 1. Nabung Gaji */}
-        <div className="rounded-xl border border-slate-200/80 bg-slate-50/50 p-4 space-y-3">
+        <div className="rounded-xl border border-slate-200 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-800/40 p-4 space-y-3">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <span className="text-xs font-semibold text-slate-700 block">
+              <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 block">
                 Nabung Gaji
               </span>
               <span className="text-[11px] text-slate-500">
@@ -75,7 +75,7 @@ export function MonthPlanCard({ month, transactions, settings, targetData }) {
               </span>
             </div>
             <div className="text-right">
-              <span className="text-xs font-bold text-slate-900 tabular-nums block">
+              <span className="text-xs font-bold text-slate-900 dark:text-slate-100 tabular-nums block">
                 {formatCurrency(stats.salaryActual)}
               </span>
               <span className="text-[11px] font-semibold text-blue-600 tabular-nums">
@@ -92,7 +92,7 @@ export function MonthPlanCard({ month, transactions, settings, targetData }) {
           </div>
 
           {/* Checkbox */}
-          <label className="flex items-center gap-2 pt-1 text-xs font-medium text-slate-700 cursor-pointer select-none">
+          <label className="flex items-center gap-2 pt-1 text-xs font-medium text-slate-700 dark:text-slate-300 cursor-pointer select-none">
             <input
               type="checkbox"
               checked={isSalaryDone}
@@ -106,10 +106,10 @@ export function MonthPlanCard({ month, transactions, settings, targetData }) {
         </div>
 
         {/* 2. Freelance */}
-        <div className="rounded-xl border border-slate-200/80 bg-slate-50/50 p-4 space-y-3">
+        <div className="rounded-xl border border-slate-200 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-800/40 p-4 space-y-3">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <span className="text-xs font-semibold text-slate-700 block">
+              <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 block">
                 Freelance
               </span>
               <span className="text-[11px] text-slate-500">
@@ -117,7 +117,7 @@ export function MonthPlanCard({ month, transactions, settings, targetData }) {
               </span>
             </div>
             <div className="text-right">
-              <span className="text-xs font-bold text-slate-900 tabular-nums block">
+              <span className="text-xs font-bold text-slate-900 dark:text-slate-100 tabular-nums block">
                 {formatCurrency(stats.freelanceActual)}
               </span>
               <span className="text-[11px] font-semibold text-emerald-600 tabular-nums">
@@ -134,7 +134,7 @@ export function MonthPlanCard({ month, transactions, settings, targetData }) {
           </div>
 
           {/* Checkbox */}
-          <label className="flex items-center gap-2 pt-1 text-xs font-medium text-slate-700 cursor-pointer select-none">
+          <label className="flex items-center gap-2 pt-1 text-xs font-medium text-slate-700 dark:text-slate-300 cursor-pointer select-none">
             <input
               type="checkbox"
               checked={isFreelanceDone}
@@ -149,16 +149,16 @@ export function MonthPlanCard({ month, transactions, settings, targetData }) {
       </div>
 
       {/* Month Card Footer */}
-      <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+      <div className="pt-3 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between text-xs text-slate-500">
         <div>
           <span>Aktual: </span>
-          <span className="font-semibold text-slate-900 tabular-nums">
+          <span className="font-semibold text-slate-900 dark:text-slate-100 tabular-nums">
             {formatCurrency(stats.totalActual)}
           </span>
         </div>
         <div>
           <span>Kurang: </span>
-          <span className="font-semibold text-slate-900 tabular-nums">
+          <span className="font-semibold text-slate-900 dark:text-slate-100 tabular-nums">
             {formatCurrency(stats.remaining)}
           </span>
           <span className="text-slate-400 ml-1">

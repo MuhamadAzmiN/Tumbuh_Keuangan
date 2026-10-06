@@ -108,7 +108,7 @@ export function ExpenseModal({
 
         {/* Nominal */}
         <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-1">
+          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
             Nominal Pengeluaran
           </label>
           <CurrencyInput
@@ -121,14 +121,14 @@ export function ExpenseModal({
 
         {/* Kategori */}
         <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-1">
+          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
             Kategori
           </label>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             required
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none"
+            className="w-full rounded-lg border border-slate-300 bg-white dark:bg-[#0F172A] px-3 py-2 text-sm text-slate-900 dark:text-slate-100 focus:border-blue-600 focus:outline-none"
           >
             {EXPENSE_CATEGORIES.map((cat) => (
               <option key={cat.value} value={cat.value}>
@@ -140,7 +140,7 @@ export function ExpenseModal({
 
         {/* Tanggal */}
         <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-1">
+          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
             Tanggal
           </label>
           <input
@@ -148,20 +148,20 @@ export function ExpenseModal({
             value={date}
             onChange={(e) => setDate(e.target.value)}
             required
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none"
+            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 focus:border-blue-600 focus:outline-none"
           />
         </div>
 
         {/* Metode Pembayaran */}
         <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-1">
+          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
             Metode Pembayaran
           </label>
           <select
             value={paymentMethod}
             onChange={(e) => setPaymentMethod(e.target.value)}
             required
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none"
+            className="w-full rounded-lg border border-slate-300 bg-white dark:bg-[#0F172A] px-3 py-2 text-sm text-slate-900 dark:text-slate-100 focus:border-blue-600 focus:outline-none"
           >
             {PAYMENT_METHODS.map((method) => (
               <option key={method} value={method}>
@@ -173,7 +173,7 @@ export function ExpenseModal({
 
         {/* Deskripsi */}
         <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-1">
+          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
             Deskripsi (Opsional)
           </label>
           <input
@@ -181,16 +181,16 @@ export function ExpenseModal({
             placeholder="Contoh: Makan siang nasi padang / Rokok harian"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none"
+            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none"
           />
         </div>
 
         {/* Action Buttons */}
-        <div className="pt-2 flex items-center justify-end gap-2 border-t border-slate-100">
+        <div className="pt-2 flex items-center justify-end gap-2 border-t border-slate-100 dark:border-slate-800/60">
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
+            className="rounded-lg border border-slate-200 dark:border-slate-800/60 px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
           >
             Batal
           </button>

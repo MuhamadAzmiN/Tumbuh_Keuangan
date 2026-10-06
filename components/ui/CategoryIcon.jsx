@@ -33,7 +33,7 @@ const CATEGORY_CONFIG = {
   shopping: { icon: ShoppingBag, bg: 'bg-rose-100 text-rose-600 border-rose-200' },
   entertainment: { icon: Film, bg: 'bg-purple-100 text-purple-600 border-purple-200' },
   bills: { icon: Wifi, bg: 'bg-violet-100 text-violet-600 border-violet-200' },
-  other_expense: { icon: Wrench, bg: 'bg-slate-100 text-slate-600 border-slate-200' },
+  other_expense: { icon: Wrench, bg: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800/60' },
 
   // Label Keys
   Gaji: { icon: Briefcase, bg: 'bg-emerald-100 text-emerald-600 border-emerald-200' },
@@ -45,18 +45,18 @@ const CATEGORY_CONFIG = {
   Hiburan: { icon: Film, bg: 'bg-purple-100 text-purple-600 border-purple-200' },
   Internet: { icon: Wifi, bg: 'bg-violet-100 text-violet-600 border-violet-200' },
   Makanan: { icon: Utensils, bg: 'bg-amber-100 text-amber-600 border-amber-200' },
-  Rokok: { icon: Cigarette, bg: 'bg-slate-100 text-slate-600 border-slate-200' },
+  Rokok: { icon: Cigarette, bg: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800/60' },
   Tagihan: { icon: Receipt, bg: 'bg-violet-100 text-violet-600 border-violet-200' },
   Belanja: { icon: ShoppingBag, bg: 'bg-rose-100 text-rose-600 border-rose-200' },
   Kesehatan: { icon: HeartPulse, bg: 'bg-red-100 text-red-600 border-red-200' },
   Keluarga: { icon: Users, bg: 'bg-indigo-100 text-indigo-600 border-indigo-200' },
-  Lainnya: { icon: MoreHorizontal, bg: 'bg-slate-100 text-slate-600 border-slate-200' },
+  Lainnya: { icon: MoreHorizontal, bg: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800/60' },
 };
 
 export function CategoryIcon({ category, size = 'md', className = '' }) {
   const cfg = CATEGORY_CONFIG[category] || {
     icon: MoreHorizontal,
-    bg: 'bg-slate-100 text-slate-600 border-slate-200',
+    bg: 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800/60',
   };
   const IconComponent = cfg.icon;
 

@@ -89,9 +89,9 @@ export default function ExpensesPage() {
         )}
 
         {/* Page Header & Month Selector */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-slate-200">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-slate-200 dark:border-slate-800/60">
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
               Pengeluaran
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
@@ -100,13 +100,13 @@ export default function ExpensesPage() {
           </div>
 
           {/* Month Selector: < Oktober 2026 > */}
-          <div className="flex items-center gap-1.5 self-start sm:self-auto bg-white border border-slate-200 rounded-xl p-1 shadow-sm">
+          <div className="flex items-center gap-1.5 self-start sm:self-auto bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800/60 rounded-xl p-1 shadow-sm">
             <button
               type="button"
               onClick={handlePrevMonth}
               disabled={currentMonthIdx <= 0}
               aria-label="Bulan Sebelumnya"
-              className="p-1.5 rounded-lg text-slate-600 hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-transparent transition-colors cursor-pointer"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
@@ -114,7 +114,7 @@ export default function ExpensesPage() {
             <select
               value={selectedMonthKey}
               onChange={(e) => setSelectedMonthKey(e.target.value)}
-              className="bg-transparent text-xs sm:text-sm font-bold text-slate-900 px-2 py-1 focus:outline-none cursor-pointer"
+              className="bg-transparent text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 px-2 py-1 focus:outline-none cursor-pointer"
             >
               {CONTRACT_MONTHS.map((m) => (
                 <option key={m.key} value={m.key}>
@@ -128,7 +128,7 @@ export default function ExpensesPage() {
               onClick={handleNextMonth}
               disabled={currentMonthIdx >= CONTRACT_MONTHS.length - 1}
               aria-label="Bulan Berikutnya"
-              className="p-1.5 rounded-lg text-slate-600 hover:bg-slate-100 disabled:opacity-30 disabled:hover:bg-transparent transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-transparent transition-colors cursor-pointer"
             >
               <ChevronRight className="h-4 w-4" />
             </button>

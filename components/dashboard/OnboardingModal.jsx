@@ -42,7 +42,7 @@ export function OnboardingModal({ isOpen, onClose }) {
       title="Mulai dengan Tumbuh 🌱"
       maxWidth="max-w-lg"
     >
-      <div className="space-y-4 text-slate-700">
+      <div className="space-y-4 text-slate-700 dark:text-slate-300">
         <p className="text-xs text-slate-500 leading-relaxed">
           Selamat datang! Konfigurasikan target tabungan kontrak kerja Anda. Nilai di bawah telah diisi dengan rencana awal Anda dan dapat disesuaikan.
         </p>
@@ -50,7 +50,7 @@ export function OnboardingModal({ isOpen, onClose }) {
         <form onSubmit={handleStart} className="space-y-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Target Akhir
               </label>
               <CurrencyInput
@@ -61,7 +61,7 @@ export function OnboardingModal({ isOpen, onClose }) {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Saldo Awal Saat Ini
               </label>
               <CurrencyInput
@@ -72,7 +72,7 @@ export function OnboardingModal({ isOpen, onClose }) {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Target Nabung Gaji / Bulan
               </label>
               <CurrencyInput
@@ -83,7 +83,7 @@ export function OnboardingModal({ isOpen, onClose }) {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Target Freelance / Bulan
               </label>
               <CurrencyInput
@@ -94,8 +94,8 @@ export function OnboardingModal({ isOpen, onClose }) {
             </div>
           </div>
 
-          <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600">
-            <span className="font-semibold text-slate-800">Periode Kontrak: </span>
+          <div className="rounded-lg border border-slate-200 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-800/40 p-3 text-xs text-slate-600 dark:text-slate-300">
+            <span className="font-semibold text-slate-800 dark:text-slate-200">Periode Kontrak: </span>
             <span>Oktober 2026 – September 2027 (12 Bulan)</span>
             <div className="mt-1 text-[11px] text-slate-500">
               Total target bulanan: {formatCurrency(salaryTarget + freelanceTarget)}
