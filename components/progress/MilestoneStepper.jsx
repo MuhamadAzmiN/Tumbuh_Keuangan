@@ -14,45 +14,40 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
   const milestones = [
     {
       title: 'Saldo Awal Start',
-      desc: 'Modal awal memulai perjalanan tabungan',
+      desc: 'Modal awal perjalanan tabungan kamu',
       amount: initial,
       icon: Rocket,
-      tag: 'Start',
     },
     {
-      title: 'Langkah 1: Fondasi Tabungan (25%)',
+      title: 'Fondasi Tabungan (25%)',
       desc: 'Mencapai 1/4 perjalanan target tabungan',
       amount: Math.round(initial + range * 0.25),
       icon: Flag,
-      tag: '25%',
     },
     {
-      title: 'Langkah 2: Separuh Jalan (50%)',
-      desc: 'Titik tengah 50% perjalanan financial goal',
+      title: 'Separuh Jalan (50%)',
+      desc: 'Titik tengah 50% target tabungan',
       amount: Math.round(initial + range * 0.50),
       icon: Target,
-      tag: '50%',
     },
     {
-      title: 'Langkah 3: Zona Akhir (75%)',
+      title: 'Zona Akhir (75%)',
       desc: 'Mendekati garis finish target tabungan',
       amount: Math.round(initial + range * 0.75),
       icon: Sparkles,
-      tag: '75%',
     },
     {
-      title: 'Puncak Target Utama (100%)',
+      title: 'Puncak Target (100%)',
       desc: 'Target tabungan utama berhasil diraih!',
       amount: target,
       icon: Trophy,
-      tag: 'Finish',
     },
   ];
 
   const [selectedMilestone, setSelectedMilestone] = useState(null);
 
   return (
-    <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xs space-y-4">
+    <div className="rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-5 shadow-xs space-y-4">
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
         <div>
           <h3 className="text-sm font-extrabold text-slate-900 tracking-tight flex items-center gap-1.5">
@@ -63,19 +58,17 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
             Tingkat pencapaian progres menuju {formatCurrency(target)}
           </p>
         </div>
-        <span className="text-[11px] font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100">
+        <span className="text-[11px] font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100 flex-shrink-0">
           {milestones.filter((m) => balance >= m.amount).length} / {milestones.length} Tercapai
         </span>
       </div>
 
-      {/* Vertical Timeline Stepper Line Container */}
-      <div className="relative pl-3 sm:pl-4 space-y-6 pt-1 pb-1">
-        {/* Continuous Connecting Line */}
-        <div className="absolute left-[23px] sm:left-[27px] top-3 bottom-3 w-0.5 bg-slate-200" />
-
+      {/* Perfectly Aligned Timeline Stepper */}
+      <div className="space-y-2 pt-1 pb-1">
         {milestones.map((milestone, idx) => {
           const isCompleted = balance >= milestone.amount;
           const isNext = !isCompleted && (idx === 0 || balance >= milestones[idx - 1].amount);
+          const isLast = idx === milestones.length - 1;
 
           let progressVal = 0;
           if (isNext) {
@@ -85,63 +78,71 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
             progressVal = Math.min(Math.max(Math.round((progressInRange / rangeVal) * 100), 0), 100);
           }
 
-          const IconComp = milestone.icon;
-
           return (
-            <div
-              key={milestone.amount}
-              onClick={() => setSelectedMilestone({ ...milestone, isCompleted, isNext, progressVal, idx })}
-              className={`relative flex items-start gap-3.5 p-3.5 rounded-2xl border transition-all cursor-pointer group ${
-                isCompleted
-                  ? 'border-emerald-200/80 bg-emerald-50/30 hover:border-emerald-300 hover:shadow-xs'
-                  : isNext
-                  ? 'border-blue-300 bg-blue-50/40 ring-2 ring-blue-500/15 shadow-sm'
-                  : 'border-slate-100 bg-slate-50/40 hover:border-slate-200'
-              }`}
-            >
-              {/* Stepper Node Circle */}
-              <div
-                className={`relative z-10 h-8 w-8 rounded-xl flex items-center justify-center flex-shrink-0 text-xs font-bold transition-transform group-hover:scale-105 shadow-xs ${
-                  isCompleted
-                    ? 'bg-emerald-500 text-white shadow-emerald-200'
-                    : isNext
-                    ? 'bg-blue-600 text-white shadow-blue-200 ring-4 ring-blue-100 animate-pulse'
-                    : 'bg-white border border-slate-200 text-slate-400'
-                }`}
-              >
-                {isCompleted ? (
-                  <Check className="h-4 w-4 stroke-[3]" />
-                ) : isNext ? (
-                  <Play className="h-3.5 w-3.5 fill-white translate-x-0.5" />
-                ) : (
-                  <Lock className="h-3.5 w-3.5 text-slate-400 stroke-[2]" />
+            <div key={milestone.amount} className="flex items-stretch gap-3 group">
+              {/* Left Column: Icon Node + Vertical Connecting Line */}
+              <div className="flex flex-col items-center flex-shrink-0 pt-1">
+                <div
+                  className={`h-8 w-8 rounded-xl flex items-center justify-center text-xs font-bold transition-all shadow-xs ${
+                    isCompleted
+                      ? 'bg-emerald-500 text-white shadow-emerald-200'
+                      : isNext
+                      ? 'bg-blue-600 text-white shadow-blue-200 ring-4 ring-blue-100 animate-pulse'
+                      : 'bg-white border border-slate-200 text-slate-400'
+                  }`}
+                >
+                  {isCompleted ? (
+                    <Check className="h-4 w-4 stroke-[3]" />
+                  ) : isNext ? (
+                    <Play className="h-3.5 w-3.5 fill-white translate-x-0.5" />
+                  ) : (
+                    <Lock className="h-3.5 w-3.5 text-slate-400 stroke-[2]" />
+                  )}
+                </div>
+
+                {!isLast && (
+                  <div
+                    className={`w-0.5 min-h-[28px] flex-1 my-1.5 transition-colors ${
+                      isCompleted ? 'bg-emerald-400' : 'bg-slate-200'
+                    }`}
+                  />
                 )}
               </div>
 
-              {/* Content Body */}
-              <div className="min-w-0 flex-1 space-y-1">
+              {/* Right Column: Interactive Content Card */}
+              <div
+                onClick={() => setSelectedMilestone({ ...milestone, isCompleted, isNext, progressVal, idx })}
+                className={`flex-1 p-3.5 rounded-2xl border transition-all cursor-pointer mb-2 ${
+                  isCompleted
+                    ? 'border-emerald-200/80 bg-emerald-50/20 hover:border-emerald-300 hover:shadow-xs'
+                    : isNext
+                    ? 'border-blue-300 bg-blue-50/40 ring-2 ring-blue-500/15 shadow-xs'
+                    : 'border-slate-100 bg-white hover:border-slate-200'
+                }`}
+              >
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-xs font-bold text-slate-900 block truncate">
+                  <span className="text-xs font-extrabold text-slate-900 leading-snug">
                     {milestone.title}
                   </span>
-                  <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full border flex-shrink-0 tabular-nums ${
-                    isCompleted
-                      ? 'bg-emerald-100 text-emerald-800 border-emerald-200'
-                      : isNext
-                      ? 'bg-blue-100 text-blue-800 border-blue-200'
-                      : 'bg-slate-100 text-slate-500 border-slate-200'
-                  }`}>
+                  <span
+                    className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border flex-shrink-0 tabular-nums ${
+                      isCompleted
+                        ? 'bg-emerald-100 text-emerald-800 border-emerald-200'
+                        : isNext
+                        ? 'bg-blue-100 text-blue-800 border-blue-200'
+                        : 'bg-slate-100 text-slate-500 border-slate-200'
+                    }`}
+                  >
                     {formatCurrency(milestone.amount)}
                   </span>
                 </div>
 
-                <p className="text-[11px] text-slate-500 font-medium leading-tight">
+                <p className="text-[11px] text-slate-500 font-medium leading-normal mt-0.5">
                   {milestone.desc}
                 </p>
 
-                {/* Progress bar if current next step */}
                 {isNext && (
-                  <div className="pt-1.5 space-y-1">
+                  <div className="pt-2 space-y-1">
                     <div className="flex items-center justify-between text-[11px] font-semibold text-slate-600">
                       <span>Progres ke milestone ini</span>
                       <span className="text-blue-600 font-bold tabular-nums">{progressVal}%</span>
@@ -154,10 +155,6 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
                     </div>
                   </div>
                 )}
-              </div>
-
-              <div className="text-slate-300 group-hover:text-blue-600 transition-colors self-center flex-shrink-0">
-                <ChevronRight className="h-4 w-4" />
               </div>
             </div>
           );
@@ -177,9 +174,11 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
 
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <div className="flex items-center gap-2.5">
-                  <div className={`p-2 rounded-xl text-white ${
-                    selectedMilestone.isCompleted ? 'bg-emerald-500' : selectedMilestone.isNext ? 'bg-blue-600' : 'bg-slate-400'
-                  }`}>
+                  <div
+                    className={`p-2 rounded-xl text-white ${
+                      selectedMilestone.isCompleted ? 'bg-emerald-500' : selectedMilestone.isNext ? 'bg-blue-600' : 'bg-slate-400'
+                    }`}
+                  >
                     <Trophy className="h-4 w-4" />
                   </div>
                   <div>
@@ -211,9 +210,11 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
                   </div>
                   <div className="flex items-center justify-between pt-1 border-t border-slate-200/60">
                     <span className="text-slate-500 font-medium">Sisa Kekurangan:</span>
-                    <span className={`font-bold tabular-nums ${
-                      balance >= selectedMilestone.amount ? 'text-emerald-600' : 'text-blue-600'
-                    }`}>
+                    <span
+                      className={`font-bold tabular-nums ${
+                        balance >= selectedMilestone.amount ? 'text-emerald-600' : 'text-blue-600'
+                      }`}
+                    >
                       {balance >= selectedMilestone.amount ? 'Tercapai 100%' : formatCurrency(selectedMilestone.amount - balance)}
                     </span>
                   </div>
@@ -227,7 +228,9 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
                 ) : selectedMilestone.isNext ? (
                   <div className="rounded-xl bg-blue-50 border border-blue-100 p-3 text-xs text-blue-900 font-medium flex items-center gap-2">
                     <Sparkles className="h-4 w-4 text-blue-600 flex-shrink-0" />
-                    <span>Kumpulkan <strong>{formatCurrency(selectedMilestone.amount - balance)}</strong> lagi untuk membuka milestone ini.</span>
+                    <span>
+                      Kumpulkan <strong>{formatCurrency(selectedMilestone.amount - balance)}</strong> lagi untuk membuka milestone ini.
+                    </span>
                   </div>
                 ) : (
                   <div className="rounded-xl bg-slate-100 p-3 text-xs text-slate-600 font-medium">
