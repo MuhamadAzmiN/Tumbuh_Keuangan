@@ -378,35 +378,58 @@ export default function ProgressPage() {
             />
 
             {/* Achievement Badges Rack */}
-            <div className="rounded-2xl border border-slate-100 bg-white p-4 shadow-xs space-y-3">
-              <div className="flex items-center justify-between">
-                <h3 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
-                  <Award className="h-4 w-4 text-amber-500" />
-                  <span>Pencapaian & Lencana</span>
-                </h3>
-                <span className="text-xs text-slate-400 font-medium">
+            <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xs space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div>
+                  <h3 className="text-sm font-extrabold text-slate-900 tracking-tight flex items-center gap-1.5">
+                    <Award className="h-4 w-4 text-amber-500" />
+                    <span>Pencapaian & Lencana Keuangan</span>
+                  </h3>
+                  <p className="text-[11px] text-slate-500 font-medium">
+                    Lencana eksklusif yang terbuka secara otomatis
+                  </p>
+                </div>
+                <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
                   {badges.filter((b) => currentBalance >= b.minAmount).length} / {badges.length} Terbuka
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {badges.map((badge) => {
                   const isUnlocked = currentBalance >= badge.minAmount;
 
                   return (
                     <div
                       key={badge.id}
-                      className={`p-3 rounded-xl border flex items-center gap-3 transition-all ${
+                      className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 transition-all ${
                         isUnlocked
-                          ? `${badge.color} shadow-xs`
-                          : 'border-slate-100 bg-slate-50/50 opacity-40 grayscale'
+                          ? 'border-slate-200/80 bg-gradient-to-br from-white to-slate-50 shadow-xs hover:shadow-md'
+                          : 'border-slate-100 bg-slate-50/40 opacity-55'
                       }`}
                     >
-                      <span className="text-2xl">{badge.icon}</span>
-                      <div className="min-w-0">
-                        <span className="text-xs font-bold block truncate">{badge.title}</span>
-                        <span className="text-[10px] opacity-80 block truncate">{badge.desc}</span>
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className={`h-10 w-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0 border shadow-2xs ${
+                          isUnlocked ? badge.color : 'border-slate-200 bg-slate-100'
+                        }`}>
+                          {badge.icon}
+                        </div>
+                        <div className="min-w-0">
+                          <span className="text-xs font-extrabold text-slate-900 block truncate">
+                            {badge.title}
+                          </span>
+                          <span className="text-[11px] text-slate-500 font-medium block truncate mt-0.5">
+                            {badge.desc}
+                          </span>
+                        </div>
                       </div>
+
+                      <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full border flex-shrink-0 ${
+                        isUnlocked
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                          : 'bg-slate-100 text-slate-400 border-slate-200'
+                      }`}>
+                        {isUnlocked ? '✓ Terbuka' : '🔒 Terkunci'}
+                      </span>
                     </div>
                   );
                 })}
