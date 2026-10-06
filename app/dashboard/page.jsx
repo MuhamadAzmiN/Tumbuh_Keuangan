@@ -7,7 +7,7 @@ import { OnboardingModal } from '@/components/dashboard/OnboardingModal';
 import { CardSkeleton, Skeleton } from '@/components/ui/Skeleton';
 import { useFinance } from '@/lib/context/FinanceContext';
 import { APP_CONFIG } from '@/lib/constants';
-import { formatCurrency } from '@/lib/formatters';
+import { formatCurrency, formatDate } from '@/lib/formatters';
 import { getCurrentContractMonthKey, calculateFinancialStatus } from '@/lib/calculations';
 import Link from 'next/link';
 import {
@@ -19,8 +19,10 @@ import {
   ArrowRight,
   ChevronRight,
   Sun,
+  History,
 } from 'lucide-react';
 import { TransactionModal } from '@/components/transactions/TransactionModal';
+import { CategoryIcon } from '@/components/ui/CategoryIcon';
 
 export default function DashboardPage() {
   const {
@@ -59,6 +61,11 @@ export default function DashboardPage() {
   const financialStatus = useMemo(() => {
     return calculateFinancialStatus(currentBalance, targetAmount, transactions, settings);
   }, [currentBalance, targetAmount, transactions, settings]);
+
+  const recentTransactions = useMemo(() => {
+    if (!transactions) return [];
+    return [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
+  }, [transactions]);
 
   useEffect(() => {
     if (!loading && user && !settings) {
@@ -234,7 +241,51 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* ── 5. KEBIASAAN MENABUNG BANNER ───────────── */}
+        {/* ── 5. TRANSAKSI TERAKHIR ──────────────────── */}
+        <div className="w-full rounded-[16px] border border-[#E2E8F0] bg-white p-3.5 shadow-2xs space-y-3">
+          <div className="flex items-center justify-between">
+            <h3 className="text-[13px] sm:text-sm font-bold text-[#172033] flex items-center gap-1.5">
+              <History className="h-4 w-4 text-blue-600" />
+              Transaksi Terakhir
+            </h3>
+            <Link
+              href="/dashboard/expenses"
+              className="text-[10px] sm:text-[11px] font-semibold text-[#2563EB] hover:underline flex items-center gap-0.5"
+            >
+              <span>Riwayat</span>
+              <ChevronRight className="h-3 w-3 stroke-[2.5]" />
+            </Link>
+          </div>
+
+          {recentTransactions.length === 0 ? (
+            <div className="text-center py-4">
+              <p className="text-[11px] text-[#94A3B8]">Belum ada transaksi bulan ini.</p>
+            </div>
+          ) : (
+            <div className="space-y-2.5">
+              {recentTransactions.map((tx) => (
+                <div key={tx.id} className="flex items-center justify-between py-1.5 border-b border-[#F1F5F9] last:border-0 last:pb-0">
+                  <div className="flex items-center gap-3">
+                    <CategoryIcon category={tx.category} />
+                    <div>
+                      <h4 className="text-[11.5px] font-bold text-[#172033] leading-tight">
+                        {tx.notes || tx.category}
+                      </h4>
+                      <p className="text-[9.5px] text-[#64748B] mt-0.5">
+                        {formatDate(tx.date)}
+                      </p>
+                    </div>
+                  </div>
+                  <div className={`text-[12px] font-bold tabular-nums ${tx.type === 'income' ? 'text-[#00A86B]' : 'text-[#172033]'}`}>
+                    {tx.type === 'income' ? '+' : '-'}{formatCurrency(tx.amount)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* ── 6. KEBIASAAN MENABUNG BANNER ───────────── */}
         <div className="w-full rounded-[16px] border border-emerald-100 bg-[#E6F4EA] p-3 flex items-center justify-between shadow-2xs h-[64px]">
           <div className="flex items-center gap-2.5 min-w-0 flex-1">
             {/* Sprout Icon */}
