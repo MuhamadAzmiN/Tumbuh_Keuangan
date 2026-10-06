@@ -586,10 +586,45 @@ export default function SettingsPage() {
                   </p>
                 </div>
 
+                {/* Card Section: Proyeksi Capaian 12 Bulan & Quick Set Target */}
+                {(() => {
+                  const currentInitialBal = Number(initialBalanceInput) || 0;
+                  const currentMonthlySavings = Math.round(((Number(monthlySalaryInput) || 0) * savingsPctInput) / 100);
+                  const userFreelanceTarget = Number(settings?.monthly_freelance_target) || APP_CONFIG.monthlyFreelanceTarget;
+                  const projectedTotal12Months = currentInitialBal + (12 * (currentMonthlySavings + userFreelanceTarget));
+
+                  return (
+                    <div className="rounded-2xl border border-emerald-100 bg-emerald-50/50 p-3.5 space-y-2">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-xs font-bold text-emerald-900 flex items-center gap-1.5">
+                          <Sparkles className="h-4 w-4 text-emerald-600" />
+                          Proyeksi 12 Bulan (s/d Sep 2027)
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setTargetAmountInput(projectedTotal12Months)}
+                          className="text-[10px] font-extrabold px-2.5 py-1 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-2xs cursor-pointer flex-shrink-0"
+                          title="Gunakan nominal proyeksi ini sebagai Target Utama Tabungan"
+                        >
+                          Terapkan {formatCurrency(projectedTotal12Months)}
+                        </button>
+                      </div>
+                      <p className="text-[11px] text-emerald-800 font-medium leading-relaxed">
+                        Hasil kalkulasi 12 bulan (Saldo Awal {formatCurrency(currentInitialBal)} + 12× Nabung {formatCurrency(currentMonthlySavings)} + 12× Freelance {formatCurrency(userFreelanceTarget)}) = <strong className="font-extrabold text-emerald-950">{formatCurrency(projectedTotal12Months)}</strong>
+                      </p>
+                    </div>
+                  );
+                })()}
+
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Target Utama Tabungan (Rp)
-                  </label>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs font-semibold text-slate-700">
+                      Target Utama Tabungan (Rp)
+                    </label>
+                    <span className="text-[10px] text-slate-400 font-medium">
+                      (Dapat disesuaikan)
+                    </span>
+                  </div>
                   <CurrencyInput
                     value={targetAmountInput}
                     onChange={(val) => setTargetAmountInput(val)}
