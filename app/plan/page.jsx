@@ -144,7 +144,13 @@ export default function PlanPage() {
     return Math.round((salary * needsPct) / 100);
   }, [settings?.monthly_salary_target, settings?.needs_percentage]);
 
-  const totalBudget = monthlyBudgets[monthKey] ?? defaultNeedsBudget;
+  const totalBudget = useMemo(() => {
+    const custom = monthlyBudgets[monthKey];
+    if (custom !== undefined && custom !== null && custom !== 2000000) {
+      return custom;
+    }
+    return defaultNeedsBudget;
+  }, [monthlyBudgets, monthKey, defaultNeedsBudget]);
 
   // Filter transactions and expenses for selected month
   const monthExpenseRecords = useMemo(() => {

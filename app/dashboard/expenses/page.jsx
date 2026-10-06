@@ -55,7 +55,13 @@ export default function ExpensesPage() {
   }, [settings?.monthly_salary_target, settings?.needs_percentage]);
 
   // Calculate expense statistics for currently selected month
-  const currentBudget = monthlyBudgets[selectedMonthKey] ?? defaultNeedsBudget;
+  const currentBudget = useMemo(() => {
+    const custom = monthlyBudgets[selectedMonthKey];
+    if (custom !== undefined && custom !== null && custom !== 2000000) {
+      return custom;
+    }
+    return defaultNeedsBudget;
+  }, [monthlyBudgets, selectedMonthKey, defaultNeedsBudget]);
   const expenseStats = useMemo(() => {
     return calculateMonthlyExpenseStats(selectedMonthKey, expenses, currentBudget);
   }, [selectedMonthKey, expenses, currentBudget]);
