@@ -52,23 +52,22 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
         <div>
           <h3 className="text-sm font-extrabold text-slate-900 tracking-tight flex items-center gap-1.5">
             <Trophy className="h-4 w-4 text-amber-500" />
-            <span>Peta Timeline Milestone</span>
+            <span>Milestone Target Tabungan</span>
           </h3>
           <p className="text-[11px] text-slate-500 font-medium">
-            Tingkat pencapaian progres menuju {formatCurrency(target)}
+            Tahapan capaian dari {formatCurrency(initial)} ke {formatCurrency(target)}
           </p>
         </div>
         <span className="text-[11px] font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100 flex-shrink-0">
-          {milestones.filter((m) => balance >= m.amount).length} / {milestones.length} Tercapai
+          {milestones.filter((m) => balance >= m.amount).length} / {milestones.length} Terbuka
         </span>
       </div>
 
-      {/* Perfectly Aligned Timeline Stepper */}
-      <div className="space-y-2 pt-1 pb-1">
+      {/* Clean Milestone Cards List */}
+      <div className="space-y-2.5">
         {milestones.map((milestone, idx) => {
           const isCompleted = balance >= milestone.amount;
           const isNext = !isCompleted && (idx === 0 || balance >= milestones[idx - 1].amount);
-          const isLast = idx === milestones.length - 1;
 
           let progressVal = 0;
           if (isNext) {
@@ -78,54 +77,58 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
             progressVal = Math.min(Math.max(Math.round((progressInRange / rangeVal) * 100), 0), 100);
           }
 
+          const IconComponent = milestone.icon;
+
           return (
-            <div key={milestone.amount} className="flex items-stretch gap-3 group">
-              {/* Left Column: Icon Node + Vertical Connecting Line */}
-              <div className="flex flex-col items-center flex-shrink-0 pt-1">
-                <div
-                  className={`h-8 w-8 rounded-xl flex items-center justify-center text-xs font-bold transition-all shadow-xs ${
-                    isCompleted
-                      ? 'bg-emerald-500 text-white shadow-emerald-200'
-                      : isNext
-                      ? 'bg-blue-600 text-white shadow-blue-200 ring-4 ring-blue-100 animate-pulse'
-                      : 'bg-white border border-slate-200 text-slate-400'
-                  }`}
-                >
-                  {isCompleted ? (
-                    <Check className="h-4 w-4 stroke-[3]" />
-                  ) : isNext ? (
-                    <Play className="h-3.5 w-3.5 fill-white translate-x-0.5" />
-                  ) : (
-                    <Lock className="h-3.5 w-3.5 text-slate-400 stroke-[2]" />
-                  )}
+            <div
+              key={milestone.amount}
+              onClick={() => setSelectedMilestone({ ...milestone, isCompleted, isNext, progressVal, idx })}
+              className={`p-3.5 rounded-2xl border transition-all cursor-pointer group active:scale-[0.99] ${
+                isCompleted
+                  ? 'border-emerald-200 bg-emerald-50/20 hover:border-emerald-300 hover:shadow-xs'
+                  : isNext
+                  ? 'border-blue-300 bg-blue-50/30 ring-2 ring-blue-500/15 shadow-xs'
+                  : 'border-slate-100 bg-slate-50/40 opacity-70 hover:border-slate-200'
+              }`}
+            >
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                  {/* Icon Badge */}
+                  <div
+                    className={`h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0 text-xs font-bold transition-transform group-hover:scale-105 ${
+                      isCompleted
+                        ? 'bg-emerald-500 text-white shadow-xs'
+                        : isNext
+                        ? 'bg-blue-600 text-white shadow-xs ring-4 ring-blue-100'
+                        : 'bg-slate-200 text-slate-400'
+                    }`}
+                  >
+                    {isCompleted ? (
+                      <Check className="h-4.5 w-4.5 stroke-[3]" />
+                    ) : isNext ? (
+                      <Play className="h-3.5 w-3.5 fill-white translate-x-0.5" />
+                    ) : (
+                      <Lock className="h-3.5 w-3.5 text-slate-400 stroke-[2]" />
+                    )}
+                  </div>
+
+                  {/* Info */}
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-extrabold text-slate-900 leading-snug">
+                        {milestone.title}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-500 font-medium leading-tight mt-0.5">
+                      {milestone.desc}
+                    </p>
+                  </div>
                 </div>
 
-                {!isLast && (
-                  <div
-                    className={`w-0.5 min-h-[28px] flex-1 my-1.5 transition-colors ${
-                      isCompleted ? 'bg-emerald-400' : 'bg-slate-200'
-                    }`}
-                  />
-                )}
-              </div>
-
-              {/* Right Column: Interactive Content Card */}
-              <div
-                onClick={() => setSelectedMilestone({ ...milestone, isCompleted, isNext, progressVal, idx })}
-                className={`flex-1 p-3.5 rounded-2xl border transition-all cursor-pointer mb-2 ${
-                  isCompleted
-                    ? 'border-emerald-200/80 bg-emerald-50/20 hover:border-emerald-300 hover:shadow-xs'
-                    : isNext
-                    ? 'border-blue-300 bg-blue-50/40 ring-2 ring-blue-500/15 shadow-xs'
-                    : 'border-slate-100 bg-white hover:border-slate-200'
-                }`}
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-xs font-extrabold text-slate-900 leading-snug">
-                    {milestone.title}
-                  </span>
+                {/* Amount Badge & Status Pill */}
+                <div className="text-right flex-shrink-0 space-y-1">
                   <span
-                    className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border flex-shrink-0 tabular-nums ${
+                    className={`text-[11px] font-extrabold px-2.5 py-0.5 rounded-full border inline-block tabular-nums ${
                       isCompleted
                         ? 'bg-emerald-100 text-emerald-800 border-emerald-200'
                         : isNext
@@ -135,27 +138,40 @@ export function MilestoneStepper({ currentBalance, targetAmount = 50000000, init
                   >
                     {formatCurrency(milestone.amount)}
                   </span>
+
+                  {isCompleted && (
+                    <span className="text-[10px] font-bold text-emerald-600 block">
+                      ✓ Terpenuhi
+                    </span>
+                  )}
+                  {isNext && (
+                    <span className="text-[10px] font-bold text-blue-600 block tabular-nums">
+                      ⚡ Progres {progressVal}%
+                    </span>
+                  )}
+                  {!isCompleted && !isNext && (
+                    <span className="text-[10px] font-semibold text-slate-400 block">
+                      🔒 Belum Terbuka
+                    </span>
+                  )}
                 </div>
-
-                <p className="text-[11px] text-slate-500 font-medium leading-normal mt-0.5">
-                  {milestone.desc}
-                </p>
-
-                {isNext && (
-                  <div className="pt-2 space-y-1">
-                    <div className="flex items-center justify-between text-[11px] font-semibold text-slate-600">
-                      <span>Progres ke milestone ini</span>
-                      <span className="text-blue-600 font-bold tabular-nums">{progressVal}%</span>
-                    </div>
-                    <div className="h-2 w-full rounded-full bg-slate-200/80 overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 transition-all duration-500"
-                        style={{ width: `${progressVal}%` }}
-                      />
-                    </div>
-                  </div>
-                )}
               </div>
+
+              {/* Progress Bar for Active Step */}
+              {isNext && (
+                <div className="mt-2.5 pt-2 border-t border-blue-100/80 space-y-1">
+                  <div className="flex items-center justify-between text-[11px] font-semibold text-slate-600">
+                    <span>Progres ke milestone ini</span>
+                    <span className="text-blue-600 font-bold tabular-nums">{progressVal}%</span>
+                  </div>
+                  <div className="h-2 w-full rounded-full bg-slate-200/80 overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 transition-all duration-500"
+                      style={{ width: `${progressVal}%` }}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           );
         })}

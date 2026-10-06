@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { AppLayout } from '@/components/layout/AppLayout';
+import { MilestoneStepper } from '@/components/progress/MilestoneStepper';
 import { TrajectoryChart } from '@/components/progress/TrajectoryChart';
 import { CardSkeleton } from '@/components/ui/Skeleton';
 import { CurrencyInput } from '@/components/ui/CurrencyInput';
@@ -160,9 +161,6 @@ export default function ProgressPage() {
         {/* Top Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Link href="/dashboard" className="p-1.5 rounded-xl text-slate-500 hover:bg-slate-100 transition-colors">
-              <ArrowLeft className="h-5 w-5" />
-            </Link>
             <div>
               <h2 className="text-xl font-extrabold text-slate-900 tracking-tight">
                 Target & Impian
@@ -172,18 +170,6 @@ export default function ProgressPage() {
               </p>
             </div>
           </div>
-
-          <button
-            type="button"
-            onClick={() => {
-              setNewTargetAmount(targetAmount);
-              setEditingTargetModal(true);
-            }}
-            className="p-2 rounded-xl text-slate-500 hover:text-blue-600 hover:bg-white transition-colors cursor-pointer border border-slate-200/80 shadow-xs"
-            title="Edit Target Utama"
-          >
-            <Edit2 className="h-4 w-4" />
-          </button>
         </div>
 
         {/* Top Main Goal Hero Card */}
@@ -327,7 +313,7 @@ export default function ProgressPage() {
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            Lencana
+            Milestone
           </button>
           <button
             type="button"
@@ -365,10 +351,16 @@ export default function ProgressPage() {
         </div>
 
         {/* ═══════════════════════════════════════ */}
-        {/* TAB 1: PENCAPAIAN & LENCANA KEUANGAN     */}
+        {/* TAB 1: MILESTONE & LENCANA KEUANGAN      */}
         {/* ═══════════════════════════════════════ */}
         {activeTab === 'target' && (
           <div className="space-y-4 animate-in fade-in duration-200">
+            {/* Milestone Stepper */}
+            <MilestoneStepper
+              currentBalance={currentBalance}
+              targetAmount={targetAmount}
+              initialBalance={initialBalance}
+            />
             {/* Achievement Badges Rack */}
             <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xs space-y-4">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
