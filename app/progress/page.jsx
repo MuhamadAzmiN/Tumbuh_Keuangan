@@ -2,7 +2,6 @@
 
 import React, { useState, useMemo } from 'react';
 import { AppLayout } from '@/components/layout/AppLayout';
-import { MilestoneStepper } from '@/components/progress/MilestoneStepper';
 import { TrajectoryChart } from '@/components/progress/TrajectoryChart';
 import { CardSkeleton } from '@/components/ui/Skeleton';
 import { CurrencyInput } from '@/components/ui/CurrencyInput';
@@ -328,7 +327,7 @@ export default function ProgressPage() {
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            Milestone
+            Lencana
           </button>
           <button
             type="button"
@@ -366,17 +365,10 @@ export default function ProgressPage() {
         </div>
 
         {/* ═══════════════════════════════════════ */}
-        {/* TAB 1: MILESTONE STEPPER & CHECKLIST     */}
+        {/* TAB 1: PENCAPAIAN & LENCANA KEUANGAN     */}
         {/* ═══════════════════════════════════════ */}
         {activeTab === 'target' && (
           <div className="space-y-4 animate-in fade-in duration-200">
-            {/* Milestone Stepper */}
-            <MilestoneStepper
-              currentBalance={currentBalance}
-              targetAmount={targetAmount}
-              initialBalance={initialBalance}
-            />
-
             {/* Achievement Badges Rack */}
             <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xs space-y-4">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
