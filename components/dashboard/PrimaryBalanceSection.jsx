@@ -16,29 +16,33 @@ export function PrimaryBalanceSection({ totalBalance, targetAmount, progressInfo
   const isBehind = financialStatus?.status === 'BEHIND';
 
   return (
-    <section className="relative overflow-hidden rounded-[16px] bg-[#2563EB] p-3.5 sm:p-4 text-white shadow-sm space-y-3">
+    <section className="relative overflow-hidden rounded-[16px] bg-gradient-to-r from-[#0062FF] to-[#0052EA] p-3.5 sm:p-4 text-white shadow-sm space-y-3">
       {/* Top Header Row */}
       <div className="flex items-start justify-between gap-2.5">
         <div className="space-y-0.5">
           <div className="flex items-center gap-1.5">
-            <span className="text-[10px] sm:text-[11px] font-medium text-blue-100 flex items-center gap-1">
-              <ShieldCheck className="h-3.5 w-3.5 text-blue-200" />
+            <span className="text-[10.5px] font-medium text-white/90 flex items-center gap-1">
+              <div className="h-4 w-4 rounded-full bg-white/20 flex items-center justify-center text-white">
+                <ShieldCheck className="h-2.5 w-2.5" />
+              </div>
               <span>Total Tabungan</span>
             </span>
 
+            {/* Green Dot Indicator */}
+            <span className="h-1.5 w-1.5 rounded-full bg-[#00D284] ml-1" />
+
             {/* Status Pill Badge */}
-            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[8.5px] font-bold tracking-wide uppercase ${isBehind
-                ? 'bg-amber-400/20 text-amber-200 border border-amber-300/40'
-                : 'bg-emerald-400/20 text-emerald-200 border border-emerald-300/40'
+            <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[9px] font-bold tracking-wide uppercase ${isBehind
+                ? 'bg-amber-400 text-amber-950'
+                : 'bg-[#00D284] text-[#003B26]'
               }`}>
-              <span className={`h-1 w-1 rounded-full ${isBehind ? 'bg-amber-300' : 'bg-emerald-300'}`} />
               <span>{statusLabel}</span>
             </span>
 
             <button
               type="button"
               onClick={() => setShowBalance(!showBalance)}
-              className="p-1 rounded-lg bg-white/10 hover:bg-white/20 text-blue-100 transition-colors cursor-pointer ml-0.5"
+              className="p-1 rounded-lg bg-white/10 hover:bg-white/20 text-white/90 transition-colors cursor-pointer ml-0.5"
               title={showBalance ? 'Sembunyikan Saldo' : 'Tampilkan Saldo'}
             >
               {showBalance ? <Eye className="h-3 w-3" /> : <EyeOff className="h-3 w-3" />}
@@ -46,13 +50,13 @@ export function PrimaryBalanceSection({ totalBalance, targetAmount, progressInfo
           </div>
 
           {/* Large Amount Display */}
-          <h3 className="text-[24px] sm:text-[25px] font-bold tracking-tight text-white tabular-nums mt-0.5 leading-tight">
+          <h3 className="text-[25px] sm:text-[26px] font-bold tracking-tight text-white tabular-nums mt-1 leading-none">
             {showBalance ? formatCurrency(currentVal) : '••••••••••••'}
           </h3>
         </div>
 
         {/* Sprout Mascot Icon Container */}
-        <div className="h-10 w-10 rounded-xl bg-white/15 backdrop-blur-md border border-white/20 flex items-center justify-center p-1.5 flex-shrink-0 shadow-2xs">
+        <div className="h-12 w-12 rounded-full bg-white/15 backdrop-blur-md flex items-center justify-center p-1.5 flex-shrink-0">
           <img
             src="/sprout-3d.png"
             alt="Sprout mascot"
@@ -62,26 +66,34 @@ export function PrimaryBalanceSection({ totalBalance, targetAmount, progressInfo
       </div>
 
       {/* Target Progress Bar */}
-      <div className="space-y-1 pt-0.5">
-        <div className="flex items-center justify-between text-[10px] sm:text-[11px] font-medium text-blue-100">
-          <span>Target Utama <strong className="text-white font-bold">{formatCurrency(targetVal)}</strong></span>
-          <span className="text-white font-bold text-[11px] tabular-nums">
+      <div className="space-y-1.5 pt-0.5">
+        <div className="flex items-center justify-between">
+          <div className="h-[7px] flex-1 rounded-full bg-black/20 overflow-hidden p-0.5 mr-3">
+            <div
+              className="h-full rounded-full bg-[#00E5A3] transition-all duration-700 ease-out"
+              style={{ width: `${Math.min(Math.max(rawPercentage, 0), 100)}%` }}
+            />
+          </div>
+          <span className="text-white font-bold text-xs tabular-nums flex-shrink-0">
             {formatPercentage(rawPercentage)}
           </span>
         </div>
 
-        {/* Progress Bar */}
-        <div className="h-[6px] w-full rounded-full bg-white/20 overflow-hidden p-0.5">
-          <div
-            className="h-full rounded-full bg-emerald-400 transition-all duration-700 ease-out"
-            style={{ width: `${Math.min(Math.max(rawPercentage, 0), 100)}%` }}
-          />
+        {/* Target Label under progress bar */}
+        <div className="text-[10.5px] font-medium text-white/90 pt-0.5">
+          <span>Target Utama</span> <span className="font-bold text-white tabular-nums ml-1">{formatCurrency(targetVal)}</span>
         </div>
 
         {/* Sisa & Terkumpul */}
-        <div className="flex items-center justify-between text-[10px] sm:text-[11px] text-blue-100/90 font-medium pt-0.5">
-          <span>Terkumpul: <strong className="text-white font-bold tabular-nums">{formatCurrency(currentVal)}</strong></span>
-          <span>Sisa: <strong className="text-white font-bold tabular-nums">{formatCurrency(remaining)}</strong></span>
+        <div className="flex items-center justify-between pt-1.5 border-t border-white/10 text-[10.5px]">
+          <div>
+            <span className="text-white/80 font-normal block">Terkumpul</span>
+            <strong className="text-white font-bold text-xs sm:text-[13px] tabular-nums block mt-0.5">{formatCurrency(currentVal)}</strong>
+          </div>
+          <div className="text-right">
+            <span className="text-white/80 font-normal block">Sisa</span>
+            <strong className="text-white font-bold text-xs sm:text-[13px] tabular-nums block mt-0.5">{formatCurrency(remaining)}</strong>
+          </div>
         </div>
       </div>
     </section>

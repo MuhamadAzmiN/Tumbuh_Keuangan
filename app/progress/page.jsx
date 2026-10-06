@@ -185,7 +185,7 @@ export default function ProgressPage() {
         </div>
 
         {/* Top Main Goal Hero Card */}
-        <div className="rounded-[16px] border border-blue-700 bg-[#2563EB] p-3.5 sm:p-4 text-white shadow-sm space-y-3">
+        <div className="rounded-[16px] bg-gradient-to-r from-[#0062FF] to-[#0052EA] p-3.5 sm:p-4 text-white shadow-sm space-y-3">
           <div className="flex items-start justify-between">
             <div>
               <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] font-semibold text-white backdrop-blur-xs mb-1 border border-white/10">
@@ -200,26 +200,33 @@ export default function ProgressPage() {
               </p>
             </div>
 
-            <div className="h-10 w-10 rounded-xl bg-white/15 backdrop-blur-md flex items-center justify-center text-amber-300 border border-white/20 flex-shrink-0">
-              <Trophy className="h-5 w-5 stroke-[2]" />
+            <div className="h-12 w-12 rounded-full bg-white/15 flex items-center justify-center text-amber-300 flex-shrink-0">
+              <Trophy className="h-6 w-6 stroke-[2]" />
             </div>
           </div>
 
           {/* Progress Bar & Subtext */}
-          <div className="space-y-1 pt-0.5">
-            <div className="flex items-center justify-between text-[10.5px] font-semibold text-white/90">
-              <span>Progres Capaian</span>
-              <span className="text-amber-300 font-bold text-[11px] tabular-nums">{formatPercentage(rawPercentage)}</span>
+          <div className="space-y-1.5 pt-0.5">
+            <div className="flex items-center justify-between">
+              <div className="h-[7px] flex-1 rounded-full bg-black/20 overflow-hidden p-0.5 mr-3">
+                <div
+                  className="h-full rounded-full bg-[#00E5A3] transition-all duration-700"
+                  style={{ width: `${Math.min(Math.max(rawPercentage, 0), 100)}%` }}
+                />
+              </div>
+              <span className="text-white font-bold text-xs tabular-nums flex-shrink-0">
+                {formatPercentage(rawPercentage)}
+              </span>
             </div>
-            <div className="h-[6px] w-full rounded-full bg-black/20 overflow-hidden p-0.5 border border-white/10">
-              <div
-                className="h-full rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-emerald-400 transition-all duration-700"
-                style={{ width: `${Math.min(Math.max(rawPercentage, 0), 100)}%` }}
-              />
-            </div>
-            <div className="flex items-center justify-between text-[10px] sm:text-[10.5px] text-white/90 font-normal pt-0.5">
-              <span>Terkumpul: <strong className="font-bold text-white tabular-nums">{formatCurrency(currentBalance)}</strong></span>
-              <span>Sisa: <strong className="font-bold text-amber-300 tabular-nums">{formatCurrency(remaining)}</strong></span>
+            <div className="flex items-center justify-between pt-1 border-t border-white/10 text-[10.5px]">
+              <div>
+                <span className="text-white/80 font-normal block">Terkumpul</span>
+                <strong className="text-white font-bold text-xs sm:text-[13px] tabular-nums block mt-0.5">{formatCurrency(currentBalance)}</strong>
+              </div>
+              <div className="text-right">
+                <span className="text-white/80 font-normal block">Sisa</span>
+                <strong className="text-white font-bold text-xs sm:text-[13px] tabular-nums block mt-0.5">{formatCurrency(remaining)}</strong>
+              </div>
             </div>
           </div>
         </div>

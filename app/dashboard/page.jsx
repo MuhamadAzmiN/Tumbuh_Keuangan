@@ -86,7 +86,7 @@ export default function DashboardPage() {
     <AppLayout>
       <div className="space-y-4 animate-in pb-6">
         {/* ── 1. GREETING HEADER ──────────────────────── */}
-        <div className="space-y-1 pt-0.5">
+        <div className="space-y-1 pt-0.5 w-full">
           {/* Pill Badge */}
           <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FFF8E6] text-[#B7791F] border border-[#FEEBC8] text-[10px] font-medium shadow-2xs">
             <Sun className="h-3 w-3 fill-[#F6AD55] text-[#D69E2E]" />
@@ -99,7 +99,7 @@ export default function DashboardPage() {
           </h2>
 
           {/* Subtitle */}
-          <p className="text-[10.5px] sm:text-[11px] text-[#64748B] font-normal leading-[16px] max-w-[320px]">
+          <p className="text-[10.5px] sm:text-[11px] text-[#64748B] font-normal leading-[16px] w-full">
             Setiap langkah kecil membawa kamu lebih dekat ke tujuan besar.
           </p>
         </div>
@@ -113,7 +113,7 @@ export default function DashboardPage() {
         />
 
         {/* ── 3. QUICK ACTIONS CARD CONTAINER ───────── */}
-        <div className="rounded-[16px] border border-[#E2E8F0] bg-white p-3 shadow-2xs">
+        <div className="w-full rounded-[16px] border border-[#E2E8F0] bg-white p-3 shadow-2xs">
           <div className="grid grid-cols-4 gap-2">
             {/* + Tambah Transaksi */}
             <button
@@ -172,7 +172,7 @@ export default function DashboardPage() {
         </div>
 
         {/* ── 4. TARGET BULAN INI CARD ───────────────── */}
-        <div className="rounded-[16px] border border-[#E2E8F0] bg-white p-3.5 shadow-2xs space-y-3">
+        <div className="w-full rounded-[16px] border border-[#E2E8F0] bg-white p-3.5 shadow-2xs space-y-3">
           {/* Section Header */}
           <div className="flex items-center justify-between">
             <h3 className="text-[13px] sm:text-sm font-bold text-[#172033]">
@@ -235,8 +235,8 @@ export default function DashboardPage() {
         </div>
 
         {/* ── 5. KEBIASAAN MENABUNG BANNER ───────────── */}
-        <div className="rounded-[16px] border border-emerald-100 bg-[#E6F4EA] p-3 flex items-center justify-between shadow-2xs h-[64px]">
-          <div className="flex items-center gap-2.5">
+        <div className="w-full rounded-[16px] border border-emerald-100 bg-[#E6F4EA] p-3 flex items-center justify-between shadow-2xs h-[64px]">
+          <div className="flex items-center gap-2.5 min-w-0 flex-1">
             {/* Sprout Icon */}
             <div className="h-8 w-8 rounded-xl bg-white p-1 flex items-center justify-center flex-shrink-0 shadow-2xs">
               <img
@@ -245,11 +245,11 @@ export default function DashboardPage() {
                 className="w-full h-full object-contain"
               />
             </div>
-            <div>
+            <div className="min-w-0 flex-1">
               <h4 className="text-[11px] sm:text-xs font-bold text-[#172033]">
                 Kebiasaan Menabung
               </h4>
-              <p className="text-[9.5px] sm:text-[10px] text-[#64748B] font-normal leading-tight mt-0.5 max-w-[210px] sm:max-w-none">
+              <p className="text-[9.5px] sm:text-[10px] text-[#64748B] font-normal leading-tight mt-0.5 truncate">
                 Jangan lupa untuk konsisten menabung setiap bulan, ya!
               </p>
             </div>
@@ -258,7 +258,7 @@ export default function DashboardPage() {
           {/* Action Button */}
           <Link
             href="/progress"
-            className="h-8 w-8 rounded-full bg-[#00A86B] hover:bg-[#00915C] text-white flex items-center justify-center transition-transform hover:scale-105 shadow-2xs flex-shrink-0"
+            className="h-8 w-8 rounded-full bg-[#00A86B] hover:bg-[#00915C] text-white flex items-center justify-center transition-transform hover:scale-105 shadow-2xs flex-shrink-0 ml-2"
             title="Lihat Target Tabungan"
           >
             <ArrowRight className="h-4 w-4 stroke-[2.5]" />

@@ -114,7 +114,7 @@ export function AppLayout({ children }) {
       {/*  MOBILE TOP HEADER                      */}
       {/*  "Tumbuh Logo" [bell] [profile]         */}
       {/* ═══════════════════════════════════════ */}
-      <header className="lg:hidden h-12 px-4 flex items-center justify-between bg-transparent border-b border-slate-100/60 max-w-[390px] mx-auto w-full">
+      <header className="lg:hidden h-12 px-4 flex items-center justify-between bg-transparent border-b border-slate-100/60 max-w-md mx-auto w-full">
         {/* Brand logo */}
         <Link href="/dashboard" aria-label="Beranda" className="flex items-center">
           <TumbuhLogo className="h-8 w-8" />
@@ -143,7 +143,7 @@ export function AppLayout({ children }) {
       {/* ═══════════════════════════════════════ */}
       {/*  MAIN CONTENT                           */}
       {/* ═══════════════════════════════════════ */}
-      <main className="flex-1 pb-20 lg:pb-10 w-full max-w-[390px] lg:max-w-4xl mx-auto px-4 pt-3 lg:pt-6">
+      <main className="flex-1 pb-20 lg:pb-10 w-full max-w-md lg:max-w-4xl mx-auto px-4 pt-3 lg:pt-6">
         {children}
       </main>
 
@@ -152,7 +152,7 @@ export function AppLayout({ children }) {
       {/* ═══════════════════════════════════════ */}
       <nav
         aria-label="Mobile Navigation"
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200 shadow-md max-w-[390px] mx-auto"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200 shadow-md max-w-md mx-auto"
         style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
       >
         <div className="h-[58px] flex items-center justify-around px-1">
