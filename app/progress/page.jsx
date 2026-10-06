@@ -11,6 +11,7 @@ import { useFinance } from '@/lib/context/FinanceContext';
 import { useToast } from '@/lib/context/ToastContext';
 import { formatCurrency, formatPercentage } from '@/lib/formatters';
 import { APP_CONFIG, CONTRACT_MONTHS } from '@/lib/constants';
+import { getCurrentContractMonthKey } from '@/lib/calculations';
 import {
   Target,
   Calendar,
@@ -27,6 +28,9 @@ import {
   X,
   Heart,
   ChevronRight,
+  History,
+  AlertCircle,
+  AlertTriangle,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -44,7 +48,7 @@ export default function ProgressPage() {
   const { totalBalance, settings, progressInfo, trajectory, updateSettings, monthlyTargets, loading } = useFinance();
   const { showToast } = useToast();
 
-  const [activeTab, setActiveTab] = useState('target'); // 'target' | 'wishlist' | 'proyeksi'
+  const [activeTab, setActiveTab] = useState('target'); // 'target' | 'riwayat' | 'wishlist' | 'proyeksi'
   const [editingTargetModal, setEditingTargetModal] = useState(false);
   const [newTargetAmount, setNewTargetAmount] = useState(settings?.target_amount || APP_CONFIG.targetAmount);
 
@@ -69,6 +73,17 @@ export default function ProgressPage() {
   const currentBalance = totalBalance || 10950000;
   const remaining = Math.max(0, targetAmount - currentBalance);
   const rawPercentage = progressInfo?.rawPercentage || (currentBalance / targetAmount) * 100;
+
+  // Active contract month calculations
+  const currentMonthKey = useMemo(() => getCurrentContractMonthKey(), []);
+  const currentMonthData = useMemo(() => {
+    return trajectory?.find((item) => item.key === currentMonthKey) || trajectory?.[0] || null;
+  }, [trajectory, currentMonthKey]);
+
+  const currentMonthlyTarget = currentMonthData?.monthStats?.totalTarget || 3300000;
+  const currentMonthlyActual = currentMonthData?.monthStats?.totalActual || 0;
+  const currentMonthlyRemaining = currentMonthData?.monthStats?.remaining || 0;
+  const currentMonthlyIsMet = currentMonthData?.monthStats?.isTargetMet || false;
 
   // Save Main Target
   const handleSaveTarget = async () => {
@@ -205,12 +220,102 @@ export default function ProgressPage() {
           </div>
         </div>
 
-        {/* Navigation Tabs: [ Target & Milestone | Impian & Wishlist | Proyeksi ] */}
-        <div className="flex rounded-2xl bg-slate-200/70 p-1 border border-slate-200">
+        {/* Current Month Savings Status Card */}
+        {currentMonthData && (
+          <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className={`p-2 rounded-xl flex-shrink-0 ${
+                  currentMonthlyIsMet ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : 'bg-amber-50 text-amber-600 border border-amber-200'
+                }`}>
+                  <Calendar className="h-4 w-4 stroke-[2.5]" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-extrabold text-slate-900 flex items-center gap-1.5">
+                    <span>Target Nabung Bulan Ini ({currentMonthData.fullLabel})</span>
+                  </h4>
+                  <p className="text-[11px] text-slate-500 font-medium mt-0.5">
+                    {currentMonthlyIsMet
+                      ? 'Selamat! Target nabung bulan ini sudah TERPENUHI! 🎉'
+                      : `Bulan ini masih KURANG ${formatCurrency(currentMonthlyRemaining)} lagi untuk nabung.`}
+                  </p>
+                </div>
+              </div>
+
+              <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold border flex-shrink-0 ${
+                currentMonthlyIsMet
+                  ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                  : 'bg-amber-50 text-amber-700 border-amber-200'
+              }`}>
+                {currentMonthlyIsMet ? '🟢 Terpenuhi' : `🟡 Kurang ${formatCurrency(currentMonthlyRemaining)}`}
+              </span>
+            </div>
+
+            {/* Monthly Progress Bar */}
+            <div className="space-y-1 pt-1">
+              <div className="flex items-center justify-between text-[11px] font-semibold text-slate-600">
+                <span>Terkumpul: <strong className="text-slate-900 tabular-nums">{formatCurrency(currentMonthlyActual)}</strong></span>
+                <span>Target: <strong className="text-slate-900 tabular-nums">{formatCurrency(currentMonthlyTarget)}</strong></span>
+              </div>
+              <div className="h-2.5 w-full rounded-full bg-slate-100 overflow-hidden p-0.5 border border-slate-200/60">
+                <div
+                  className={`h-full rounded-full transition-all duration-500 ${
+                    currentMonthlyIsMet ? 'bg-emerald-500' : 'bg-amber-500'
+                  }`}
+                  style={{ width: `${Math.min(currentMonthData.monthStats?.progress || 0, 100)}%` }}
+                />
+              </div>
+            </div>
+
+            {/* Shortfall Breakdown per Source */}
+            <div className="grid grid-cols-2 gap-2 pt-1">
+              <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-2.5">
+                <span className="text-[10px] font-semibold text-slate-500 block">Nabung Gaji</span>
+                <div className="flex items-baseline justify-between mt-0.5">
+                  <span className="text-xs font-bold text-slate-900 tabular-nums">
+                    {formatCurrency(currentMonthData.monthStats?.salaryActual || 0)}
+                  </span>
+                  <span className="text-[10px] text-slate-400 tabular-nums">
+                    / {formatCurrency(currentMonthData.monthStats?.salaryTarget || 0)}
+                  </span>
+                </div>
+                {Math.max(0, (currentMonthData.monthStats?.salaryTarget || 0) - (currentMonthData.monthStats?.salaryActual || 0)) > 0 ? (
+                  <span className="text-[10px] font-semibold text-amber-600 mt-1 block">
+                    Kurang {formatCurrency(Math.max(0, (currentMonthData.monthStats?.salaryTarget || 0) - (currentMonthData.monthStats?.salaryActual || 0)))}
+                  </span>
+                ) : (
+                  <span className="text-[10px] font-semibold text-emerald-600 mt-1 block">✓ Terpenuhi</span>
+                )}
+              </div>
+
+              <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-2.5">
+                <span className="text-[10px] font-semibold text-slate-500 block">Freelance</span>
+                <div className="flex items-baseline justify-between mt-0.5">
+                  <span className="text-xs font-bold text-slate-900 tabular-nums">
+                    {formatCurrency(currentMonthData.monthStats?.freelanceActual || 0)}
+                  </span>
+                  <span className="text-[10px] text-slate-400 tabular-nums">
+                    / {formatCurrency(currentMonthData.monthStats?.freelanceTarget || 0)}
+                  </span>
+                </div>
+                {Math.max(0, (currentMonthData.monthStats?.freelanceTarget || 0) - (currentMonthData.monthStats?.freelanceActual || 0)) > 0 ? (
+                  <span className="text-[10px] font-semibold text-amber-600 mt-1 block">
+                    Kurang {formatCurrency(Math.max(0, (currentMonthData.monthStats?.freelanceTarget || 0) - (currentMonthData.monthStats?.freelanceActual || 0)))}
+                  </span>
+                ) : (
+                  <span className="text-[10px] font-semibold text-emerald-600 mt-1 block">✓ Terpenuhi</span>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Navigation Tabs */}
+        <div className="flex rounded-2xl bg-slate-200/70 p-1 border border-slate-200 overflow-x-auto no-scrollbar">
           <button
             type="button"
             onClick={() => setActiveTab('target')}
-            className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer ${
+            className={`flex-1 min-w-[75px] py-2 text-xs font-bold rounded-xl transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'target'
                 ? 'bg-white text-blue-600 shadow-sm'
                 : 'text-slate-600 hover:text-slate-900'
@@ -220,8 +325,19 @@ export default function ProgressPage() {
           </button>
           <button
             type="button"
+            onClick={() => setActiveTab('riwayat')}
+            className={`flex-1 min-w-[95px] py-2 text-xs font-bold rounded-xl transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === 'riwayat'
+                ? 'bg-white text-blue-600 shadow-sm'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            Riwayat Nabung
+          </button>
+          <button
+            type="button"
             onClick={() => setActiveTab('wishlist')}
-            className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer ${
+            className={`flex-1 min-w-[85px] py-2 text-xs font-bold rounded-xl transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'wishlist'
                 ? 'bg-white text-blue-600 shadow-sm'
                 : 'text-slate-600 hover:text-slate-900'
@@ -232,7 +348,7 @@ export default function ProgressPage() {
           <button
             type="button"
             onClick={() => setActiveTab('proyeksi')}
-            className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer ${
+            className={`flex-1 min-w-[75px] py-2 text-xs font-bold rounded-xl transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'proyeksi'
                 ? 'bg-white text-blue-600 shadow-sm'
                 : 'text-slate-600 hover:text-slate-900'
@@ -284,6 +400,126 @@ export default function ProgressPage() {
                   );
                 })}
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* ═══════════════════════════════════════ */}
+        {/* TAB 2: RIWAYAT TARGET & KEKURANGAN BULANAN*/}
+        {/* ═══════════════════════════════════════ */}
+        {activeTab === 'riwayat' && (
+          <div className="space-y-4 animate-in fade-in duration-200">
+            <div className="rounded-2xl border border-slate-100 bg-white p-4 shadow-xs space-y-1">
+              <div className="flex items-center gap-2">
+                <History className="h-4 w-4 text-blue-600" />
+                <h3 className="text-sm font-bold text-slate-900">Riwayat Target Nabung 12 Bulan</h3>
+              </div>
+              <p className="text-xs text-slate-500 font-medium">
+                Rincian ketercapaian dan sisa kekurangan nominal yang perlu ditabung setiap bulan.
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              {trajectory?.map((m) => {
+                const isCurrent = m.key === currentMonthKey;
+                const isPast = m.key < currentMonthKey;
+                const isFuture = m.key > currentMonthKey;
+                const isMet = m.monthStats?.isTargetMet;
+                const remainingMonth = m.monthStats?.remaining || 0;
+                const salaryRemaining = Math.max(0, (m.monthStats?.salaryTarget || 0) - (m.monthStats?.salaryActual || 0));
+                const freelanceRemaining = Math.max(0, (m.monthStats?.freelanceTarget || 0) - (m.monthStats?.freelanceActual || 0));
+
+                return (
+                  <div
+                    key={m.key}
+                    className={`rounded-2xl border p-4 shadow-xs space-y-3 transition-all ${
+                      isCurrent
+                        ? 'border-blue-400 bg-blue-50/40 ring-2 ring-blue-500/20'
+                        : 'border-slate-100 bg-white hover:border-slate-200'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-extrabold text-slate-900">{m.fullLabel}</span>
+                        {isCurrent && (
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-600 text-white shadow-xs">
+                            Bulan Ini
+                          </span>
+                        )}
+                      </div>
+
+                      <span
+                        className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold border flex-shrink-0 ${
+                          isMet
+                            ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                            : isPast
+                            ? 'bg-rose-50 text-rose-700 border-rose-200'
+                            : isCurrent
+                            ? 'bg-amber-50 text-amber-700 border-amber-200'
+                            : 'bg-slate-50 text-slate-500 border-slate-200'
+                        }`}
+                      >
+                        {isMet
+                          ? '🟢 Terpenuhi'
+                          : isFuture
+                          ? '⚪ Belum Dimulai'
+                          : `🟡 Kurang ${formatCurrency(remainingMonth)}`}
+                      </span>
+                    </div>
+
+                    {/* Progress Bar per month */}
+                    <div className="space-y-1">
+                      <div className="flex items-center justify-between text-xs font-semibold text-slate-600">
+                        <span>Terkumpul: <strong className="text-slate-900 tabular-nums">{formatCurrency(m.monthStats?.totalActual || 0)}</strong></span>
+                        <span>Target: <strong className="text-slate-900 tabular-nums">{formatCurrency(m.monthStats?.totalTarget || 0)}</strong></span>
+                      </div>
+                      <div className="h-2 w-full rounded-full bg-slate-100 overflow-hidden">
+                        <div
+                          className={`h-full rounded-full transition-all ${
+                            isMet ? 'bg-emerald-500' : isCurrent ? 'bg-amber-500' : isPast ? 'bg-rose-400' : 'bg-slate-300'
+                          }`}
+                          style={{ width: `${Math.min(m.monthStats?.progress || 0, 100)}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Shortfall Breakdown Alert Box */}
+                    {!isFuture && (
+                      <div
+                        className={`rounded-xl p-3 text-xs space-y-1.5 ${
+                          isMet
+                            ? 'bg-emerald-50/70 border border-emerald-100 text-emerald-900'
+                            : 'bg-amber-50/70 border border-amber-100 text-amber-900'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between font-bold">
+                          <span>{isMet ? '✅ Target Nabung Terpenuhi' : '⚠️ Sisa Kekurangan Nabung:'}</span>
+                          <span className="tabular-nums font-extrabold">
+                            {isMet ? formatCurrency(m.monthStats?.totalActual || 0) : formatCurrency(remainingMonth)}
+                          </span>
+                        </div>
+
+                        {!isMet && (
+                          <div className="grid grid-cols-2 gap-2 pt-1.5 border-t border-amber-200/60 text-[11px]">
+                            <div>
+                              <span className="text-slate-600 font-medium">Gaji: </span>
+                              <strong className={salaryRemaining > 0 ? 'text-amber-700 font-bold' : 'text-emerald-700'}>
+                                {salaryRemaining > 0 ? `Kurang ${formatCurrency(salaryRemaining)}` : 'Terpenuhi'}
+                              </strong>
+                            </div>
+                            <div>
+                              <span className="text-slate-600 font-medium">Freelance: </span>
+                              <strong className={freelanceRemaining > 0 ? 'text-amber-700 font-bold' : 'text-emerald-700'}>
+                                {freelanceRemaining > 0 ? `Kurang ${formatCurrency(freelanceRemaining)}` : 'Terpenuhi'}
+                              </strong>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
