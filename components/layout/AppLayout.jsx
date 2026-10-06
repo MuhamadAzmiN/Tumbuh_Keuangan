@@ -32,7 +32,7 @@ const MOBILE_NAV_ITEMS = [
   { href: '/dashboard', label: 'Beranda', icon: Home },
   { href: '/transactions', label: 'Transaksi', icon: FileText },
   { href: '/plan', label: 'Anggaran', icon: LayoutGrid },
-  { href: '/settings', label: 'Profil', icon: User },
+  { href: '/progress', label: 'Target', icon: Target },
 ];
 
 export function AppLayout({ children }) {
@@ -183,15 +183,14 @@ export function AppLayout({ children }) {
             return (
               <React.Fragment key={item.href}>
                 {index === 2 && (
-                  <div className="flex flex-col items-center justify-start min-w-[72px] relative -top-6">
+                  <div className="flex items-center justify-center min-w-[72px] relative -top-6">
                     <button
                       type="button"
                       onClick={() => setIsAddTxOpen(true)}
-                      className="h-14 w-14 rounded-full bg-[#2563EB] text-white flex items-center justify-center shadow-[0_8px_16px_rgba(37,99,235,0.25)] border-[4px] border-white dark:border-[#0F172A] transform hover:scale-105 active:scale-95 transition-all z-50 cursor-pointer"
+                      className="h-[60px] w-[60px] rounded-full bg-[#2563EB] text-white flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.4)] border-[2px] border-white dark:border-[#0F172A] transform hover:scale-105 active:scale-95 transition-all z-50 cursor-pointer"
                     >
-                      <Plus className="h-7 w-7 stroke-[2.5]" />
+                      <Plus className="h-7 w-7 stroke-[2]" />
                     </button>
-                    <span className="text-[10px] font-bold text-[#2563EB] mt-1">Tambah</span>
                   </div>
                 )}
                 <Link
