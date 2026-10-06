@@ -83,6 +83,18 @@ export default function SettingsPage() {
   const [resetModalOpen, setResetModalOpen] = useState(false);
   const [activeFaqIdx, setActiveFaqIdx] = useState(null);
 
+  React.useEffect(() => {
+    const isAnyOpen = profileModalOpen || maintenanceModalOpen || faqModalOpen || aboutModalOpen || resetModalOpen;
+    if (isAnyOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [profileModalOpen, maintenanceModalOpen, faqModalOpen, aboutModalOpen, resetModalOpen]);
+
   // Form state for profile modal
   const defaultUserName = profile?.name || user?.user_metadata?.name || user?.email?.split('@')[0] || 'Pengguna';
   const [nameInput, setNameInput] = useState(defaultUserName);
@@ -479,7 +491,7 @@ export default function SettingsPage() {
               className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
               onClick={() => setProfileModalOpen(false)}
             />
-            <div className="relative z-10 w-full max-w-sm sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
+            <div className="relative z-10 w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
               <div className="w-12 h-1.5 rounded-full bg-slate-200 mx-auto -mt-1 mb-1 flex-shrink-0 sm:hidden" />
 
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
@@ -718,7 +730,7 @@ export default function SettingsPage() {
               className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
               onClick={() => setMaintenanceModalOpen(false)}
             />
-            <div className="relative z-10 w-full max-w-sm sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 text-center">
+            <div className="relative z-10 w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 text-center">
               <div className="w-12 h-1.5 rounded-full bg-slate-200 mx-auto -mt-1 mb-1 flex-shrink-0 sm:hidden" />
 
               <div className="h-14 w-14 rounded-2xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center mx-auto shadow-xs">
@@ -769,7 +781,7 @@ export default function SettingsPage() {
               className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
               onClick={() => setFaqModalOpen(false)}
             />
-            <div className="relative z-10 w-full max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
+            <div className="relative z-10 w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
               <div className="w-12 h-1.5 rounded-full bg-slate-200 mx-auto -mt-1 mb-1 flex-shrink-0 sm:hidden" />
 
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
@@ -841,7 +853,7 @@ export default function SettingsPage() {
               className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
               onClick={() => setAboutModalOpen(false)}
             />
-            <div className="relative z-10 w-full max-w-sm sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 text-center">
+            <div className="relative z-10 w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 text-center">
               <div className="w-12 h-1.5 rounded-full bg-slate-200 mx-auto -mt-1 mb-1 flex-shrink-0 sm:hidden" />
 
               <div className="h-14 w-14 rounded-2xl bg-blue-600 text-white flex items-center justify-center mx-auto shadow-md">
@@ -891,7 +903,7 @@ export default function SettingsPage() {
               className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
               onClick={() => setResetModalOpen(false)}
             />
-            <div className="relative z-10 w-full max-w-sm rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 text-center">
+            <div className="relative z-10 w-full sm:max-w-sm rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 text-center">
               <div className="w-12 h-1.5 rounded-full bg-slate-200 mx-auto -mt-1 mb-1 flex-shrink-0 sm:hidden" />
 
               <div className="h-12 w-12 rounded-2xl bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center mx-auto">

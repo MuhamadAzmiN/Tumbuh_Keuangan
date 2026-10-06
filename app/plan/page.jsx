@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { CardSkeleton } from '@/components/ui/Skeleton';
 import { useFinance } from '@/lib/context/FinanceContext';
@@ -122,6 +122,18 @@ export default function PlanPage() {
   const [expandedCategory, setExpandedCategory] = useState(null);
   const [deletingRecordId, setDeletingRecordId] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    const isAnyOpen = Boolean(editingCategory || editingTotalModal);
+    if (isAnyOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [editingCategory, editingTotalModal]);
 
   const handleDeleteItem = async (item) => {
     try {
@@ -429,9 +441,8 @@ export default function PlanPage() {
             <div>
               <span className="text-[11px] font-semibold text-slate-400 block">Sisa Anggaran</span>
               <span
-                className={`text-sm font-bold tabular-nums ${
-                  remainingBudget < 0 ? 'text-rose-600' : 'text-emerald-600'
-                }`}
+                className={`text-sm font-bold tabular-nums ${remainingBudget < 0 ? 'text-rose-600' : 'text-emerald-600'
+                  }`}
               >
                 {formatCurrency(remainingBudget)}
               </span>
@@ -446,9 +457,8 @@ export default function PlanPage() {
             </div>
             <div className="h-2.5 w-full rounded-full bg-slate-100 overflow-hidden">
               <div
-                className={`h-full rounded-full transition-all duration-300 ${
-                  totalSpent > totalBudget ? 'bg-rose-600' : 'bg-blue-600'
-                }`}
+                className={`h-full rounded-full transition-all duration-300 ${totalSpent > totalBudget ? 'bg-rose-600' : 'bg-blue-600'
+                  }`}
                 style={{ width: `${Math.min(overallPercent, 100)}%` }}
               />
             </div>
@@ -634,7 +644,7 @@ export default function PlanPage() {
               className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
               onClick={() => setEditingCategory(null)}
             />
-            <div className="relative z-10 w-full max-w-sm sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
+            <div className="relative z-10 w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
               {/* Drag Handle Bar for mobile */}
               <div className="w-12 h-1.5 rounded-full bg-slate-200 mx-auto -mt-1 mb-1 flex-shrink-0 sm:hidden" />
 
@@ -695,7 +705,7 @@ export default function PlanPage() {
               className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
               onClick={() => setEditingTotalModal(false)}
             />
-            <div className="relative z-10 w-full max-w-sm sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
+            <div className="relative z-10 w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
               {/* Drag Handle Bar for mobile */}
               <div className="w-12 h-1.5 rounded-full bg-slate-200 mx-auto -mt-1 mb-1 flex-shrink-0 sm:hidden" />
 

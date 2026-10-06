@@ -112,29 +112,29 @@ export function AppLayout({ children }) {
 
       {/* ═══════════════════════════════════════ */}
       {/*  MOBILE TOP HEADER                      */}
-      {/*  "Pencatatan Azmi" [bell] [profile]     */}
+      {/*  "Tumbuh Logo" [bell] [profile]         */}
       {/* ═══════════════════════════════════════ */}
-      <header className="lg:hidden pt-3.5 pb-1 px-4 flex items-center justify-between bg-transparent">
+      <header className="lg:hidden h-12 px-4 flex items-center justify-between bg-transparent border-b border-slate-100/60 max-w-[390px] mx-auto w-full">
         {/* Brand logo */}
         <Link href="/dashboard" aria-label="Beranda" className="flex items-center">
-          <TumbuhLogo className="h-7 w-7" />
+          <TumbuhLogo className="h-8 w-8" />
         </Link>
 
         {/* Right: Bell + Profile Icon */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <button
             type="button"
             aria-label="Notifikasi"
-            className="h-9 w-9 rounded-full flex items-center justify-center text-slate-700 hover:bg-slate-200/50 transition-colors cursor-pointer"
+            className="h-8 w-8 rounded-full flex items-center justify-center text-slate-700 hover:bg-slate-200/50 transition-colors cursor-pointer"
           >
-            <Bell className="h-5 w-5 stroke-[1.8]" />
+            <Bell className="h-[18px] w-[18px] stroke-[1.8]" />
           </button>
           <Link
             href="/settings"
             aria-label="Profil"
-            className="h-9 w-9 rounded-full bg-[#EBF3FF] flex items-center justify-center flex-shrink-0 text-blue-600 hover:bg-blue-100 transition-colors"
+            className="h-8 w-8 rounded-full bg-[#EBF3FF] flex items-center justify-center text-blue-600 hover:bg-blue-100 transition-colors"
           >
-            <User className="h-5 w-5 stroke-[2] text-blue-600 fill-blue-600/10" />
+            <User className="h-[18px] w-[18px] stroke-[2] text-blue-600 fill-blue-600/10" />
           </Link>
         </div>
       </header>
@@ -143,7 +143,7 @@ export function AppLayout({ children }) {
       {/* ═══════════════════════════════════════ */}
       {/*  MAIN CONTENT                           */}
       {/* ═══════════════════════════════════════ */}
-      <main className="flex-1 pb-24 lg:pb-10 w-full max-w-xl lg:max-w-4xl mx-auto px-4 sm:px-6 pt-4 lg:pt-6">
+      <main className="flex-1 pb-20 lg:pb-10 w-full max-w-[390px] lg:max-w-4xl mx-auto px-4 pt-3 lg:pt-6">
         {children}
       </main>
 
@@ -152,26 +152,29 @@ export function AppLayout({ children }) {
       {/* ═══════════════════════════════════════ */}
       <nav
         aria-label="Mobile Navigation"
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200 flex items-center justify-around shadow-lg px-1"
-        style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 4px)', pt: '6px' }}
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200 shadow-md max-w-[390px] mx-auto"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
       >
-        {NAV_ITEMS.map((item) => {
-          const Icon = item.icon;
-          const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href));
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`flex flex-col items-center justify-center py-2 px-1 min-w-0 flex-1 transition-colors ${isActive ? 'text-blue-600 font-semibold' : 'text-slate-400 hover:text-slate-600'
+        <div className="h-[58px] flex items-center justify-around px-1">
+          {NAV_ITEMS.map((item) => {
+            const Icon = item.icon;
+            const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href));
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex flex-col items-center justify-center py-1 px-1 min-w-0 flex-1 transition-colors ${
+                  isActive ? 'text-[#2563EB]' : 'text-[#94A3B8] hover:text-slate-600'
                 }`}
-            >
-              <Icon className={`h-5 w-5 mb-1 ${isActive ? 'text-blue-600 stroke-[2.2]' : 'stroke-[1.8]'}`} />
-              <span className={`text-[11px] leading-none truncate ${isActive ? 'font-bold text-blue-600' : 'font-medium'}`}>
-                {item.label}
-              </span>
-            </Link>
-          );
-        })}
+              >
+                <Icon className={`h-[19px] w-[19px] mb-0.5 ${isActive ? 'text-[#2563EB] stroke-[2.2]' : 'stroke-[1.8]'}`} />
+                <span className={`text-[9px] leading-none truncate ${isActive ? 'font-bold text-[#2563EB]' : 'font-medium text-[#94A3B8]'}`}>
+                  {item.label}
+                </span>
+              </Link>
+            );
+          })}
+        </div>
       </nav>
 
       <TransactionModal isOpen={isAddTxOpen} onClose={() => setIsAddTxOpen(false)} />

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { MilestoneStepper } from '@/components/progress/MilestoneStepper';
 import { TrajectoryChart } from '@/components/progress/TrajectoryChart';
@@ -50,7 +50,7 @@ export default function ProgressPage() {
       try {
         const saved = localStorage.getItem('road_to_50jt_wishlists');
         if (saved) return JSON.parse(saved);
-      } catch {}
+      } catch { }
     }
     return DEFAULT_WISHLISTS;
   });
@@ -59,6 +59,18 @@ export default function ProgressPage() {
   const [wishlistName, setWishlistName] = useState('');
   const [wishlistAmount, setWishlistAmount] = useState(5000000);
   const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    const isAnyOpen = Boolean(editingTargetModal || addingWishlistModal);
+    if (isAnyOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [editingTargetModal, addingWishlistModal]);
 
   const targetAmount = settings?.target_amount || APP_CONFIG.targetAmount;
   const initialBalance = settings?.initial_balance || APP_CONFIG.initialBalance;
@@ -157,15 +169,15 @@ export default function ProgressPage() {
 
   return (
     <AppLayout>
-      <div className="space-y-4 animate-in pb-8">
+      <div className="space-y-3.5 animate-in pb-6">
         {/* Top Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div>
-              <h2 className="text-xl font-extrabold text-slate-900 tracking-tight">
+              <h2 className="text-[17px] sm:text-lg font-bold text-[#172033] tracking-tight">
                 Target & Impian
               </h2>
-              <p className="text-xs text-slate-500 font-medium">
+              <p className="text-[10.5px] sm:text-[11px] text-[#64748B] font-normal mt-0.5">
                 Pantau progres dan milestone 50 juta
               </p>
             </div>
@@ -173,129 +185,132 @@ export default function ProgressPage() {
         </div>
 
         {/* Top Main Goal Hero Card */}
-        <div className="rounded-3xl border border-blue-700 bg-blue-600 p-5 text-white shadow-md space-y-4">
+        <div className="rounded-[16px] border border-blue-700 bg-[#2563EB] p-3.5 sm:p-4 text-white shadow-sm space-y-3">
           <div className="flex items-start justify-between">
             <div>
-              <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] font-semibold text-blue-100 backdrop-blur-xs mb-1.5 border border-white/10">
-                <Target className="h-3.5 w-3.5 text-amber-300" />
+              <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] font-semibold text-white backdrop-blur-xs mb-1 border border-white/10">
+                <Target className="h-3 w-3 text-amber-300" />
                 <span>Target Utama 12 Bulan</span>
               </span>
-              <h3 className="text-2xl font-extrabold text-white tabular-nums tracking-tight">
+              <h3 className="text-[24px] sm:text-[25px] font-bold text-white tabular-nums tracking-tight mt-0.5 leading-tight">
                 {formatCurrency(targetAmount)}
               </h3>
-              <p className="text-xs text-blue-100/90 font-medium mt-0.5">
+              <p className="text-[10.5px] text-blue-100/90 font-normal mt-0.5">
                 Periode: Oktober 2026 – September 2027
               </p>
             </div>
 
-            <div className="h-11 w-11 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center text-amber-300 border border-white/20 flex-shrink-0">
-              <Trophy className="h-6 w-6 stroke-[2.2]" />
+            <div className="h-10 w-10 rounded-xl bg-white/15 backdrop-blur-md flex items-center justify-center text-amber-300 border border-white/20 flex-shrink-0">
+              <Trophy className="h-5 w-5 stroke-[2]" />
             </div>
           </div>
 
           {/* Progress Bar & Subtext */}
-          <div className="space-y-1.5 pt-1">
-            <div className="flex items-center justify-between text-xs font-bold text-blue-100">
+          <div className="space-y-1 pt-0.5">
+            <div className="flex items-center justify-between text-[10.5px] font-semibold text-white/90">
               <span>Progres Capaian</span>
-              <span className="text-amber-300 font-extrabold text-sm tabular-nums">{formatPercentage(rawPercentage)}</span>
+              <span className="text-amber-300 font-bold text-[11px] tabular-nums">{formatPercentage(rawPercentage)}</span>
             </div>
-            <div className="h-3 w-full rounded-full bg-black/20 overflow-hidden p-0.5 border border-white/10">
+            <div className="h-[6px] w-full rounded-full bg-black/20 overflow-hidden p-0.5 border border-white/10">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-amber-400 to-emerald-400 transition-all duration-700 shadow-xs"
+                className="h-full rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-emerald-400 transition-all duration-700"
                 style={{ width: `${Math.min(Math.max(rawPercentage, 0), 100)}%` }}
               />
             </div>
-            <div className="flex items-center justify-between text-xs pt-1 text-blue-100/90 font-medium">
+            <div className="flex items-center justify-between text-[10px] sm:text-[10.5px] text-white/90 font-normal pt-0.5">
               <span>Terkumpul: <strong className="font-bold text-white tabular-nums">{formatCurrency(currentBalance)}</strong></span>
-              <span>Sisa: <strong className="font-bold text-amber-200 tabular-nums">{formatCurrency(remaining)}</strong></span>
+              <span>Sisa: <strong className="font-bold text-amber-300 tabular-nums">{formatCurrency(remaining)}</strong></span>
             </div>
           </div>
         </div>
 
         {/* Current Month Savings Status Card */}
         {currentMonthData && (
-          <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm space-y-3">
-            <div className="flex items-center justify-between">
+          <div className="rounded-[16px] border border-[#E2E8F0] bg-white p-3.5 shadow-2xs space-y-3">
+            <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2.5">
-                <div className={`p-2 rounded-xl flex-shrink-0 ${
-                  currentMonthlyIsMet ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : 'bg-amber-50 text-amber-600 border border-amber-200'
-                }`}>
-                  <Calendar className="h-4 w-4 stroke-[2.5]" />
+                <div className="h-9 w-9 rounded-xl flex-shrink-0 flex items-center justify-center bg-[#FFF8E6] text-[#B7791F] border border-[#FEEBC8]">
+                  <Calendar className="h-4.5 w-4.5 stroke-[2]" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-extrabold text-slate-900 flex items-center gap-1.5">
+                  <h4 className="text-[12px] sm:text-[13px] font-bold text-[#172033] flex items-center gap-1">
                     <span>Target Nabung Bulan Ini ({currentMonthData.fullLabel})</span>
                   </h4>
-                  <p className="text-[11px] text-slate-500 font-medium mt-0.5">
+                  <p className="text-[10px] sm:text-[10.5px] text-[#64748B] font-normal mt-0.5 leading-snug">
                     {currentMonthlyIsMet
                       ? 'Selamat! Target nabung bulan ini sudah TERPENUHI! 🎉'
-                      : `Bulan ini masih KURANG ${formatCurrency(currentMonthlyRemaining)} lagi untuk nabung.`}
+                      : `Bulan ini masih KURANG ${formatCurrency(currentMonthlyRemaining)} lagi.`}
                   </p>
                 </div>
               </div>
 
-              <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold border flex-shrink-0 ${
-                currentMonthlyIsMet
+              <span className={`px-2 py-0.5 rounded-full text-[9px] font-semibold border flex-shrink-0 flex items-center gap-1 ${currentMonthlyIsMet
                   ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                  : 'bg-amber-50 text-amber-700 border-amber-200'
-              }`}>
-                {currentMonthlyIsMet ? '🟢 Terpenuhi' : `🟡 Kurang ${formatCurrency(currentMonthlyRemaining)}`}
+                  : 'bg-[#FFF8E6] text-[#B7791F] border border-[#FEEBC8]'
+                }`}>
+                {currentMonthlyIsMet ? (
+                  '🟢 Terpenuhi'
+                ) : (
+                  <>
+                    <span className="h-2 w-2 rounded-full bg-amber-400 border border-amber-600 inline-block flex-shrink-0" />
+                    <span>Kurang {formatCurrency(currentMonthlyRemaining)}</span>
+                  </>
+                )}
               </span>
             </div>
 
             {/* Monthly Progress Bar */}
-            <div className="space-y-1 pt-1">
-              <div className="flex items-center justify-between text-[11px] font-semibold text-slate-600">
-                <span>Terkumpul: <strong className="text-slate-900 tabular-nums">{formatCurrency(currentMonthlyActual)}</strong></span>
-                <span>Target: <strong className="text-slate-900 tabular-nums">{formatCurrency(currentMonthlyTarget)}</strong></span>
+            <div className="space-y-1 pt-0.5">
+              <div className="flex items-center justify-between text-[10.5px] font-medium text-slate-600">
+                <span>Terkumpul: <strong className="text-[#172033] font-bold tabular-nums">{formatCurrency(currentMonthlyActual)}</strong></span>
+                <span>Target: <strong className="text-[#172033] font-bold tabular-nums">{formatCurrency(currentMonthlyTarget)}</strong></span>
               </div>
-              <div className="h-2.5 w-full rounded-full bg-slate-100 overflow-hidden p-0.5 border border-slate-200/60">
+              <div className="h-2 w-full rounded-full bg-slate-100 overflow-hidden p-0.5 border border-slate-200/60">
                 <div
-                  className={`h-full rounded-full transition-all duration-500 ${
-                    currentMonthlyIsMet ? 'bg-emerald-500' : 'bg-amber-500'
-                  }`}
+                  className={`h-full rounded-full transition-all duration-500 ${currentMonthlyIsMet ? 'bg-emerald-500' : 'bg-amber-500'
+                    }`}
                   style={{ width: `${Math.min(currentMonthData.monthStats?.progress || 0, 100)}%` }}
                 />
               </div>
             </div>
 
             {/* Shortfall Breakdown per Source */}
-            <div className="grid grid-cols-2 gap-2 pt-1">
+            <div className="grid grid-cols-2 gap-2 pt-0.5">
               <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-2.5">
-                <span className="text-[10px] font-semibold text-slate-500 block">Nabung Gaji</span>
-                <div className="flex items-baseline justify-between mt-0.5">
-                  <span className="text-xs font-bold text-slate-900 tabular-nums">
+                <span className="text-[10px] font-semibold text-slate-500 block mb-0.5">Nabung Gaji</span>
+                <div className="flex items-baseline gap-1 mt-0.5">
+                  <span className="text-[12px] font-bold text-[#172033] tabular-nums">
                     {formatCurrency(currentMonthData.monthStats?.salaryActual || 0)}
                   </span>
-                  <span className="text-[10px] text-slate-400 tabular-nums">
+                  <span className="text-[10px] text-slate-400 font-normal tabular-nums">
                     / {formatCurrency(currentMonthData.monthStats?.salaryTarget || 0)}
                   </span>
                 </div>
                 {Math.max(0, (currentMonthData.monthStats?.salaryTarget || 0) - (currentMonthData.monthStats?.salaryActual || 0)) > 0 ? (
-                  <span className="text-[10px] font-semibold text-amber-600 mt-1 block">
+                  <span className="text-[10px] font-bold text-amber-600 mt-0.5 block">
                     Kurang {formatCurrency(Math.max(0, (currentMonthData.monthStats?.salaryTarget || 0) - (currentMonthData.monthStats?.salaryActual || 0)))}
                   </span>
                 ) : (
-                  <span className="text-[10px] font-semibold text-emerald-600 mt-1 block">✓ Terpenuhi</span>
+                  <span className="text-[10px] font-bold text-emerald-600 mt-0.5 block">✓ Terpenuhi</span>
                 )}
               </div>
 
               <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-2.5">
-                <span className="text-[10px] font-semibold text-slate-500 block">Freelance</span>
-                <div className="flex items-baseline justify-between mt-0.5">
-                  <span className="text-xs font-bold text-slate-900 tabular-nums">
+                <span className="text-[10px] font-semibold text-slate-500 block mb-0.5">Freelance</span>
+                <div className="flex items-baseline gap-1 mt-0.5">
+                  <span className="text-[12px] font-bold text-[#172033] tabular-nums">
                     {formatCurrency(currentMonthData.monthStats?.freelanceActual || 0)}
                   </span>
-                  <span className="text-[10px] text-slate-400 tabular-nums">
+                  <span className="text-[10px] text-slate-400 font-normal tabular-nums">
                     / {formatCurrency(currentMonthData.monthStats?.freelanceTarget || 0)}
                   </span>
                 </div>
                 {Math.max(0, (currentMonthData.monthStats?.freelanceTarget || 0) - (currentMonthData.monthStats?.freelanceActual || 0)) > 0 ? (
-                  <span className="text-[10px] font-semibold text-amber-600 mt-1 block">
+                  <span className="text-[10px] font-bold text-amber-600 mt-0.5 block">
                     Kurang {formatCurrency(Math.max(0, (currentMonthData.monthStats?.freelanceTarget || 0) - (currentMonthData.monthStats?.freelanceActual || 0)))}
                   </span>
                 ) : (
-                  <span className="text-[10px] font-semibold text-emerald-600 mt-1 block">✓ Terpenuhi</span>
+                  <span className="text-[10px] font-bold text-emerald-600 mt-0.5 block">✓ Terpenuhi</span>
                 )}
               </div>
             </div>
@@ -303,48 +318,44 @@ export default function ProgressPage() {
         )}
 
         {/* Navigation Tabs */}
-        <div className="grid grid-cols-4 gap-1 p-1 rounded-2xl bg-slate-200/70 border border-slate-200 text-center text-xs font-bold">
+        <div className="grid grid-cols-4 gap-1 p-1 rounded-xl bg-slate-200/70 border border-slate-200 text-center text-[11px] font-bold">
           <button
             type="button"
             onClick={() => setActiveTab('target')}
-            className={`py-2 px-1 rounded-xl transition-all cursor-pointer truncate ${
-              activeTab === 'target'
-                ? 'bg-white text-blue-600 shadow-xs font-extrabold'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
+            className={`py-1.5 px-1 rounded-lg transition-all cursor-pointer truncate ${activeTab === 'target'
+                ? 'bg-white text-[#2563EB] shadow-2xs font-bold'
+                : 'text-slate-600 hover:text-slate-900 font-medium'
+              }`}
           >
             Milestone
           </button>
           <button
             type="button"
             onClick={() => setActiveTab('riwayat')}
-            className={`py-2 px-1 rounded-xl transition-all cursor-pointer truncate ${
-              activeTab === 'riwayat'
-                ? 'bg-white text-blue-600 shadow-xs font-extrabold'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
+            className={`py-1.5 px-1 rounded-lg transition-all cursor-pointer truncate ${activeTab === 'riwayat'
+                ? 'bg-white text-[#2563EB] shadow-2xs font-bold'
+                : 'text-slate-600 hover:text-slate-900 font-medium'
+              }`}
           >
             Riwayat
           </button>
           <button
             type="button"
             onClick={() => setActiveTab('wishlist')}
-            className={`py-2 px-1 rounded-xl transition-all cursor-pointer truncate ${
-              activeTab === 'wishlist'
-                ? 'bg-white text-blue-600 shadow-xs font-extrabold'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
+            className={`py-1.5 px-1 rounded-lg transition-all cursor-pointer truncate ${activeTab === 'wishlist'
+                ? 'bg-white text-[#2563EB] shadow-2xs font-bold'
+                : 'text-slate-600 hover:text-slate-900 font-medium'
+              }`}
           >
             Wishlist ({wishlists.length})
           </button>
           <button
             type="button"
             onClick={() => setActiveTab('proyeksi')}
-            className={`py-2 px-1 rounded-xl transition-all cursor-pointer truncate ${
-              activeTab === 'proyeksi'
-                ? 'bg-white text-blue-600 shadow-xs font-extrabold'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
+            className={`py-1.5 px-1 rounded-lg transition-all cursor-pointer truncate ${activeTab === 'proyeksi'
+                ? 'bg-white text-[#2563EB] shadow-2xs font-bold'
+                : 'text-slate-600 hover:text-slate-900 font-medium'
+              }`}
           >
             Proyeksi
           </button>
@@ -385,16 +396,14 @@ export default function ProgressPage() {
                   return (
                     <div
                       key={badge.id}
-                      className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 transition-all ${
-                        isUnlocked
+                      className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 transition-all ${isUnlocked
                           ? 'border-slate-200/80 bg-gradient-to-br from-white to-slate-50 shadow-xs hover:shadow-md'
                           : 'border-slate-100 bg-slate-50/40 opacity-55'
-                      }`}
+                        }`}
                     >
                       <div className="flex items-center gap-3 min-w-0">
-                        <div className={`h-10 w-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0 border shadow-2xs ${
-                          isUnlocked ? badge.color : 'border-slate-200 bg-slate-100'
-                        }`}>
+                        <div className={`h-10 w-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0 border shadow-2xs ${isUnlocked ? badge.color : 'border-slate-200 bg-slate-100'
+                          }`}>
                           {badge.icon}
                         </div>
                         <div className="min-w-0">
@@ -407,11 +416,10 @@ export default function ProgressPage() {
                         </div>
                       </div>
 
-                      <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full border flex-shrink-0 ${
-                        isUnlocked
+                      <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full border flex-shrink-0 ${isUnlocked
                           ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
                           : 'bg-slate-100 text-slate-400 border-slate-200'
-                      }`}>
+                        }`}>
                         {isUnlocked ? '✓ Terbuka' : '🔒 Terkunci'}
                       </span>
                     </div>
@@ -450,11 +458,10 @@ export default function ProgressPage() {
                 return (
                   <div
                     key={m.key}
-                    className={`rounded-2xl border p-4 shadow-xs space-y-3 transition-all ${
-                      isCurrent
+                    className={`rounded-2xl border p-4 shadow-xs space-y-3 transition-all ${isCurrent
                         ? 'border-blue-400 bg-blue-50/40 ring-2 ring-blue-500/20'
                         : 'border-slate-100 bg-white hover:border-slate-200'
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
@@ -467,21 +474,20 @@ export default function ProgressPage() {
                       </div>
 
                       <span
-                        className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold border flex-shrink-0 ${
-                          isMet
+                        className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold border flex-shrink-0 ${isMet
                             ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
                             : isPast
-                            ? 'bg-rose-50 text-rose-700 border-rose-200'
-                            : isCurrent
-                            ? 'bg-amber-50 text-amber-700 border-amber-200'
-                            : 'bg-slate-50 text-slate-500 border-slate-200'
-                        }`}
+                              ? 'bg-rose-50 text-rose-700 border-rose-200'
+                              : isCurrent
+                                ? 'bg-amber-50 text-amber-700 border-amber-200'
+                                : 'bg-slate-50 text-slate-500 border-slate-200'
+                          }`}
                       >
                         {isMet
                           ? '🟢 Terpenuhi'
                           : isFuture
-                          ? '⚪ Belum Dimulai'
-                          : `🟡 Kurang ${formatCurrency(remainingMonth)}`}
+                            ? '⚪ Belum Dimulai'
+                            : `🟡 Kurang ${formatCurrency(remainingMonth)}`}
                       </span>
                     </div>
 
@@ -493,9 +499,8 @@ export default function ProgressPage() {
                       </div>
                       <div className="h-2 w-full rounded-full bg-slate-100 overflow-hidden">
                         <div
-                          className={`h-full rounded-full transition-all ${
-                            isMet ? 'bg-emerald-500' : isCurrent ? 'bg-amber-500' : isPast ? 'bg-rose-400' : 'bg-slate-300'
-                          }`}
+                          className={`h-full rounded-full transition-all ${isMet ? 'bg-emerald-500' : isCurrent ? 'bg-amber-500' : isPast ? 'bg-rose-400' : 'bg-slate-300'
+                            }`}
                           style={{ width: `${Math.min(m.monthStats?.progress || 0, 100)}%` }}
                         />
                       </div>
@@ -504,11 +509,10 @@ export default function ProgressPage() {
                     {/* Shortfall Breakdown Alert Box */}
                     {!isFuture && (
                       <div
-                        className={`rounded-xl p-3 text-xs space-y-1.5 ${
-                          isMet
+                        className={`rounded-xl p-3 text-xs space-y-1.5 ${isMet
                             ? 'bg-emerald-50/70 border border-emerald-100 text-emerald-900'
                             : 'bg-amber-50/70 border border-amber-100 text-amber-900'
-                        }`}
+                          }`}
                       >
                         <div className="flex items-center justify-between font-bold">
                           <span>{isMet ? '✅ Target Nabung Terpenuhi' : '⚠️ Sisa Kekurangan Nabung:'}</span>
@@ -595,11 +599,10 @@ export default function ProgressPage() {
                         </div>
 
                         <div className="flex items-center gap-2">
-                          <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${
-                            isReached
+                          <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${isReached
                               ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                               : 'bg-blue-50 text-blue-700 border border-blue-200'
-                          }`}>
+                            }`}>
                             {isReached ? 'Tercapai! 🎉' : `${pct}%`}
                           </span>
 
@@ -707,7 +710,7 @@ export default function ProgressPage() {
               className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
               onClick={() => setEditingTargetModal(false)}
             />
-            <div className="relative z-10 w-full max-w-sm sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
+            <div className="relative z-10 w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
               {/* Drag Handle Bar for mobile */}
               <div className="w-12 h-1.5 rounded-full bg-slate-200 mx-auto -mt-1 mb-1 flex-shrink-0 sm:hidden" />
 
@@ -763,7 +766,7 @@ export default function ProgressPage() {
               className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
               onClick={() => setAddingWishlistModal(false)}
             />
-            <div className="relative z-10 w-full max-w-sm sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
+            <div className="relative z-10 w-full sm:max-w-md rounded-t-[32px] sm:rounded-3xl bg-white p-5 sm:p-6 shadow-2xl space-y-4 animate-in duration-200 max-h-[90vh] overflow-y-auto">
               {/* Drag Handle Bar for mobile */}
               <div className="w-12 h-1.5 rounded-full bg-slate-200 mx-auto -mt-1 mb-1 flex-shrink-0 sm:hidden" />
 

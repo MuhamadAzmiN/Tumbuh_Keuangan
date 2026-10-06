@@ -109,8 +109,6 @@ export function TransactionModal({ isOpen, onClose, transactionToEdit = null }) 
     setError('');
   }, [transactionToEdit, isOpen]);
 
-  if (!isOpen) return null;
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -149,6 +147,16 @@ export function TransactionModal({ isOpen, onClose, transactionToEdit = null }) 
     }
   };
 
+  useEffect(() => {
+    if (!isOpen) return;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
   const activeCategories = flowType === 'income' ? CATEGORIES_PEMASUKAN : CATEGORIES_PENGELUARAN;
 
   return (
@@ -161,7 +169,7 @@ export function TransactionModal({ isOpen, onClose, transactionToEdit = null }) 
         />
 
         {/* Bottom Sheet Drawer on Mobile / Centered Modal on Desktop */}
-        <div className="relative z-10 w-full max-w-md bg-white rounded-t-[32px] sm:rounded-3xl shadow-2xl overflow-hidden animate-in duration-300 max-h-[90vh] flex flex-col">
+        <div className="relative z-10 w-full sm:max-w-md bg-white rounded-t-[32px] sm:rounded-3xl shadow-2xl overflow-hidden animate-in duration-300 max-h-[90vh] flex flex-col">
 
           {/* Drag Handle Bar */}
           <div className="w-12 h-1.5 rounded-full bg-slate-200 mx-auto mt-3 mb-1 flex-shrink-0 sm:hidden" />

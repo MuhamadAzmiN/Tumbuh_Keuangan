@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { X } from 'lucide-react';
 import { Portal } from './Portal';
 
-export function Modal({ isOpen, onClose, title, children, maxWidth = 'max-w-md' }) {
+export function Modal({ isOpen, onClose, title, children, maxWidth = 'sm:max-w-md' }) {
   useEffect(() => {
     if (!isOpen) return;
 
