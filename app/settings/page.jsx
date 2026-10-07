@@ -387,7 +387,7 @@ export default function SettingsPage() {
               <h3 className="text-lg font-extrabold text-slate-900 dark:text-slate-100 tracking-tight leading-tight truncate">
                 {userName}
               </h3>
-              <p className="text-xs text-slate-400 font-medium mt-0.5 truncate">Pencatatan Azmi • Road to 50JT</p>
+              <p className="text-xs text-slate-400 font-medium mt-0.5 truncate">Tumbuh • Road to 50JT</p>
               <div className="flex items-center gap-2 mt-1.5 overflow-hidden">
                 <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100 whitespace-nowrap">
                   <ShieldCheck className="h-3 w-3 text-blue-600 flex-shrink-0" />

@@ -57,7 +57,7 @@ export function AppLayout({ children }) {
               <TumbuhLogo className="h-9 w-9" />
             </div>
             <div>
-              <h1 className="text-base font-bold tracking-tight text-slate-900 dark:text-slate-100 leading-none">Pencatatan Azmi</h1>
+              <h1 className="text-base font-bold tracking-tight text-slate-900 dark:text-slate-100 leading-none">Tumbuh</h1>
               <p className="text-[10px] text-slate-500 mt-1 font-medium">Catat, Kelola, Capai.</p>
             </div>
           </Link>
@@ -104,7 +104,7 @@ export function AppLayout({ children }) {
             </div>
             <div className="min-w-0">
               <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 truncate">{userName}</p>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">Pencatatan Azmi</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">Tumbuh</p>
             </div>
           </div>
           <div className="flex items-center gap-1">
