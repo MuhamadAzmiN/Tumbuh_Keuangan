@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { PrimaryBalanceSection } from '@/components/dashboard/PrimaryBalanceSection';
 import { WeeklyChart } from '@/components/dashboard/WeeklyChart';
+import { SmartInsightsWidget } from '@/components/dashboard/SmartInsightsWidget';
 import { OnboardingModal } from '@/components/dashboard/OnboardingModal';
 import { CardSkeleton, Skeleton } from '@/components/ui/Skeleton';
 import { useFinance } from '@/lib/context/FinanceContext';
@@ -137,6 +138,9 @@ export default function DashboardPage() {
           showBalance={showBalance}
           onToggleBalance={() => setShowBalance(!showBalance)}
         />
+
+        {/* ── 2.5 SMART INSIGHTS WIDGET ─────────────── */}
+        <SmartInsightsWidget transactions={transactions || []} expenses={expenses || []} />
 
         {/* ── 3. QUICK ACTIONS CARD CONTAINER ───────── */}
         <div className="w-full rounded-[16px] border border-[#E2E8F0] dark:border-slate-800/60 bg-white dark:bg-[#0F172A] p-3 shadow-2xs">
@@ -287,7 +291,7 @@ export default function DashboardPage() {
             <div className="space-y-2.5">
               {recentTransactions.map((tx, idx) => {
                 const isPositive = tx.normalizedAmount >= 0;
-                
+
                 return (
                   <div key={`${tx.id}-${idx}`} className="flex items-center justify-between py-1.5 border-b border-[#F1F5F9] dark:border-slate-800/60 last:border-0 last:pb-0">
                     <div className="flex items-center gap-3">

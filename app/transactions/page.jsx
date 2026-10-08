@@ -9,6 +9,7 @@ import { useToast } from '@/lib/context/ToastContext';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { Search, Plus, Edit2, Trash2 } from 'lucide-react';
 import { CategoryIcon } from '@/components/ui/CategoryIcon';
+import { AnalyticsChart } from '@/components/dashboard/AnalyticsChart';
 
 const EXPENSE_CATEGORIES = [
   'food', 'transport', 'shopping', 'entertainment', 'bills', 'other_expense',
@@ -146,6 +147,11 @@ export default function TransactionsPage() {
             <Plus className="h-4 w-4 stroke-[2.5]" />
             <span>Tambah</span>
           </button>
+        </div>
+
+        {/* Analytics Chart */}
+        <div className="pt-2">
+          <AnalyticsChart transactions={transactions || []} expenses={expenses || []} showBalance={true} />
         </div>
 
         {/* Search Bar */}

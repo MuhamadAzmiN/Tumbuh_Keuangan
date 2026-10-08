@@ -156,7 +156,7 @@ export function AppLayout({ children }) {
       {/* ═══════════════════════════════════════ */}
       {/*  MAIN CONTENT                           */}
       {/* ═══════════════════════════════════════ */}
-      <main className="flex-1 pb-20 lg:pb-10 w-full max-w-md lg:max-w-4xl mx-auto px-4 pt-3 lg:pt-6">
+      <main className="flex-1 pb-20 lg:pb-10 w-full max-w-md mx-auto lg:mx-0 lg:max-w-5xl px-4 lg:px-10 pt-3 lg:pt-8">
         <motion.div
           key={pathname}
           initial={{ opacity: 0, y: 15 }}
